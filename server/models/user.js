@@ -2,7 +2,7 @@
  * 用户表
  * @param { [object] } sequelize
  * @param { [object] } DataTypes
- * foreign_key { UserKlass }  每个用户含有一个用户分类的外键
+ * foreign_key { userType }  每个用户含有一个用户分类的外键
  */
 
 // let config = require('../../nuxt.config.js');  // 这边暂时待定
@@ -10,7 +10,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'User', {
+    'user', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -23,7 +23,9 @@ module.exports = (sequelize, DataTypes) => {
         }, // 用户登陆所需的账号
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: DataTypes.account,
+            //初始密码默认是账号
             // set(password) {
             //     //bcrypt.genSaltSync(8)
             //     this.setDataValue('password', bcrypt.hashSync(password, "saw", null));
