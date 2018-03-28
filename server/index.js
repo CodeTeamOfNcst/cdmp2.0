@@ -2,6 +2,9 @@
 const Koa = require('koa')
 const { Nuxt, Builder } = require('nuxt')
 const logger = require('koa-logger')
+const Cors = require('koa2-cors')
+const bodyParser = require('koa-bodyparser');
+
 const app = new Koa()
 
 const router = require('./router')()
@@ -23,6 +26,10 @@ async function start() {
   }
   // init middlewares 
   app.use(logger())
+  app.use(bodyParser());
+  app.use(Cors({
+    'credentials': true
+  }))
   app.use(router.routes()).use(router.allowedMethods())
   
   app.use(ctx => {
