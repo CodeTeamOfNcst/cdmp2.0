@@ -4,7 +4,8 @@
  * @param { [object] } DataTypes
  * foreign_key { UserKlass }  每个用户含有一个用户分类的外键
  */
-// let config = require('../../nuxt.config.js');
+
+// let config = require('../../nuxt.config.js');  // 这边暂时待定
 // let bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize, DataTypes) => {

@@ -11,8 +11,11 @@ module.exports = () => {
     prefix: '/api'
   })
 
-  // test url 
+  // test url 测试用相关 service 
   router.get('/test', testGet)
 
+  // user 相关 service 
+
+  // device 相关 service
   return router
 }

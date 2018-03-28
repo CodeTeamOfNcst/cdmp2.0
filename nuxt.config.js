@@ -2,7 +2,7 @@ const pkg = require('./package')
 
 module.exports = {
   mode: 'spa',
-
+  title: '预约系统',
   /*
   ** Headers of the page
   */
