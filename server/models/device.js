@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: true
             }, //设备图片路径
             location: {
-                type: DataType.STRING,
+                type: DataTypes.STRING,
                 allowNull: true
             },//设备位置
             description: {
@@ -53,6 +53,8 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: true
             } //此条记录是否可用
             //默认添加 createAt 和 updateAt 两个字段 
+        },{
+            tabelName: 'device'
         }
     )
 }

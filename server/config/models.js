@@ -1,16 +1,16 @@
 const path = require('path')
-const sequelize = require('../config/config')
+const sequelize = require('./database.js')
 
 // 这边后期应该加上 循环自动导入model，先放着(人手不足 -_-! )
-const ComputeApply = sequelize.import('../server/models/computeApply')
-const Device = sequelize.import('../server/models/device')
-const DeviceApply = sequelize.import('../server/models/deviceApply')
-const DeviceType = sequelize.import('../server/models/deviceType')
-const Message = sequelize.import('../server/models/message')
-const MessageType = sequelize.import('../server/models/messageType')
-const Info = sequelize.import('../server/models/info')
-const User = sequelize.import('../server/models/user')
-const UserType = sequelize.import('../server/models/userType')
+const ComputeApply = sequelize.import('../models/computeApply')
+const Device = sequelize.import('../models/device')
+const DeviceApply = sequelize.import('../models/deviceApply')
+const DeviceType = sequelize.import('../models/deviceType')
+const Message = sequelize.import('../models/message')
+const MessageType = sequelize.import('../models/messageType')
+const Info = sequelize.import('../models/info')
+const User = sequelize.import('../models/user')
+const UserType = sequelize.import('../models/userType')
     
        
 Message.belongsTo(MessageType, {
@@ -43,20 +43,6 @@ UserType.hasMany(User, {
     foreignKey: "user_type",
     foreignKeyContraints: false
 })
-
-// <--新增-->
-Device.hasOne(User,{
-    as: "DeviceUser",
-    foreignKey: "device_manager",
-    foreignKeyContraints: false
-})  //设备联系人
-User.hasMany(Device,{
-    as: "UserDevice",
-    foreignKey: "device_manager",
-    foreignKeyContraints: false
-})
-// <---->
-
 Device.belongsTo(DeviceType, {
     as: "DeviceType",
     foreignKey: "device_type",
@@ -78,7 +64,18 @@ Device.hasOne(DeviceApply, {
     foreignKeyContraints: false
 })
 
-//一份预约申请表属于一个预约用户，属于(有？)一个审批人员check_user
+// <--新增-->
+Device.belongsTo(User,{
+    as: "DeviceUser",
+    foreignKey: "device_manager",
+    foreignKeyContraints: false
+})  //设备联系人
+User.hasMany(Device,{
+    as: "UserDevice",
+    foreignKey: "device_manager",
+    foreignKeyContraints: false
+})
+//一个预约用户，一个审批人员check_user
 DeviceApply.belongsTo(User, {
     as: "DeviceApplyer",
     foreignKey: "apply_user",
@@ -89,8 +86,16 @@ User.hasMany(DeviceApply, {
     foreignKey: "apply_user",
     foreignKeyContraints: false
 })
-
-
+DeviceApply.belongsTo(User,{
+    as: "DeviceApplyChecker",
+    foreignKey: "check_user",
+    foreignKeyContraints: false
+})
+User.hasMany(DeviceApply, {
+    as: "CheckDeviceApply",
+    foreignKey: "check_user",
+    foreignKeyContraints: false
+})
 ComputeApply.belongsTo(User,{
     as: "ComputeApplyer",
     foreignKey: "apply_user",
@@ -101,7 +106,18 @@ User.hasOne(ComputeApply,{
     foreignKey: "apply_user",
     foreignKeyContraints: false
 })
+ComputeApply.belongsTo(User,{
+    as: "ComputeApplyChecker",
+    foreignKey: "check_user",
+    foreignKeyContraints: false
+})
+User.hasMany(ComputeApply,{
+    as: "CheckComputeApply",
+    foreignKey: "check_user",
+    foreignKeyContraints: false
+})
 
+// <---->
 module.exports = {
     ComputeApply,
     DeviceApply,

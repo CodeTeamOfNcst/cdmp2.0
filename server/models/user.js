@@ -10,7 +10,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'user', {
+      'user', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: account,
+            defaultValue: '123456',
             //初始密码默认是账号
             // set(password) {
             //     //bcrypt.genSaltSync(8)
@@ -49,6 +49,8 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: true
         }, // 此条记录是否可用
         //默认添加 createAt 和 updateAt 两个字段 
+    },{
+        tabelName: 'user'
     }
   )
 }

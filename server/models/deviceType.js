@@ -6,7 +6,7 @@
  */
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define(
-        'deviceType', {
+        'device_type', {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -23,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: true
             } // 此条记录是否可用
             //默认添加 createAt 和 updateAt 两个字段 
+        },{
+            tabelName: 'device_type'
         }
     )
 }

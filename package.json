@@ -22,7 +22,9 @@
     "koa-router": "^7.4.0",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
-    "nuxt": "^1.0.0"
+    "mysql2": "^1.5.3",
+    "nuxt": "^1.0.0",
+    "sequelize": "^4.37.5"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

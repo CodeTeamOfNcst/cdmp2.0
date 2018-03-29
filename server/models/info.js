@@ -6,7 +6,7 @@ const moment = require('moment');
  */
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define(
-        'info', {
+        'notice_announce', {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -32,6 +32,8 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: true
             } //此条记录是否可用
             //默认添加 createAt 和 updateAt 两个字段 
+        },{
+            tabelName: 'notice_announce'
         }
     )
 }
