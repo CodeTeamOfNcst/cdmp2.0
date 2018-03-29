@@ -24,6 +24,7 @@
     "koa2-cors": "^2.0.5",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
+    "moment": "^2.21.0",
     "nuxt": "^1.0.0"
   },
   "devDependencies": {
