@@ -6,7 +6,7 @@ const Cors = require('koa2-cors')
 const bodyParser = require('koa-bodyparser');
 
 const app = new Koa()
-
+const database = require('./config/models')
 const router = require('./router')()
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
@@ -23,6 +23,15 @@ async function start() {
   if (config.dev) {
     const builder = new Builder(nuxt)
     await builder.build()
+  }
+  if (process.env.NODE_ENV === 'development') {
+    /**
+    ** Sync DB
+    */
+    await database.sequelize.sync({
+      force: true
+    })
+    console.log("Database Sync successfully")
   }
   // init middlewares 
   app.use(logger())

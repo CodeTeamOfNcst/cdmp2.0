@@ -6,7 +6,7 @@
  */
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define(
-        'userType', {
+        'user_type', {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
             //     5.计算资源管理员 computeManager
             //     6.计算资源维护人员 computeMainter）
             //默认添加 createAt 和 updateAt 两个字段 
+        },{
+            tabelName: 'user_type'
         }
     )
 }
