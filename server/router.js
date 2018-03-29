@@ -12,10 +12,13 @@ module.exports = () => {
   })
 
   // test url 测试用相关 service 
-  router.get('/test', testGet)
+  router.get('/test', testGet)  // 测试 get 带参数
+  router.post('/test/post')   // 测试post 带参数
 
   // user 相关 service 
 
   // device 相关 service
+  
+
   return router
 }

@@ -20,6 +20,8 @@
     "koa-logger": "^3.2.0",
     "koa-multer": "^1.0.2",
     "koa-router": "^7.4.0",
+    "less": "^3.0.1",
+    "less-loader": "^4.1.0",
     "nuxt": "^1.0.0"
   },
   "devDependencies": {
