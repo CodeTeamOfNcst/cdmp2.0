@@ -2,8 +2,8 @@
     <div class="header">
         <div class="header-logo">
             <!--<img src="../assets/img/r_bg.jpg"/>-->
-            <el-row :gutter="20">
-                <el-col :span="2" :offset="2"><h1>CDMP</h1></el-col>
+            <el-row  >
+                <el-col :span="2"  ><div class="header-item grid-content bg-purple-light"><h1>CDMP</h1></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/clcresources">计算资源</nuxt-link></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/device">仪器列表</nuxt-link></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple"><nuxt-link class="button" to="/notice">通知公告</nuxt-link></div></el-col>
@@ -78,7 +78,7 @@
     .header-item{
         text-align: center;
         .button {
-        width: 95%;
+         
         font-family: SimHei;
         text-align: center;
         }
