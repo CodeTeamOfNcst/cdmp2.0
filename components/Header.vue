@@ -2,33 +2,30 @@
     <div class="header">
         <div class="header-logo">
             <!--<img src="../assets/img/r_bg.jpg"/>-->
-            <h1>云计算及设备资源管理平台</h1>
-             
-        </div>
-        <div class="header-list">
-            <el-row>
-                <el-col :span="3"><div class="header-item grid-content bg-purple"><nuxt-link class="button" to="/">首页</nuxt-link></div></el-col>
-                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/clcresources">云计算资源</nuxt-link></div></el-col>
+            <el-row :gutter="20">
+                <el-col :span="2" :offset="2"><h1>CDMP</h1></el-col>
+                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/clcresources">计算资源</nuxt-link></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/device">仪器列表</nuxt-link></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple"><nuxt-link class="button" to="/notice">通知公告</nuxt-link></div></el-col>
-                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍及使用 </nuxt-link></div></el-col>
-                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/personal">个人中心</nuxt-link></div></el-col>
+                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/download">下载中心</nuxt-link></div></el-col>
-                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/contact">联系我们</nuxt-link></div></el-col>
-            </el-row>
-            <!--<nuxt-link class="button page" to="/">首页</nuxt-link>-->
-            <!--<nuxt-link class="button page" to="/device">仪器列表</nuxt-link>-->
-            <!--<nuxt-link class="button page" to="/notice">通知公告</nuxt-link>-->
-            <!--<nuxt-link class="button page" to="/personal">个人中心</nuxt-link>-->
+                <el-col class="right" :span="5">
+                    <div class="little"><img class="img1" src="../assets/img/index.png"/><next-link>首页</next-link></div>
+                    <div class="little"><img class="img2" src="../assets/img/login.png"/><next-link>登录</next-link></div>
+                    <div class="little"><img class="img3" src="../assets/img/register.png"/><next-link>注册</next-link></div>
+                </el-col>
+            </el-row> 
         </div>
+         
     </div>
 </template>
 <style lang="less" scoped>
     
     .header-logo {
-        width: 70%;
-        height: 80px;
+        width: 80%;
+        height: 60px;
         margin-left:10%;
+        background-color:#333;
         h1 {
         float: left;
         color: #fafafa;
@@ -42,23 +39,49 @@
     .nuxt-link-exact-active {
         background: #6b8db4;
         color: #fff;
-
     }
-    .header-list {
-        background-color:#333;
+     
+    .el-row{
+        width: 100%;
         margin:auto;
-    }
-    .header-list .el-row {
-        width: 80%;
-        margin:auto;
+        .right{
+            height:59px;;
+            float:right;
+            color:#fff;
+            // background-color: #6b8db4;
+            .little{
+                width:60px;
+                margin: 20px 0 0 15px;    
+                height:30px;
+                // background-color: aquamarine;
+                float:left;
+                .img1{
+                width:20px;
+                height:20px; 
+                vertical-align: middle;
+               }
+               .img2{
+                width:17px;
+                height:17px; 
+                vertical-align: middle;
+               }
+               .img3{
+                width:16px;
+                height:16px; 
+                vertical-align: middle;
+               }
+                
+            }
+            
+        }
      }
-    .header-list .button {
+    .header-item{
+        text-align: center;
+        .button {
         width: 95%;
         font-family: SimHei;
         text-align: center;
-    }
-    .header-item{
-        text-align: center;
+        }
     }
 </style>
 

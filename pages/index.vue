@@ -21,7 +21,7 @@
   </el-row>
   <div class="middle">
   </div>
-  <el-row :gutter="20">
+  <el-row class="content" :gutter="20">
     <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
     <el-col :span="10"><div class="grid-content bg-purple"></div></el-col>
     <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
@@ -71,6 +71,7 @@
     background-color: aquamarine;
     border-radius: @border-radius;
   }
+  
   .device{
     height:200px;
     border-radius:@border-radius;
