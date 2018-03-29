@@ -1,0 +1,38 @@
+const moment = require('moment');
+/**
+ * 消息表
+ * @param { [object] } sequelize 
+ * @param { [object] } DataTypes 
+ * @foreign_key { messageType }  每条消息含有一个消息分类的外键
+ */
+module.exports = (sequelize, DataTypes) => {
+    return sequelize.define(
+        'message', {
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            content: {
+                type: DataTypes.TEXT,
+                allowNull: true
+            }, // 消息内容
+            releaseDate: {
+                type: DataTypes.DATE,
+                defaultValue: DataTypes.NOW,
+                get() {
+                    return moment(this.getDataValue('releaseDate')).format('YYYY-MM-DD');
+                }
+            }, //推送日期
+            isRead: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            }, //消息是否被读到 （用户登陆后并且标记后才被置为true）
+            isUse: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            }, // 此条记录是否可用
+            //默认添加 createAt 和 updateAt 两个字段 
+        }
+    )
+};
