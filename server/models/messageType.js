@@ -2,7 +2,7 @@
  * 消息类别表
  * @param { [object] } sequelize 
  * @param { [object] } DataTypes 
- * a foreign_key of { Message }  每条消息含有一个消息分类的外键
+ * a foreign_key of { message }  每条消息含有一个消息分类的外键
  */
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define(
