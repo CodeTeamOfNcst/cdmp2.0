@@ -1,53 +1,65 @@
-<template>
-  <div>
-    <nuxt/>
+ <template>
+  <div class="allBody">
+    <my-header/>
+    <div class="mainwidth">
+      <nuxt/>
+    </div>
+    <my-footer/>
   </div>
 </template>
 
-<style>
-html
-{
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-*, *:before, *:after
-{
-  box-sizing: border-box;
-  margin: 0;
-}
-.button--green
-{
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-.button--green:hover
-{
-  color: #fff;
-  background-color: #3b8070;
-}
-.button--grey
-{
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-.button--grey:hover
-{
-  color: #fff;
-  background-color: #35495e;
-}
+<script>
+    import MyHeader from '~/components/Header.vue'
+    import MyFooter from '~/components/Footer.vue'
+    export default {
+        components: {
+            MyHeader,
+            MyFooter
+        }
+    }
+</script>
+
+<style lang="less">
+  .allBody{
+    width: 100%;
+    background: #fff;
+    .mainwidth{
+    width: 80%;
+    margin: 15px auto;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background: #fff;
+    }
+  }
+  .container {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    /* min-height: 800px; */
+    height: auto;
+  }
+  .button, .button:visited
+  {
+    display: inline-block;
+    color: #fff;
+    letter-spacing: 1px;
+    /*background-color: #fff;*/
+    /*border: 2px solid #063961;*/
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 15px 2.1%;
+  }
+  .button:hover, .button:focus
+  {
+    color: #fff;
+    background-color: #6b8db4;
+  }
+  .title
+  {
+    color: #505153;
+    font-weight: 300;
+    font-size: 2.5em;
+    margin: 0;
+  }
 </style>
