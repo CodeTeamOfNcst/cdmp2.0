@@ -1,7 +1,6 @@
 const path = require('path')
 const sequelize = require('./database.js')
 
-// 这边后期应该加上 循环自动导入model，先放着(人手不足 -_-! )
 const ComputeApply = sequelize.import('../models/computeApply')
 const Device = sequelize.import('../models/device')
 const DeviceApply = sequelize.import('../models/deviceApply')

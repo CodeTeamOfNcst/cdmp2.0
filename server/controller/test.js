@@ -5,8 +5,10 @@
  * @param {*} ctx 
  * @param {*} next 
  */
-module.exports.testGet = (ctx, next) => {
-
+module.exports.testGet = async (ctx, next) => {
+  ctx.body = {
+    get: 'successfully get'
+  }
 }
 
 /**
@@ -14,8 +16,11 @@ module.exports.testGet = (ctx, next) => {
  * @param {*} ctx 上下文
  * @param {*} next 
  */
-module.exports.testPost = (ctx, next) => {
-
+module.exports.testPost = async (ctx, next) => {
+  console.log(ctx.request.body)
+  ctx.body = {
+    post: ctx.request.body
+  }
 }
 
 /**
@@ -23,8 +28,11 @@ module.exports.testPost = (ctx, next) => {
  * @param {*} ctx 上下文
  * @param {*} next 
  */
-module.exports.testDelete = (ctx, next) => {
-
+module.exports.testDelete = async (ctx, next) => {
+  console.log(ctx.request.body)
+  ctx.body = {
+    delete: ctx.request.body
+  }
 }
 
 /**
@@ -32,6 +40,9 @@ module.exports.testDelete = (ctx, next) => {
  * @param {*} ctx 上下文
  * @param {*} next 
  */
-module.exports.testPut = (ctx, next) => {
-
+module.exports.testPut = async (ctx, next) => {
+  console.log(ctx.request.body)
+  ctx.body = {
+    put: ctx.request.body
+  }
 }

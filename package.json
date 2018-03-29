@@ -17,19 +17,26 @@
     "@nuxtjs/axios": "^5.0.0",
     "element-ui": "^2.3.0",
     "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
     "koa-logger": "^3.2.0",
     "koa-multer": "^1.0.2",
     "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.5",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
+<<<<<<< HEAD
     "mysql2": "^1.5.3",
     "nuxt": "^1.0.0",
     "sequelize": "^4.37.5"
+=======
+    "moment": "^2.21.0",
+    "nuxt": "^1.0.0"
+>>>>>>> 297fb1e6cb7f851676cccaac931b7891417cd34e
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
     "cross-env": "^5.0.1",
-    "eslint": "^4.15.0",
+    "eslint": "^4.19.1",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-vue": "^4.0.0",
     "nodemon": "^1.11.0"
