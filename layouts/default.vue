@@ -25,8 +25,8 @@
     background: #fff;
     .mainwidth{
     width: 80%;
-    margin: 15px auto;
-    border: 1px solid #eee;
+    margin: 0 auto;
+    // border: 1px solid #eee;
     border-radius: 5px;
     background: #fff;
     }
@@ -48,7 +48,7 @@
     /*border: 2px solid #063961;*/
     text-decoration: none;
     text-transform: uppercase;
-    padding: 15px 2.1%;
+    padding: 21px 2.1%;
   }
   .button:hover, .button:focus
   {
