@@ -24,14 +24,11 @@
     "koa2-cors": "^2.0.5",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
-<<<<<<< HEAD
     "mysql2": "^1.5.3",
     "nuxt": "^1.0.0",
-    "sequelize": "^4.37.5"
-=======
+    "sequelize": "^4.37.5",
     "moment": "^2.21.0",
     "nuxt": "^1.0.0"
->>>>>>> 297fb1e6cb7f851676cccaac931b7891417cd34e
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
