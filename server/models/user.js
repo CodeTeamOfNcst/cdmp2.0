@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: DataTypes.account,
+            defaultValue: account,
             //初始密码默认是账号
             // set(password) {
             //     //bcrypt.genSaltSync(8)
