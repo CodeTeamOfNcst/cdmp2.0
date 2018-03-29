@@ -1,5 +1,3 @@
-
-
 <template>
     <div>
         <div class="header_img">
@@ -14,7 +12,7 @@
         </div>
         <div class="main_nav">
             <el-row class="nav_content">
-                <nuxt-link to="/admin">
+                <nuxt-link to="/admin/device">
                     <div class="grid-content bg-purple-dark"><i class="el-icon-menu icon"></i>设备管理</div>
                 </nuxt-link>
             </el-row>
@@ -60,7 +58,7 @@
         min-height: 60px;
         height:auto;
         overflow: hidden;
-        background: #44679F;
+        background: black;
         h1{
         float: left;
         line-height: 60px;
@@ -82,7 +80,7 @@
         float: right;
         height:60px;
         line-height: 60px;
-        background:#44679F;
+        // background:#333;
         p{
         padding-left: 20px;
         text-align: right;
