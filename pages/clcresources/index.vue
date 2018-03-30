@@ -61,7 +61,6 @@
                     <el-collapse-transition>
                       <div v-show="show1">
                         <div class="transition-box">el-collapse-transition</div>
-                         
                       </div>
                     </el-collapse-transition>
             </div>
@@ -86,20 +85,11 @@
       </el-tabs>
     </div>
 </template>
-<style scoped>
+<style lang="less" scoped>
+
 .all{
     height:auto;
     margin-top:20px;
-}
-/* .orderbefore{
-        width: 5px;
-        height:28px;
-        float: left;
-        background: #2e2f30;
-    } */
-
-.usvideo{
-    margin-top:100px;
 }
 .bullCont{
   height:70%;
