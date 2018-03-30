@@ -45,8 +45,11 @@
 
             <!-- 暂定折叠面板(css设置在main.css 18-32行) -->
             <el-row class="nav_content">
-                <el-collapse v-model="activeNames" @change="handleChange">
-                    <el-collapse-item title="预约管理" name="1">
+                <el-collapse accordion>
+                    <el-collapse-item>
+                        <template slot="title">
+                        <i class="header-icon el-icon-document icon"></i>预约管理
+                        </template>
                         <el-row class="nav_contentAnother">
                             <nuxt-link to="/admin/deviceApply">
                                 <div class="grid-content bg-purple-dark"><i class="el-icon-edit icon"></i>设备预约管理</div>
@@ -120,7 +123,7 @@
     }
     .main_nav{
         width: 9%;
-        min-height: 800px;
+        min-height: 850px;
         height:auto;
         float: left;
         display: block;
@@ -149,10 +152,11 @@
     import  NuxtLink  from '../.nuxt/components/nuxt-link'
 
     export default {
-        components: { NuxtLink },
+        components() { 
+            return NuxtLink
+        },
         data(){
             return{
-                // activeNames: ['1'],
             };
         },
         methods() {
@@ -160,9 +164,6 @@
                 handleLogOugt(){
                     window.location.href = '/'
                 },
-                handleChange(val) {
-                    console.log(val);
-                }
             }
         }
     }
