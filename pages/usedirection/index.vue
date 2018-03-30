@@ -1,8 +1,5 @@
 <template>
-    <div class="all">
-        
-        
-
+<div class="all">
   <el-tabs :tab-position="tabPosition" type = "card" style="height: 700px;">
     <el-tab-pane label="平台概况介绍">
         <!-- <section class="container">  -->
@@ -70,50 +67,45 @@
     
   
 </template>
-<style scoped>
+<style lang="less" scoped>
+a{
+        text-decoration: none;
+}
 .el-tabs {
     border: 0;
 }
-/* .orderbefore{
-        width: 5px;
-        height:28px;
-        float: left;
-        background: #2e2f30;
-    } */
-
 .usvideo{
      margin-top:70px;
  }
 .bullCont{
     font-size:14px;
  }
- a{
-        text-decoration: none;
-    }
-    .contentList{
-        width: 100%;
-        height:650px;
-    }
-    .paging{
-        width: 40%;
-        margin-left: 30%;
-    }
-    .strip{
-        margin-left:30px;
-        width: 80%;
-        height: 35px;
-        /*border: 1px solid #2e2f30;*/
-    }
-    .grid-content{
-        float:left;
-        line-height: 35px;
-    }
+ 
+.contentList{
+    width: 100%;
+    height:650px;
+}
+.paging{
+    width: 40%;
+    margin-left: 30%;
+}
+.strip{
+    margin-left:30px;
+    width: 80%;
+    height: 35px;
+    /*border: 1px solid #2e2f30;*/
+}
+.grid-content{
+    float:left;
+    line-height: 35px;
     .grid-content>a{
-        color:#3675a8;
+    color:#3675a8;
     }
     .grid-content>a:hover{
         color:black;
     }
+}
+
 </style>
 <script>
   export default {
