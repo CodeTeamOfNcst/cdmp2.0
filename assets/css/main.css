@@ -4,7 +4,7 @@ html, body
   letter-spacing: 0.5px;
   font-family: "Source Sans Pro", Arial, sans-serif;
   height: 100vh;
-  margin: 0;
+  margin: 0px;
 }
 .el-form-item {
   margin-bottom: 5px!important;
@@ -16,7 +16,6 @@ html, body
 .el-select{
   width: 100%;
 }
-
 .add{
   width: 5%;
   margin-left: 5px;

@@ -125,7 +125,7 @@
                 <el-tab-pane label="仪器设备预约记录">
 
 
-                    <div v-for="data in result">
+                    <!-- <div v-for="data in result">
                         <div class="history">
                             <img :src="data.device.imgFilePath" >
                             <div class="hisCont">
@@ -136,7 +136,7 @@
                                 <div class="startTime">是否批准使用:{{data.apply.isAgree ? '是':'否'}}</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                    
                 </el-tab-pane>
@@ -194,9 +194,9 @@
                     </el-form>
 
 
-                    <div v-for="user in usersDetail">
+                    <!-- <div v-for="user in usersDetail">
                         <el-col :span="24"><div>{{ user.user.account }}</div></el-col>
-                    </div>
+                    </div> -->
                 </el-tab-pane>        
             </el-tabs>
         </div>
@@ -262,134 +262,134 @@
     }
 </style>
 
-<script>
-    import axios from 'axios'
+// <script>
+//     import axios from 'axios'
     
-    export default {
-        data() {
-            return {     
-                form: {
-                    name: '',
-                    account: '',
-                    password: '',
-                    email: '',
-                    phone:'',
-                },
-                dialogFormVisible: false,
-                form2: {
-                    password:'',
-                    email:'',
-                },                         
-                formLabelWidth: '80px',
-                tableData0: [
-                    {
-                        startTime:'2018-01-05',
-                        endTime:'2018-03-31',
-                        applyTime:'20000.00',
-                        restTime:'19999.00',
-                        signNumber:'16548',
-                        operation:''
-                    }
-                ],
-                tableData1: [
-                    {
-                        startDate:'2017-12-02',
-                        endDate:'2018-01-01',
-                        applyTime:'20000.00',
-                        restTime:'15000.00',
-                        status:'成功',
-                        operation1:''
-                    },
-                    {
-                        startDate:'2017-11-03',
-                        endDate:'2018-01-01',
-                        applyTime:'20000.00',
-                        restTime:'0.00',
-                        status:'失败',
-                        operation1:''
-                    }
-                ],
-                tabPosition: '',
-                result: [
-                    {
-                        device: [],
-                        deviceType: [],
-                        apply: []
-                    }
-                ],
-                chance: false,
-            }
-        },
+//     export default {
+//         data() {
+//             return {     
+//                 form: {
+//                     name: '',
+//                     account: '',
+//                     password: '',
+//                     email: '',
+//                     phone:'',
+//                 },
+//                 dialogFormVisible: false,
+//                 form2: {
+//                     password:'',
+//                     email:'',
+//                 },                         
+//                 formLabelWidth: '80px',
+//                 tableData0: [
+//                     {
+//                         startTime:'2018-01-05',
+//                         endTime:'2018-03-31',
+//                         applyTime:'20000.00',
+//                         restTime:'19999.00',
+//                         signNumber:'16548',
+//                         operation:''
+//                     }
+//                 ],
+//                 tableData1: [
+//                     {
+//                         startDate:'2017-12-02',
+//                         endDate:'2018-01-01',
+//                         applyTime:'20000.00',
+//                         restTime:'15000.00',
+//                         status:'成功',
+//                         operation1:''
+//                     },
+//                     {
+//                         startDate:'2017-11-03',
+//                         endDate:'2018-01-01',
+//                         applyTime:'20000.00',
+//                         restTime:'0.00',
+//                         status:'失败',
+//                         operation1:''
+//                     }
+//                 ],
+//                 tabPosition: '',
+//                 result: [
+//                     {
+//                         device: [],
+//                         deviceType: [],
+//                         apply: []
+//                     }
+//                 ],
+//                 chance: false,
+//             }
+//         },
         
-        methods() {
-            return{
-                async onSubmit(){
-                // let resData = await axios.post('/api/user/modifyUserById', {
-                //     userId: this.user.id,
-                //     account: this.form.account,
-                //     name: this.form.name,
-                //     phone: this.form.phone,
-                //     email:this.form.email
-                // })
-                // if(resData.data.status === 1){
-                //     this.$message({
-                //         message: resData.data.message,
-                //         type: 'success'
-                //     });
-                //     window.location.href = '/personal'
-                // }else{
-                //     this.$message.error(resData.data.message)
-                // }
-                },  
-                open2() {
-                    this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!'
-                        });
-                    }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '已取消删除'
-                        });          
-                    });
-                },   
-            }   
-        },
-        async asyncData(context){
-            // api路径有问题   提取用户账号筛选出登陆者的密码等信息
-            let resData = await axios.get('api/user/getAll')         
-            if(resData.data.status === 1)
-            {
-                return {
-                    count: resData.data.counts,
-                    usersDetail: resData.data.usersDetail
-                }
-            }           
-        },
-        async mounted(){
-            if(! this.$auth.state.loggedIn) window.location.href ='/login'   
-            let resData = await axios.post('/api/user/getPersonal',{
-                account: this.$auth.state.user.login_account
-            })
-            this.form.account = this.$auth.state.user.login_account
-            if(resData.data.status === 1){
-                console.log(resData.data.result)
-                this.result = resData.data.result
-                this.tableData = resData.data.result
-            }else{
-                this.$message.error('获取数据失败')
-            }           
-        },
+//         methods() {
+//             return{
+//                 async onSubmit(){
+//                 // let resData = await axios.post('/api/user/modifyUserById', {
+//                 //     userId: this.user.id,
+//                 //     account: this.form.account,
+//                 //     name: this.form.name,
+//                 //     phone: this.form.phone,
+//                 //     email:this.form.email
+//                 // })
+//                 // if(resData.data.status === 1){
+//                 //     this.$message({
+//                 //         message: resData.data.message,
+//                 //         type: 'success'
+//                 //     });
+//                 //     window.location.href = '/personal'
+//                 // }else{
+//                 //     this.$message.error(resData.data.message)
+//                 // }
+//                 },  
+//                 open2() {
+//                     this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+//                         confirmButtonText: '确定',
+//                         cancelButtonText: '取消',
+//                         type: 'warning'
+//                     }).then(() => {
+//                         this.$message({
+//                             type: 'success',
+//                             message: '删除成功!'
+//                         });
+//                     }).catch(() => {
+//                         this.$message({
+//                             type: 'info',
+//                             message: '已取消删除'
+//                         });          
+//                     });
+//                 },   
+//             }   
+//         },
+//         async asyncData(context){
+//             // api路径有问题   提取用户账号筛选出登陆者的密码等信息
+//             let resData = await axios.get('api/user/getAll')         
+//             if(resData.data.status === 1)
+//             {
+//                 return {
+//                     count: resData.data.counts,
+//                     usersDetail: resData.data.usersDetail
+//                 }
+//             }           
+//         },
+//         async mounted(){
+//             if(! this.$auth.state.loggedIn) window.location.href ='/login'   
+//             let resData = await axios.post('/api/user/getPersonal',{
+//                 account: this.$auth.state.user.login_account
+//             })
+//             this.form.account = this.$auth.state.user.login_account
+//             if(resData.data.status === 1){
+//                 console.log(resData.data.result)
+//                 this.result = resData.data.result
+//                 this.tableData = resData.data.result
+//             }else{
+//                 this.$message.error('获取数据失败')
+//             }           
+//         },
         
-        head(){
-            return {
-                title: 'CDMP - 个人中心'
-            }
-        },
-    }
-</script>
+//         head(){
+//             return {
+//                 title: 'CDMP - 个人中心'
+//             }
+//         },
+//     }
+// </script>
