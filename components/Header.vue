@@ -10,9 +10,9 @@
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/download">下载中心</nuxt-link></div></el-col>
                 <el-col class="right" :span="4">
-                    <div class="little"><img class="img1" src="../assets/img/index.png"/><next-link to="/">首页</next-link></div>
-                    <div class="little"><img class="img2" src="../assets/img/login.png"/><next-link>登录</next-link></div>
-                    <div class="little"><img class="img3" src="../assets/img/register.png"/><next-link>注册</next-link></div>
+                    <div class="little"><img class="img1" src="../assets/img/index.png"/><nuxt-link to="/">首页</nuxt-link></div>
+                    <div class="little"><img class="img2" src="../assets/img/login.png"/><nuxt-link to="/">登录</nuxt-link></div>
+                    <div class="little"><img class="img3" src="../assets/img/register.png"/><nuxt-link to="/">注册</nuxt-link></div>
                 </el-col>
             </el-row> 
         </div>
@@ -20,7 +20,9 @@
     </div>
 </template>
 <style lang="less" scoped>
-    
+    a{
+        color:#fff;
+    }
     .header-logo {
         width: 80%;
         height: 60px;
@@ -35,14 +37,13 @@
         }
         /* background: url("~assets/img/bg2.png") no-repeat left 100%; */
     }
-     
     .nuxt-link-exact-active {
-        background: #6b8db4;
+        // background: #6b8db4;
         color: #fff;
     }
      
     .el-row{
-        width: 90%;
+        width: 90%; 
         .right{
             height:59px;;
             float:right;
@@ -50,9 +51,10 @@
             // background-color: #6b8db4;
             .little{
                 width:60px;
-                margin: 20px 0 0 15px;    
+                margin: 18px 0 0 15px;    
                 height:30px;
-                cursor:  ;
+                cursor:pointer;
+                color:#fff;
                 // background-color: aquamarine;
                 float:left;
                 .img1{

@@ -86,6 +86,7 @@
     </div>
 </template>
 <style lang="less" scoped>
+
 .all{
     height:auto;
     margin-top:20px;
