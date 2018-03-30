@@ -5,9 +5,11 @@
 </template>
 <style lang="less" scoped>
 .footer{
-  height:60px;
+  height:50px;
+  border-top:1px solid #ddd;
   p{
-  text-align:center;
+    text-align:center;
+    line-height: 50px;
   }
 }
 

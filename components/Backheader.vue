@@ -17,11 +17,6 @@
                 </nuxt-link>
             </el-row>
             <el-row class="nav_content">
-                <nuxt-link to="/admin/order">
-                    <div class="grid-content bg-purple-dark"><i class="el-icon-edit icon"></i>预约管理</div>
-                </nuxt-link>
-            </el-row>
-            <el-row class="nav_content">
                 <nuxt-link to="/admin/user">
                     <div class="grid-content bg-purple-dark"><i class="el-icon-setting icon"></i>用户管理</div>
                 </nuxt-link>
@@ -36,11 +31,37 @@
                     <div class="grid-content bg-purple-dark"><i class="el-icon-message icon"></i>消息管理</div>
                 </nuxt-link>
             </el-row>
+            <!-- <el-row class="nav_content">
+                <nuxt-link to="/admin/order">
+                    <div class="grid-content bg-purple-dark"><i class="el-icon-edit icon"></i>设备预约管理</div>
+                </nuxt-link>
+            </el-row>
             <el-row class="nav_content">
                 <nuxt-link to="/admin/resources">
                     <div class="grid-content bg-purple-dark"><i class="el-icon-service icon"></i>云计算资源管理</div>
                 </nuxt-link>
+            </el-row> -->
+
+
+            <!-- 暂定折叠面板(css设置在main.css 18-32行) -->
+            <el-row class="nav_content">
+                <el-collapse v-model="activeNames" @change="handleChange">
+                    <el-collapse-item title="预约管理" name="1">
+                        <el-row class="nav_contentAnother">
+                            <nuxt-link to="/admin/deviceApply">
+                                <div class="grid-content bg-purple-dark"><i class="el-icon-edit icon"></i>设备预约管理</div>
+                            </nuxt-link>
+                        </el-row>
+                        <el-row class="nav_content">
+                            <nuxt-link to="/admin/computeApply">
+                                <div class="grid-content bg-purple-dark"><i class="el-icon-service icon"></i>云计算资源管理</div>
+                            </nuxt-link>
+                        </el-row>
+                    </el-collapse-item>
+                </el-collapse>
             </el-row>
+            <!--end-->
+            
         </div>
     </div>
 </template>
@@ -60,16 +81,15 @@
         overflow: hidden;
         background: black;
         h1{
-        float: left;
-        line-height: 60px;
-        margin-top: 0;
-        margin-bottom: 0;
-        margin-left: 10%;
-        color: #fafafa;
-        letter-spacing: 0;
-        text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135 ;
+            float: left;
+            line-height: 60px;
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 10%;
+            color: #fafafa;
+            letter-spacing: 0;
+            text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135 ;
         }
-        /* background: black; */
     }
     .nuxt-link-exact-active{
         color: #3498db;
@@ -80,14 +100,13 @@
         float: right;
         height:60px;
         line-height: 60px;
-        // background:#333;
         p{
-        padding-left: 20px;
-        text-align: right;
-        float: right;
-        color:#fff;
-     }
-        /* background: black; */
+            padding-left: 20px;
+            text-align: right;
+            float: right;
+            color:#fff;
+            line-height: 60px;
+        }
     } 
     .logout{
         height:100%;
@@ -103,11 +122,11 @@
         width: 9%;
         min-height: 800px;
         height:auto;
-        /*background: #F0F0F0;*/
-        /*min-width: 98px;*/
         float: left;
         display: block;
         border-right: 1px solid #ddd;
+        // font-size: 1.1em;
+        // font-family: 'YouYuan';
     }
     .nav_content{
         width: 100%;
@@ -115,10 +134,15 @@
         height:auto;
         text-align: center;
         line-height: 80px;
-        /*border-right: 1px solid #ddd;*/
         border-bottom: 1px solid #ddd;
     }
-    
+    .nav_contentAnother{
+        width: 100%;
+        min-height: 80px;
+        height:auto;
+        text-align: center;
+        line-height: 80px;
+    }
 </style>
 
 <script>
@@ -126,10 +150,18 @@
 
     export default {
         components: { NuxtLink },
+        data(){
+            return{
+                // activeNames: ['1'],
+            };
+        },
         methods() {
             return{
                 handleLogOugt(){
                     window.location.href = '/'
+                },
+                handleChange(val) {
+                    console.log(val);
                 }
             }
         }
