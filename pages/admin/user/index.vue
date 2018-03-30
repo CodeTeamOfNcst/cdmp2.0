@@ -199,26 +199,12 @@
 </template>
 
 <style lang='less' scoped>
-    .mianContent{
-        width: 100%;
-        min-width:350px;
-        height: 100%;
-    }
     .textarea{
         height: 350px;
     }
     .announceCont{
         width: 100%;
         margin-top: 5px;
-    }
-    th,td{
-        text-align: center;
-    }
-    .addContent{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        padding: 0px;
     }
     .commonGround{
         width: 15%;
@@ -238,23 +224,6 @@
             margin-left: 10px;
             .commonGround;
         }
-    }
-    .table{
-        width: 100%;
-        min-height:600px;
-        height:auto;
-    }
-    .el-table {
-        font-size: 15px;
-        color: gray;
-    }
-    table{
-        max-width: 1500px;
-    }
-    .page{
-        width: 100%;
-        height:50px;
-        /*text-align: center;*/
     }
 </style>
 

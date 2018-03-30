@@ -142,12 +142,6 @@
         float: left;
         z-index: 9999;
     }
-    
-    .mianContent{
-        width: 100%;
-        min-width:350px;
-        height: 100%;
-    }
     .inputName{
         width: 72%;
     }
@@ -178,18 +172,6 @@
             .commonGround;
         }
     }
-    .addContent{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        padding: 0px;
-    }
-    .table{
-        width: 100%;
-        min-height:600px;
-        height:auto;
-    }
-    
 </style>
 
 <script>

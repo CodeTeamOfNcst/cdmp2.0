@@ -113,7 +113,7 @@
                     <el-table-column
                             prop="message.publishDate"
                             label="消息发布日期"
-                            width="150">
+                            width="">
                     </el-table-column>
                     <el-table-column
                             label="消息是否发布"
@@ -214,11 +214,6 @@
 </template>
 
 <style lang='less' scoped>
-    .mianContent{
-        width: 100%;
-        min-width:350px;
-        height: 100%;
-    }
     .el-col-14 {
         width: 45%;
     }
@@ -228,17 +223,7 @@
     .announceCont{
         width: 100%;
         margin-top: 5px;
-    }
-    th,td{
-        text-align: center;
-    }
-    
-    .addContent{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        padding: 0px;
-    }
+    }  
     .commonGround{
         width: 15%;
         height: 40px;
@@ -257,24 +242,7 @@
             margin-left: 10px;
             .commonGround;
         }
-    }
-    .table{
-        width: 100%;
-        min-height:600px;
-        height:auto;
-    }
-    .el-table {
-        font-size: 15px;
-        color: gray;
-    }
-    table{
-        max-width: 1500px;
-    }
-    .page{
-        width: 100%;
-        height:50px;
-        /*text-align: center;*/
-    }
+    }  
 </style>
 
 <script>

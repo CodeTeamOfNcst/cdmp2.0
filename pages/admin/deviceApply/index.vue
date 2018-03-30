@@ -63,7 +63,7 @@
         </el-popover>
         <div class="headerName">
             <div class="leftSty"></div>
-            <span class="bullCont">预约管理</span>
+            <span class="bullCont">设备预约管理</span>
         </div>
         <el-row class="headerline"/>
         <div class="announceCont">
@@ -216,24 +216,9 @@
     .el-col-18 {
         width: 88%;
     }
-    .mianContent{
-        width: 100%;
-        min-width:350px;
-        height: 100%;
-    }
     .announceCont{
         width: 100%;
         margin-top: 5px;
-    }
-    th,td{
-        text-align: center;
-    }
-    
-    .addContent{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        padding: 0px;
     }
     .commonGround{
         width: 15%;
@@ -254,23 +239,7 @@
             .commonGround;
         }
     }
-    .table{
-        width: 100%;
-        min-height:600px;
-        height:auto;
-    }
-    .el-table {
-        font-size: 15px;
-        color: gray;
-    }
-    table{
-        max-width: 1500px;
-    }
-    .page{
-        width: 100%;
-        height:50px;
-        /*text-align: center;*/
-    }
+    
 </style>
 
 <script>

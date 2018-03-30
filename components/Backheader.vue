@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="header_img">
-            <h1>云计算资源及设备预约管理平台后台</h1>
+            <h1>CDMP-云计算资源及设备预约管理后台</h1>
             <div class="grid-content bg-purple-dark userLogout">
                 <div class="logout">
                     <el-button class="button_logout" @click="handleLogOugt">退出</el-button>
@@ -85,7 +85,7 @@
             line-height: 60px;
             margin-top: 0;
             margin-bottom: 0;
-            margin-left: 10%;
+            margin-left: 9%;
             color: #fafafa;
             letter-spacing: 0;
             text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135 ;

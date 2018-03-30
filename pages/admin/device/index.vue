@@ -204,12 +204,6 @@
     </div>
 </template>
 <style lang='less' scoped>
-    .addContent{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        padding: 0px;
-    }
     .announceCont{
         width: 100%;
         margin-top: 5px;
@@ -253,11 +247,6 @@
     .inputName{
         width: 72%;
     }
-    .mianContent{
-        width: 100%;
-        min-width:350px;
-        height: 100%;
-    }
     .commonGround{
         width: 15%;
         height: 40px;
@@ -276,11 +265,6 @@
             margin-left: 10px;
             .commonGround;
         }
-    }
-    .table{
-        width: 100%;
-        min-height:600px;
-        height:auto;
     }
     .textarea{
         height: 120px;

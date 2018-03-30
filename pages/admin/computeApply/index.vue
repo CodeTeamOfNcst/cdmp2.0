@@ -300,22 +300,10 @@
 </template>
 
 <style lang='less' scoped>
-    .mianContent{
-        width: 100%;
-        min-width:350px;
-        height: 100%;
-    }
     .announceCont{
         width: 100%;
         margin-top: 5px;
-    }
-    
-    .addContent{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        padding: 0px;
-    }
+    } 
     .commonGround{
         width: 15%;
         height: 40px;
@@ -335,60 +323,31 @@
             .commonGround;
         }
     }
-    .el-col {
-        border-radius: 4px;
-    }
     .grid-content {
         min-height: 200px;
         font-family: 幼圆;
         font-size: 1.1em;
     }
-    .el-table {
-        font-size: 15px;
-        color: gray;
-    }
-    .table{
-        width: 100%;
-        min-height: 600px;
-        /* background: gray; */
-        /* float: left; */
-    }
-    .page{
-        float: left;
-    }
     .resStatis{
+        margin-left: 5px;
+        min-width: 31px;
+        .commonGround;
         width: 10%;
-margin-left: 5px;
-min-width: 31px;
-height: 40px;
-float: left;
-z-index: 9999;
-        /* width:22%;
-        min-width: 246px;
-        float:right;
-        margin-right:5%;
-        color:gray;
-        font-family: 幼圆;
-        line-height: 150%;
-        background: #E9E9E5;
-        box-shadow: 1px 1px 6px gray; */
     }
     .resName{
         height:30px;
         width: 100%;
         text-align:center;
-    }
-    .resName p{
-        font-weight: 700;
-        font-size: 1.2em;
+        p{
+            font-weight: 700;
+            font-size: 1.2em;
+        }
     }
     .resContent{
         width: 100%;  
         min-height: 200px;
         float: right;
     }
-    
-    
 </style>
 
 <script>
