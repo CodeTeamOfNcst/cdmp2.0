@@ -3,14 +3,14 @@
         <div class="header-logo">
             <!--<img src="../assets/img/r_bg.jpg"/>-->
             <el-row  >
-                <el-col :span="2"  ><div class="header-item grid-content bg-purple-light"><h1>CDMP</h1></div></el-col>
+                <el-col :span="3" :offset="2" ><div class="header-item grid-content bg-purple-light"><h1>CDMP</h1></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/clcresources">计算资源</nuxt-link></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/device">仪器列表</nuxt-link></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple"><nuxt-link class="button" to="/notice">通知公告</nuxt-link></div></el-col>
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/download">下载中心</nuxt-link></div></el-col>
-                <el-col class="right" :span="5">
-                    <div class="little"><img class="img1" src="../assets/img/index.png"/><next-link>首页</next-link></div>
+                <el-col class="right" :span="4">
+                    <div class="little"><img class="img1" src="../assets/img/index.png"/><next-link to="/">首页</next-link></div>
                     <div class="little"><img class="img2" src="../assets/img/login.png"/><next-link>登录</next-link></div>
                     <div class="little"><img class="img3" src="../assets/img/register.png"/><next-link>注册</next-link></div>
                 </el-col>
@@ -42,8 +42,7 @@
     }
      
     .el-row{
-        width: 100%;
-        margin:auto;
+        width: 90%;
         .right{
             height:59px;;
             float:right;
@@ -53,6 +52,7 @@
                 width:60px;
                 margin: 20px 0 0 15px;    
                 height:30px;
+                cursor:  ;
                 // background-color: aquamarine;
                 float:left;
                 .img1{
@@ -78,7 +78,6 @@
     .header-item{
         text-align: center;
         .button {
-         
         font-family: SimHei;
         text-align: center;
         }

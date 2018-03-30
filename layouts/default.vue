@@ -41,6 +41,7 @@
   }
   .button, .button:visited
   {
+    width:100%;
     display: inline-block;
     color: #fff;
     letter-spacing: 1px;
@@ -52,6 +53,7 @@
   }
   .button:hover, .button:focus
   {
+    width:100%;
     color: #fff;
     background-color: #6b8db4;
   }
