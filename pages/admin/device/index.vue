@@ -1,6 +1,6 @@
 <template>
     <div class="mianContent">
-        <!-- <div class="popover-el">
+        <div class="popover-el">
             <el-popover
                 ref="popover4"
                 placement="right"
@@ -60,11 +60,11 @@
                 </el-form-item>
             </el-form>
         </el-popover>
-        </div> -->
-        <!-- <div class="headerName">
+        </div>
+        <div class="headerName">
             <div class="leftSty"></div>
             <span class="bullCont">设备管理</span>
-        </div> -->
+        </div>
         <el-row class="headerline"/>
         <div class="announceCont">
             <div class="oneline">
@@ -86,9 +86,9 @@
                         </el-option>
                     </el-select>
                 </div>
-                <!-- <div class="add">
-                    <el-button v-popover:popover4 class="addContent">添加</el-button>
-                </div> -->
+                <div class="add">
+                    <el-button v-popover:popover4 class="addContent">新增</el-button>
+                </div>
             </div>
 
             <div class="table">
@@ -108,7 +108,7 @@
                     </el-table-column>
                     <el-table-column
                             prop="name"
-                            label="设备名称">                     
+                            label="设备名称">
                     </el-table-column>                    
                     <el-table-column
                             prop="type"
@@ -131,7 +131,7 @@
                 </el-table>
             </div>
 
-            <!-- <el-dialog title="编辑设备" :visible.sync="editFormVisibel" @close="editDialogClose">
+            <el-dialog title="编辑设备" :visible.sync="editFormVisibel" @close="editDialogClose">
                 <el-form :model="editForm" >
                     <el-form-item label="设备名称" :label-width="editFormLabelWidth">
                         <div class="inputName">
@@ -199,28 +199,16 @@
                         layout="total, prev, pager, next"
                         :total="itemCounts">
                 </el-pagination>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>
-<style scoped>
-    /* .addContent{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        padding: 0px;
-    } */
-    .headerline{
-        width: 100%;
-        height:1px;
-        background: #ECECEC;
-        margin: 10px;
-    }
+<style lang='less' scoped>
     .announceCont{
         width: 100%;
         margin-top: 5px;
     }
-    /* .avatar {
+    .avatar {
         width: 178px;
         height: 178px;
         display: block;
@@ -242,7 +230,7 @@
         height: 178px;
         line-height: 178px;
         text-align: center;
-    } */
+    }
     .deviceSelect {
         width:72%;
     }
@@ -259,48 +247,28 @@
     .inputName{
         width: 72%;
     }
-    .mianContent{
-        width: 100%;
-        min-width:350px;
-        height: 100%;
+    .commonGround{
+        width: 15%;
+        height: 40px;
+        float: left;
+        z-index: 9999;
     }
     .oneline{
         width: 100%;
         height:60px;
-    }
-    .page{
-        width: 100%;
-        height:50px;
-    }
-    .search{
-        width: 15%;
-        min-width: 120px;
-        height: 40px;
-        float: left;
-        z-index: 9999;
-    }
-    .select{
-        width: 15%;
-        min-width: 170px;
-        height: 40px;
-        float: left;
-        margin-left: 10px;
-        z-index: 9999;
-    }
-    .table{
-        width: 100%;
-        min-height:600px;
-        height:auto;
-    }
-    table{
-        max-width: 1500px;
+        .search{        
+            min-width: 120px; 
+            .commonGround;   
+        }
+        .select{            
+            min-width: 170px;
+            margin-left: 10px;
+            .commonGround;
+        }
     }
     .textarea{
         height: 120px;
-    }    
-    th,td{
-        text-align: center;
-    }
+    }     
 </style>
 
 <script>
@@ -474,64 +442,64 @@ export default{
     },
     data() {
         return {
-            // currentPage:1,
-            // itemCounts: null,
-            // editFormLabelWidth:'100px',
-            // searchInput:'',
-            // deviceTypes: [
-            //     {
-            //         value: '选项1',
-            //         label: '黄金糕'
-            //     }
-            // ],
-            // value:'',
-            // options1: [
-            //     {
-            //         value: '1',
-            //         label: '仪器名称'
-            //     }
-            // ],
-            // addForm: {
-            //     name: '',
-            //     deviceType: '',
-            //     addDate: '',
-            //     describe: '',
-            //     needRepair: false,
-            //     canApply: true,
-            //     isUse: true,
-            // },
-            // editForm: {
-            //     id: '',
-            //     name: '',
-            //     deviceType: '',
-            //     addDate: '',
-            //     describe: '',
-            //     needRepair: false,
-            //     canApply: true,
-            //     isUse: true,
-            //     deviceImageUrl: null,
-            // },
-            // tableData: [
-            //     {
-            //         id: '',
-            //         date: '',
-            //         name: '',
-            //         disable: '',
-            //         type: '',
-            //         operation:'',
-            //     }
-            // ],
-            // editFormVisibel: false,
-            // addFormVisible: false,
+            currentPage:1,
+            itemCounts: null,
+            editFormLabelWidth:'100px',
+            searchInput:'',
+            deviceTypes: [
+                {
+                    value: '选项1',
+                    label: '黄金糕'
+                }
+            ],
+            value:'',
+            options1: [
+                {
+                    value: '1',
+                    label: '仪器名称'
+                }
+            ],
+            addForm: {
+                name: '',
+                deviceType: '',
+                addDate: '',
+                describe: '',
+                needRepair: false,
+                canApply: true,
+                isUse: true,
+            },
+            editForm: {
+                id: '',
+                name: '',
+                deviceType: '',
+                addDate: '',
+                describe: '',
+                needRepair: false,
+                canApply: true,
+                isUse: true,
+                deviceImageUrl: null,
+            },
+            tableData: [
+                {
+                    id: '',
+                    date: '',
+                    name: '',
+                    disable: '',
+                    type: '',
+                    operation:'',
+                }
+            ],
+            editFormVisibel: false,
+            addFormVisible: false,
         };
     },
     async asyncData({}) {
-        // let  resData  = await axios.get(`/api/device/getAll/1`);
-        // return {
-        //     counts: resData.data.counts,
-        //     devices: resData.data.Devices,
-        //     deviceTypes: resData.data.DeviceTypes
-        // }
+        let  resData  = await axios.get(`/api/device/getAll/1`);
+        return {
+            counts: resData.data.counts,
+            devices: resData.data.Devices,
+            deviceTypes: resData.data.DeviceTypes
+        }
     },
     head() {
         return {
@@ -539,8 +507,8 @@ export default{
         }
     },
     mounted(){
-        // this.itemCounts = this.counts;
-        // this.tableData = this.devices
+        this.itemCounts = this.counts;
+        this.tableData = this.devices
     },
 }
 </script>
