@@ -27,8 +27,7 @@
     "mysql2": "^1.5.3",
     "nuxt": "^1.0.0",
     "sequelize": "^4.37.5",
-    "moment": "^2.21.0",
-    "nuxt": "^1.0.0"
+    "moment": "^2.21.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
