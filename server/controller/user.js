@@ -18,9 +18,22 @@ module.exports.userGet = async (ctx, next) => {
  * @param {*} next 
  */
 module.exports.userPost = async (ctx, next) => {
+  console.log("888888")
   console.log(ctx.request.body)
+  let postData = ctx.request.body; //获取数据
+  //封装
+  dataJSON = {
+    // id: postData.userType,
+    "account": postData.account,
+    "password": postData.password,
+    "name": postData.name,
+    "phone": postData.phone,
+    "email": postData.email,
+    "isUse": postData.isUse
+  }
+  let result = await userService.userAddUser(dataJSON)
   ctx.body = {
-    post: ctx.request.body
+    post: result
   }
 }
 
@@ -43,12 +56,7 @@ module.exports.userDelete = async (ctx, next) => {
  */
 module.exports.userPut = async (ctx, next) => {
   console.log(ctx.request.body)
-  let userData = ctx.request.body; //获取数据
-
-  dataJSON = {
     
-  }
-
   ctx.body = {
     put: ctx.request.body
   }
