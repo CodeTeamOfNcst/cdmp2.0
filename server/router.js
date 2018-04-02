@@ -22,6 +22,7 @@ module.exports = () => {
 
   // user 相关 service 
   router.post('/user/userAddUser',userController.userPost) 
+  router.get('/user/userGetUserData',userController.userGet)
 
   // device 相关 service
 

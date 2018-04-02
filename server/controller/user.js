@@ -7,9 +7,17 @@ const userService = require('../service/user')
  * @param {*} next 
  */
 module.exports.userGet = async (ctx, next) => {
-  ctx.body = {
-    get: 'successfully get'
+  let getData = ctx.request.body;
+  let dataJSON = {
+    "id": getData.id
   }
+  let result = await userService.userGetUserData(dataJSON,10)
+  ctx.body = {
+    user:result.user,
+    status:result.status,
+    message:result.message
+  }
+  console.log(ctx.body.message)
 }
 
 /**
@@ -18,12 +26,12 @@ module.exports.userGet = async (ctx, next) => {
  * @param {*} next 
  */
 module.exports.userPost = async (ctx, next) => {
-  console.log("测试试一下！！！")
-  // console.log(ctx.request.body)
+  console.log("再试一下。。")
   let postData = ctx.request.body; //获取数据
   //封装
-  dataJSON = {
+  let dataJSON = {
     "id": postData.id,
+    "user_type": postData.user_type,
     "account": postData.account,
     "password": postData.password,
     "name": postData.name,
@@ -32,8 +40,11 @@ module.exports.userPost = async (ctx, next) => {
     "isUse": postData.isUse
   }
   let result = await userService.userAddUser(dataJSON)
+  console.log("就是就是。。")
   ctx.body = {
-    result
+    status:result.status,
+    message:result.message
+    // post:ctx.request.body
   }
 }
 
