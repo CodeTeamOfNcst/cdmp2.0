@@ -25,7 +25,7 @@
     }
     .header-logo {
         width: 80%;
-        height: 60px;
+        height: 80px;
         margin-left:10%;
         background-color:#333;
         h1 {
@@ -44,14 +44,15 @@
      
     .el-row{
         width: 90%; 
+        height:100%;
         .right{
             height:59px;;
             float:right;
             color:#fff;
             // background-color: #6b8db4;
             .little{
-                width:60px;
-                margin: 18px 0 0 15px;    
+                width:25%;
+                margin: 32px 0 0 15px;    
                 height:30px;
                 cursor:pointer;
                 color:#fff;
@@ -71,17 +72,18 @@
                 width:16px;
                 height:16px; 
                 vertical-align: middle;
-               }
-                
-            }
-            
+               }       
+            }  
         }
      }
     .header-item{
         text-align: center;
+        height:100%;
+        margin-top:11px;
         .button {
         font-family: SimHei;
         text-align: center;
+        font-size:1.2em;
         }
     }
 </style>
