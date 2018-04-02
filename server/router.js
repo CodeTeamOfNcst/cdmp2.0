@@ -3,6 +3,7 @@ const multer = require('koa-multer')
 
 
 const testController = require('./controller/test')
+const userController = require('./controller/user')
 const upload = multer({
   dest: './static/uploads'
 })
@@ -17,8 +18,10 @@ module.exports = () => {
   router.post('/test/post', testController.testPost)   // 测试post 带参数
   router.put('/test/put', testController.testPut)  // 测试 put 带参数
   router.delete('/test/delete', testController.testDelete) // 测试 delete 带参数
+ 
 
   // user 相关 service 
+  router.post('/user/userAddUser',userController.userPost) 
 
   // device 相关 service
 

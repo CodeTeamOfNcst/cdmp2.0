@@ -18,12 +18,12 @@ module.exports.userGet = async (ctx, next) => {
  * @param {*} next 
  */
 module.exports.userPost = async (ctx, next) => {
-  console.log("888888")
-  console.log(ctx.request.body)
+  console.log("测试试一下！！！")
+  // console.log(ctx.request.body)
   let postData = ctx.request.body; //获取数据
   //封装
   dataJSON = {
-    // id: postData.userType,
+    "id": postData.id,
     "account": postData.account,
     "password": postData.password,
     "name": postData.name,
@@ -33,7 +33,7 @@ module.exports.userPost = async (ctx, next) => {
   }
   let result = await userService.userAddUser(dataJSON)
   ctx.body = {
-    post: result
+    result
   }
 }
 

@@ -424,11 +424,12 @@
                 ],
             };
         },
-        mounted() {
+        async mounted() {
             // 挂载数据
             this.userKlasses = this.userKlassDetail;
             this.tableData = this.usersDetail;
             this.itemCounts = this.counts;
+            this.resData = await this.$axios.$post('/api/user/userAddUser', {post: 'post'});
         },
         async asyncData({}) {
             let resData  = await axios.get(`/api/user/getAll/1`);
