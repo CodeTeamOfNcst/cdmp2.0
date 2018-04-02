@@ -8,7 +8,7 @@
             <span class="bullCont"><i class="el-icon-d-arrow-right"></i>机房环境</span>
           </div>
           </el-col>
-          <el-col :span="16" :offset="5">
+          <el-col :span="15" :offset="8">
             <h2>24小时内机房环境温湿度曲线（五分钟内采集的平均温湿度）</h2>
           </el-col>
           </el-row>
