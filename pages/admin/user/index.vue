@@ -431,6 +431,9 @@
             this.itemCounts = this.counts;
             this.resData = await this.$axios.$post('/api/user/userAddUser', {post: 'post'});
             this.getData = await this.$axios.$get('/api/user/userGetUserData');
+            // this.getAll = await this.$axios.$get('/api/user/usergetAllUser');
+            this.deleteData = await this.$axios.$delete('/api/user/userDeleteById', { data:{delete: 'delete'}}) // 这边方式稍有不同
+
 
         },
         async asyncData({}) {

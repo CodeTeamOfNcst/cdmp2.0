@@ -12,12 +12,15 @@ module.exports.userGet = async (ctx, next) => {
     "id": getData.id
   }
   let result = await userService.userGetUserData(dataJSON,10)
+  // let res = await userService.usergetAllUser()
   ctx.body = {
     user:result.user,
     status:result.status,
     message:result.message
   }
+  console.log("GET测试！！")
   console.log(ctx.body.message)
+  // console.log(res.message)
 }
 
 /**
@@ -26,7 +29,6 @@ module.exports.userGet = async (ctx, next) => {
  * @param {*} next 
  */
 module.exports.userPost = async (ctx, next) => {
-  console.log("再试一下。。")
   let postData = ctx.request.body; //获取数据
   //封装
   let dataJSON = {
@@ -40,12 +42,13 @@ module.exports.userPost = async (ctx, next) => {
     "isUse": postData.isUse
   }
   let result = await userService.userAddUser(dataJSON)
-  console.log("就是就是。。")
   ctx.body = {
     status:result.status,
     message:result.message
     // post:ctx.request.body
   }
+  console.log("POST查询！！")
+  console.log(ctx.body.message)
 }
 
 /**
@@ -54,10 +57,17 @@ module.exports.userPost = async (ctx, next) => {
  * @param {*} next 
  */
 module.exports.userDelete = async (ctx, next) => {
-  console.log(ctx.request.body)
-  ctx.body = {
-    delete: ctx.request.body
+  let userId = ctx.request.body;
+  let dataJSON = {
+    "id":userId.id
   }
+  let result = await userService.userDeleteById(dataJSON)
+  ctx.body = {
+    status:result.status,
+    message:result.message
+  }
+  console.log("DELETE测试！！")
+  console.log(ctx.body.message)
 }
 
 /**
