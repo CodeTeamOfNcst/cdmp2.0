@@ -1,29 +1,49 @@
 'use strict' 
-
-module.exports.userget = (ctx) => {
-  
-}
-
-module.exports.userPost = (ctx) => {
-
-}
-
-module.exports.userPut = (ctx) => {
-
-}
-
-module.exports.userDelete = (ctx) => {
-  
-}
-
+const { User } = require('../config/models')
+const { UserType } = require('../config/models')
 /**
  * 
  * @param { JSON } options 相当于查询的条件
  * @param { Number } limit 限制数据的条数，默认为 comfig 中的条数
  */
+const ItemPerPage = 10;
+module.exports.usergetAllData = async () => {
+  try{
+    let Users = await User.findAll({
+      // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage,
+      limit: ItemPerPage
+    });
+    let UserTypes = await UserType.findAll();
+    let UsersDetail = [];
+    for (let index in Users) {
+        let userType = await Users[index].getUserType();
+        UsersDetail.push({
+            user: Users[index],
+            userType: userType
+        })
+    }
+    let count = await User.count();
+    let res = {
+        counts: count,
+        status: 1,
+        message: '获取数据成功!!!',
+        usersDetail: UsersDetail,
+        userTypeDetail: UserTypes
+    }
+    return res
+  }catch(err){
+    let res = {
+      status: 0,
+      message: '获取数据失败',
+    }
+    return res
+  }
+  
+};
+
 module.exports.userGetUserData = async (JSON, limit) => {
   try{
-    let userId = await user.findOne({
+    let userId = await User.findOne({
       where: {
         id: JSON.id
       } 
@@ -56,12 +76,12 @@ module.exports.userGetUserData = async (JSON, limit) => {
 
 module.exports.userAddUser = async (JSON) => {
   try {
-    let UserType = await userType.findOne({
+    let userType = await UserType.findOne({
       where: {
         id: JSON.user_type
       }
     });
-    let newUser = await user.create({
+    let newUser = await User.create({
       account: JSON.account,
       password: JSON.password,
       name: JSON.name,
@@ -69,7 +89,7 @@ module.exports.userAddUser = async (JSON) => {
       email: JSON.email,
       isUse: JSON.isUse
     })
-    await newUser.setUserType(UserType)
+    await newUser.setUserType(userType)
     newUser.save()
     let res = {
       status: 1,
@@ -87,7 +107,7 @@ module.exports.userAddUser = async (JSON) => {
 
 module.exports.userDeleteById = async (JSON) => {
   try{
-    let thisUser = await user.findOne({
+    let thisUser = await User.findOne({
       where:{
         id:JSON.id
       }
@@ -110,29 +130,40 @@ module.exports.userDeleteById = async (JSON) => {
   }
 }
 
-
-// module.exports.usergetAllUser = async (ctx) => {
-//   let Users = await user.findAll({
-//     offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage,
-//     limit: ItemPerPage
-//   });
-//   let UserKlasses = await userType.findAll();
-//   let UsersDetail = [];
-//   for (let index in Users) {
-//       let userType = await Users[index].getUserType();
-//       UsersDetail.push({
-//           user: Users[index],
-//           userType: userType
-//       })
-//   }
-//   let count = await user.count();
-//   let res = {
-//       counts: count,
-//       status: 1,
-//       message: '获取数据成功',
-//       usersDetail: UsersDetail,
-//       userKlassDetail: UserKlasses
-//   }
-//   console.log("getAll测试！！")
-//   return res
-// }
+module.exports.modifyUserById = async (JSON) => {
+  try {
+    let thisUser = await User.findOne({
+        where: {
+            id: 1
+        }
+    }); 
+    let userType = await UserType.findOne({
+      where: {
+        id: JSON.user_type
+      }
+    });
+    await thisUser.update({
+      id:JSON.id,
+      user_type:JSON.user_type,
+      account: JSON.account,
+      password:JSON.password,
+      name: JSON.name,
+      phone: JSON.phone,
+      email: JSON.email,
+      isUse: JSON.isUse
+    })
+    thisUser.setUserType(userType);
+    thisUser.save();
+    let result = {
+        status: 1,
+        message: '用户信息更新成功'
+    }
+    return result
+  }catch (err) {
+    let result = {
+        status: 0,
+        message: `更新失败， 原因${err}`
+    }
+    return result
+  }
+};

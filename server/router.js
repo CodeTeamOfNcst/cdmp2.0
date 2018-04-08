@@ -21,10 +21,11 @@ module.exports = () => {
  
 
   // user 相关 service 
+  router.get('/user/usergetAllData',userController.userGet)
   router.post('/user/userAddUser',userController.userPost) 
   router.get('/user/userGetUserData',userController.userGet)
-  // router.get('/user/usergetAllUser',userController.userGet)
   router.delete('/user/userDeleteById', userController.userDelete)
+  router.put('/user/modifyUserById',userController.userPut)
 
   // device 相关 service
 

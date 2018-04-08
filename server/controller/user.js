@@ -9,10 +9,10 @@ const userService = require('../service/user')
 module.exports.userGet = async (ctx, next) => {
   let getData = ctx.request.body;
   let dataJSON = {
-    "id": getData.id
+    "id": getData.id,
   }
   let result = await userService.userGetUserData(dataJSON,10)
-  // let res = await userService.usergetAllUser()
+  let res = await userService.usergetAllData()
   ctx.body = {
     user:result.user,
     status:result.status,
@@ -20,7 +20,7 @@ module.exports.userGet = async (ctx, next) => {
   }
   console.log("GET测试！！")
   console.log(ctx.body.message)
-  // console.log(res.message)
+  console.log(res.message)
 }
 
 /**
@@ -41,13 +41,23 @@ module.exports.userPost = async (ctx, next) => {
     "email": postData.email,
     "isUse": postData.isUse
   }
+  //测试数据如下：创建成功！
+  // let dataJSON = {
+  //   "id": 1,
+  //   "user_type": 3,
+  //   "account": 123456,
+  //   "password": 123456,
+  //   "name": "zhangzhang",
+  //   "phone": 123456,
+  //   "email": 123456,
+  //   "isUse": 1
+  // }
   let result = await userService.userAddUser(dataJSON)
   ctx.body = {
     status:result.status,
     message:result.message
-    // post:ctx.request.body
   }
-  console.log("POST查询！！")
+  console.log("POST测试！！")
   console.log(ctx.body.message)
 }
 
@@ -76,9 +86,21 @@ module.exports.userDelete = async (ctx, next) => {
  * @param {*} next 
  */
 module.exports.userPut = async (ctx, next) => {
-  console.log(ctx.request.body)
-    
-  ctx.body = {
-    put: ctx.request.body
+  let user = ctx.request.body;   //获取数据
+  let dataJSON = {
+    "id":user.id,
+    "user_type":user.userType,
+    "account": user.account,
+    "name": user.name,
+    "phone": user.phone,
+    "email": user.email,
+    "isUse": user.isUse
   }
+  let result = await userService.modifyUserById(dataJSON)
+  ctx.body = {
+    status:result.status,
+    message:result.message
+  }
+  console.log("PUT测试！！")
+  console.log(ctx.body.message)
 }

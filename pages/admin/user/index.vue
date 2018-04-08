@@ -426,13 +426,14 @@
         },
         async mounted() {
             // 挂载数据
-            this.userKlasses = this.userKlassDetail;
+            this.userTypes = this.userTypeDetail;
             this.tableData = this.usersDetail;
             this.itemCounts = this.counts;
             this.resData = await this.$axios.$post('/api/user/userAddUser', {post: 'post'});
             this.getData = await this.$axios.$get('/api/user/userGetUserData');
-            // this.getAll = await this.$axios.$get('/api/user/usergetAllUser');
+            this.getAllData = await this.$axios.$get('/api/user/usergetAllData');
             this.deleteData = await this.$axios.$delete('/api/user/userDeleteById', { data:{delete: 'delete'}}) // 这边方式稍有不同
+            this.putData = await this.$axios.$put('/api/user/modifyUserById', {put: 'put'});
 
 
         },
