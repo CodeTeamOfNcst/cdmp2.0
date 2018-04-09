@@ -511,11 +511,15 @@ export default{
         this.itemCounts = this.counts;
         this.tableData = this.devices
         this.itemCounts = this.counts;
-        this.resData = await this.$axios.$post('/api/user/userAddUser', {post: 'post'});
-        this.getData = await this.$axios.$get('/api/user/userGetUserData');
-        this.getAllData = await this.$axios.$get('/api/user/usergetAllData');
-        this.deleteData = await this.$axios.$delete('/api/user/userDeleteById', { data:{delete: 'delete'}}) // 这边方式稍有不同
-        this.putData = await this.$axios.$put('/api/user/modifyUserById', {put: 'put'});
+        //不要轻易删除！！
+        // this.resData = await this.$axios.$post('/api/device/AddDevice', {post: 'post'});
+        // this.getDataById = await this.$axios.$get('/api/device/getDeviceDataById');
+        // this.getDataByName = await this.$axios.$get('/api/device/getDeviceDataByName');
+        // this.getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
+        // this.searchData = await this.$axios.$get('/api/device/getDeviceSearch');
+        // this.getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
+        // this.deleteData = await this.$axios.$delete('/api/device/deleteDeviceById', { data:{delete: 'delete'}}) 
+        // this.putData = await this.$axios.$put('/api/device/modifyDeviceById', {put: 'put'});
 
 
     },

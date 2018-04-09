@@ -429,7 +429,7 @@
                 searchOption: [
                     {
                         value: '1',
-                        label: '消息内容'
+                        label: '消息用户'
                     },
                 ],
                 // 从数据库加载的数据， 这里只是数据的格式
@@ -454,10 +454,17 @@
                 MessageTypes: []
             };
         },
-        mounted() {
+        async mounted() {
             // 将信息挂载
             this.tableData = this.Messages;
             this.itemCounts = this.counts;
+
+            this.resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
+            this.getDataById = await this.$axios.$get('/api/message/getMessageDataById');
+            this.searchData = await this.$axios.$get('/api/message/getMessageSearch');
+            this.getAllData = await this.$axios.$get('/api/message/getAllMessageData');
+            this.deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
+            this.putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
         },
         async asyncData({}) {
             let  resData  = await axios.get(`/api/message/getAll/1`);
