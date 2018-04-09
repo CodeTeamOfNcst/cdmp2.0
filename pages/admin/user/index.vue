@@ -430,10 +430,13 @@
             this.tableData = this.usersDetail;
             this.itemCounts = this.counts;
             this.resData = await this.$axios.$post('/api/user/userAddUser', {post: 'post'});
-            this.getData = await this.$axios.$get('/api/user/userGetUserData');
-            this.getAllData = await this.$axios.$get('/api/user/usergetAllData');
-            this.deleteData = await this.$axios.$delete('/api/user/userDeleteById', { data:{delete: 'delete'}}) // 这边方式稍有不同
-            this.putData = await this.$axios.$put('/api/user/modifyUserById', {put: 'put'});
+            this.getOneUserData = await this.$axios.$get('/api/user/userGetUserData');
+            this.getAllUsersData = await this.$axios.$get('/api/user/userGetAllData');
+            this.onlyGetUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
+            this.searchUserData = await this.$axios.$get('/api/user/userSearchData');
+            this.getApplyData = await this.$axios.$get('/api/user/userApply');
+            this.deleteUserData = await this.$axios.$delete('/api/user/userDeleteById', { data:{delete: 'delete'}}) // 这边方式稍有不同
+            this.putUserData = await this.$axios.$put('/api/user/modifyUserById', {put: 'put'});
 
 
         },

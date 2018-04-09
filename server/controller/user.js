@@ -9,18 +9,57 @@ const userService = require('../service/user')
 module.exports.userGet = async (ctx, next) => {
   let getData = ctx.request.body;
   let dataJSON = {
-    "id": getData.id,
+    "id": getData,
   }
   let result = await userService.userGetUserData(dataJSON,10)
-  let res = await userService.usergetAllData()
   ctx.body = {
     user:result.user,
     status:result.status,
-    message:result.message
+    message:result.message,
   }
-  console.log("GET测试！！")
-  console.log(ctx.body.message)
-  console.log(res.message)
+}
+module.exports.userGetAll = async (ctx, next) => {
+  let result = await userService.userGetAllData()
+  ctx.body = {
+    counts:result.counts,
+    status:result.status,
+    message:result.message,
+    usersDetail:result.usersDetail,
+    userTypeDetail:result.userTypeDetail
+  }
+}
+module.exports.userGetName = async (ctx, next) => {
+  let result = await userService.onlyGetAllUser()
+  ctx.body = {
+    users:result.users,
+    status:result.status,
+    message:result.message,
+  }
+}
+module.exports.userSearch = async (ctx, next) => {
+  let search = ctx.request.body.search;
+  let dataJSON = {
+    "name":search,
+  }
+  let result = await userService.userSearchData(dataJSON)
+  ctx.body = {
+    result:result.result,
+    status:result.status,
+    message:result.message,
+  }
+}
+module.exports.getApplys = async (ctx,next) => {
+  let userId = ctx.request.body.id
+  let dataJSON = {
+    "id":3
+  }
+  let result = await userService.userApply(dataJSON)
+  ctx.body = {
+    status:result.status,
+    message:result.message,
+    deviceResult:result.deviceResult,
+    computeResult: result.computeResult
+  }
 }
 
 /**
@@ -32,7 +71,6 @@ module.exports.userPost = async (ctx, next) => {
   let postData = ctx.request.body; //获取数据
   //封装
   let dataJSON = {
-    "id": postData.id,
     "user_type": postData.user_type,
     "account": postData.account,
     "password": postData.password,
@@ -41,24 +79,11 @@ module.exports.userPost = async (ctx, next) => {
     "email": postData.email,
     "isUse": postData.isUse
   }
-  //测试数据如下：创建成功！
-  // let dataJSON = {
-  //   "id": 1,
-  //   "user_type": 3,
-  //   "account": 123456,
-  //   "password": 123456,
-  //   "name": "zhangzhang",
-  //   "phone": 123456,
-  //   "email": 123456,
-  //   "isUse": 1
-  // }
   let result = await userService.userAddUser(dataJSON)
   ctx.body = {
     status:result.status,
     message:result.message
   }
-  console.log("POST测试！！")
-  console.log(ctx.body.message)
 }
 
 /**
@@ -76,8 +101,6 @@ module.exports.userDelete = async (ctx, next) => {
     status:result.status,
     message:result.message
   }
-  console.log("DELETE测试！！")
-  console.log(ctx.body.message)
 }
 
 /**
@@ -101,6 +124,4 @@ module.exports.userPut = async (ctx, next) => {
     status:result.status,
     message:result.message
   }
-  console.log("PUT测试！！")
-  console.log(ctx.body.message)
 }
