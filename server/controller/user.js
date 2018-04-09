@@ -51,7 +51,7 @@ module.exports.userSearch = async (ctx, next) => {
 module.exports.getApplys = async (ctx,next) => {
   let userId = ctx.request.body.id
   let dataJSON = {
-    "id":3
+    "id":userId
   }
   let result = await userService.userApply(dataJSON)
   ctx.body = {
