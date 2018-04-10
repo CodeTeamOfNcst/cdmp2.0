@@ -461,9 +461,18 @@
                 }
             }
         },
-        mounted(){
+        async mounted(){
             this.tableData = this.applys;
             this.itemCounts = this.counts;
+
+            this.getDataById = await this.$axios.$get('/api/deviceApply/getApplyById');
+            this.getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
+            this.searchData = await this.$axios.$get('/api/deviceApply/getApplySearch');
+            this.postData = await this.$axios.$post('/api/deviceApply/addApply', {post: 'post'});
+            this.postDataFront = await this.$axios.$post('/api/deviceApply/addApplyFront', {post: 'post'});
+            this.deleteData = await this.$axios.$delete('/api/deviceApply/deleteApplyById', { data:{delete: 'delete'}}) 
+            this.putData = await this.$axios.$put('/api/deviceApply/modifyApplyById', {put: 'put'});
+
         },
         head() {
             return {

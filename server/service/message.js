@@ -166,5 +166,35 @@ module.exports.deleteMessageById = async (JSON) => {
 }
 
 module.exports.modifyMessageById = async (JSON) => {
-  
+    try {
+        let thisMessage = await Message.findOne({
+            where: {
+                id: JSON.id
+            }
+        });
+        let thisMessageType = await MessageType.findOne({
+            where: {
+                id: JSON.message_type
+            }
+        });
+        await thisMessage.update({
+            releaseDate: JSON.releaseDate,
+            content: JSON.content,
+            isRead: JSON.isRead,
+            isUse: JSON.isUse
+        });
+        await thisMessage.setMessageType(thisMessageType);
+        await thisMessage.save()
+        let result = {
+            status: 1,
+            message: '更新成功'
+        }
+        return result;
+    } catch (err) {
+        let result = {
+            status: 0,
+            message: `更新失败， 由于${err}`
+        }
+        return result;
+    }
 }

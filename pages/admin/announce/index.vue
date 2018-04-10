@@ -352,10 +352,17 @@
                 }
             }
         },
-        mounted(){
+        async mounted(){
             this.itemCounts = this.counts;
             this.tableData = this.rules;
             this.itemCounts = this.counts;
+
+            // this.getDataById = await this.$axios.$get('/api/info/getInfoDataById');
+            // this.getAllData = await this.$axios.$get('/api/info/getAllInfoData');
+            // this.searchData = await this.$axios.$get('/api/info/getInfoSearch');
+            // this.resData = await this.$axios.$post('/api/info/addInfo', {post: 'post'});
+            // this.deleteData = await this.$axios.$delete('/api/info/deleteInfoById', { data:{delete: 'delete'}}) 
+            // this.putData = await this.$axios.$put('/api/info/modifyInfoById', {put: 'put'});
         }
     }
 </script>

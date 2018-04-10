@@ -6,6 +6,11 @@ const testController = require('./controller/test')
 const userController = require('./controller/user')
 const deviceController = require('./controller/device')
 const messageController = require('./controller/message')
+const infoController = require('./controller/info')
+const deviceApplyController = require('./controller/deviceApply')
+const computeApplyController = require('./controller/computeApply')
+const authController = require('./controller/auth')
+
 
 const upload = multer({
   dest: './static/uploads'
@@ -51,5 +56,38 @@ module.exports = () => {
   router.delete('/message/deleteMessageById', messageController.messageDelete)
   router.put('/message/modifyMessageById',messageController.messagePut)
 
+  // notice 相关 service
+  router.get('/info/getInfoDataById',infoController.infoGetById)
+  router.get('/info/getAllInfoData',infoController.infoGetAll)
+  router.get('/info/getInfoSearch',infoController.infoSearch)
+  router.post('/info/addInfo',infoController.infoPost) 
+  router.delete('/info/deleteInfoById', infoController.infoDelete)
+  router.put('/info/modifyInfoById',infoController.infoPut)
+
+  // deviceApply 相关 service
+  router.get('/deviceApply/getApplyById',deviceApplyController.deviceApplyGetById)
+  router.get('/deviceApply/getAllApplyData',deviceApplyController.deviceApplyGetAll)
+  router.get('/deviceApply/getApplySearch',deviceApplyController.deviceApplySearch)
+  router.post('/deviceApply/addApply',deviceApplyController.deviceApplyPost)
+  router.post('/deviceApply/addApplyFront',deviceApplyController.deviceApplyPostFront) 
+  router.delete('/deviceApply/deleteApplyById', deviceApplyController.deviceApplyDelete)
+  router.put('/deviceApply/modifyApplyById',deviceApplyController.deviceApplyPut)
+
+  //computeApply 相关 service
+  router.get('/computeApply/getApplyById',computeApplyController.computeApplyGetById)
+  router.get('/computeApply/getAllApplyData',computeApplyController.computeApplyGetAll)
+  router.get('/computeApply/getApplySearch',computeApplyController.computeApplySearch)
+  router.post('/computeApply/addApply',computeApplyController.computeApplyPost)
+  router.post('/computeApply/addApplyFront',computeApplyController.computeApplyPostFront) 
+  router.delete('/computeApply/deleteApplyById', computeApplyController.computeApplyDelete)
+  router.put('/computeApply/modifyApplyById',computeApplyController.computeApplyPut)
+
+  //auth 相关 service
+  router.get('/auth/getUser',authController.authGetUser)
+  router.get('/auth/checkLogIn',authController.authCheckLogin)
+  router.post('/auth/regist',authController.authRegist)
+  router.put('/auth/logIn',authController.authLogin)
+  router.put('/auth/logOut',authController.authLogOut)
+  
   return router
 }

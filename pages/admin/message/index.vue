@@ -459,12 +459,12 @@
             this.tableData = this.Messages;
             this.itemCounts = this.counts;
 
-            this.resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
-            this.getDataById = await this.$axios.$get('/api/message/getMessageDataById');
-            this.searchData = await this.$axios.$get('/api/message/getMessageSearch');
-            this.getAllData = await this.$axios.$get('/api/message/getAllMessageData');
-            this.deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
-            this.putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
+            // this.resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
+            // this.getDataById = await this.$axios.$get('/api/message/getMessageDataById');
+            // this.searchData = await this.$axios.$get('/api/message/getMessageSearch');
+            // this.getAllData = await this.$axios.$get('/api/message/getAllMessageData');
+            // this.deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
+            // this.putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
         },
         async asyncData({}) {
             let  resData  = await axios.get(`/api/message/getAll/1`);

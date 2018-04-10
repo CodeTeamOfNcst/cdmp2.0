@@ -74,8 +74,8 @@ module.exports.messageDelete = async (ctx, next) => {
  * @param {*} next 
  */
 module.exports.messagePut = async (ctx, next) => {
-  let postData = ctx.request.body;
-  let result = await messageService.modifyMessageById(postData)
+  let putData = ctx.request.body;
+  let result = await messageService.modifyMessageById(putData)
   ctx.body = {
     status:result.status,
     message:result.message
