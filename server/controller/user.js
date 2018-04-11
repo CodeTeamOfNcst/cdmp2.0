@@ -36,18 +36,7 @@ module.exports.userGetName = async (ctx, next) => {
     message:result.message,
   }
 }
-module.exports.userSearch = async (ctx, next) => {
-  let search = ctx.request.body.search;
-  let dataJSON = {
-    "name":search,
-  }
-  let result = await userService.userSearchData(dataJSON)
-  ctx.body = {
-    result:result.result,
-    status:result.status,
-    message:result.message,
-  }
-}
+
 module.exports.getApplys = async (ctx,next) => {
   let userId = ctx.request.body.id
   let dataJSON = {
@@ -86,6 +75,18 @@ module.exports.userPost = async (ctx, next) => {
   }
 }
 
+module.exports.userSearch = async (ctx, next) => {
+  let search = ctx.request.body.search;
+  let dataJSON = {
+    "name":search,
+  }
+  let result = await userService.userSearchData(dataJSON)
+  ctx.body = {
+    result:result.result,
+    status:result.status,
+    message:result.message,
+  }
+}
 
 /**
  * 测试 delete 方法

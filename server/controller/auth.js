@@ -7,38 +7,54 @@ const authService = require('../service/auth')
  * @param {*} next 
  */
 module.exports.authGetUser = async (ctx, next) => {
-  let apply = ctx.request.body;
-  let result = await authService.getUser(apply)
+  let getData = ctx.cookies.get('account');
+  let result = await authService.getUser(getData)
   ctx.body = {
-    result:result.res,
-    status:result.status,
-    message:result.message
+    user:result.user,
   }
 }
 
 module.exports.authCheckLogin = async (ctx, next) => {
-  let result = await authService.checkLogIn()
-  ctx.body = {
-    counts:result.counts,
-    applys:result.applys,
-    status:result.status,
-    message:result.message
-  }
+    let getData = ctx.cookies.get('account');
+    let result = await authService.checkLogIn(getData)
+    ctx.body = {
+        user:result.user,
+        user_is_admin:result.user_is_admin,
+        status:result.status,
+        message:result.message
+    }
 }
-
+module.exports.authLogOut = async (ctx, next) => {
+    let putData = ctx.cookies;
+    let result = await authService.logOut(putData)
+    ctx.body = {
+      status:result.status,
+    }
+  }
 /**
  * 测试 post 方法的参数提取
  * @param {*} ctx 上下文
  * @param {*} next 
  */
 module.exports.authRegist = async (ctx, next) => {
-  let apply = ctx.request.body;
-  let result = await authService.regist(apply)
+  let postData = ctx.request.body;
+  let result = await authService.regist(postData)
   ctx.body = {
+    user:result.user,
     status:result.status,
     message:result.message
   }
 }
+module.exports.authLogin = async (ctx, next) => {
+    let putData = ctx.request.body;
+    let result = await authService.logIn(putData)
+    ctx.body = {
+      user:result.user, 
+      user_is_admin:result.user_is_admin,
+      status:result.status,
+      message:result.message
+    }
+  }
 
 /**
  * 测试 delete 方法
@@ -52,20 +68,6 @@ module.exports.authRegist = async (ctx, next) => {
  * @param {*} ctx 上下文
  * @param {*} next 
  */
-module.exports.authLogin = async (ctx, next) => {
-  let putData = ctx.request.body;
-  let result = await authService.logIn(putData)
-  ctx.body = {
-    status:result.status,
-    message:result.message
-  }
-}
-module.exports.authLogOut = async (ctx, next) => {
-    let putData = ctx.request.body;
-    let result = await authService.logOut(putData)
-    ctx.body = {
-      status:result.status,
-      message:result.message
-    }
-  }
+
+
 

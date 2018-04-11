@@ -243,8 +243,7 @@
                     if(! this.searchInput){
                         window.location.reload()
                     }else{
-                        console.log(this.searchInput)
-                        let resData = await axios.post('/api/user/search',{
+                        let resData = await this.$axios.$post('/api/user/userSearchData',{
                             search: this.searchInput
                         })
                         if(resData.data.status === 1){

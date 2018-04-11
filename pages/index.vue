@@ -120,11 +120,12 @@ export default {
     this.Myname = resData
 
     
-    this.getDataById = await this.$axios.$get('/api/auth/getUser');
-    this.getDataById = await this.$axios.$get('/api/auth/checkLogIn');
-    this.resData = await this.$axios.$post('/api/auth/regist', {post: 'post'});
-    this.putData = await this.$axios.$put('/api/auth/logIn', {put: 'put'});
-    this.putData = await this.$axios.$put('/api/auth/logOut', {put: 'put'});
+    // this.getDataById = await this.$axios.$get('/api/auth/getUser');
+    // this.getDataById = await this.$axios.$get('/api/auth/checkLogIn');
+    // this.putData = await this.$axios.$get('/api/auth/logOut');
+    // this.resData = await this.$axios.$post('/api/auth/regist', {post: 'post'});
+    // this.putData = await this.$axios.$post('/api/auth/logIn', {post: 'post'});
+    
     
   },
 
