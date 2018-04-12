@@ -513,10 +513,10 @@ export default{
         this.itemCounts = this.counts;
         //不要轻易删除！！
         // this.resData = await this.$axios.$post('/api/device/AddDevice', {post: 'post'});
-        // this.getDataById = await this.$axios.$get('/api/device/getDeviceDataById');
-        // this.getDataByName = await this.$axios.$get('/api/device/getDeviceDataByName');
+        // this.getDataById = await this.$axios.$post('/api/device/getDeviceDataById', {post: 'post'});
+        // this.getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
         // this.getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
-        // this.searchData = await this.$axios.$get('/api/device/getDeviceSearch');
+        // this.searchData = await this.$axios.$post('/api/device/getDeviceSearch', {post: 'post'});
         // this.getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
         // this.deleteData = await this.$axios.$delete('/api/device/deleteDeviceById', { data:{delete: 'delete'}}) 
         // this.putData = await this.$axios.$put('/api/device/modifyDeviceById', {put: 'put'});

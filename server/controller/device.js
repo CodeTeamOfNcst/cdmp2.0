@@ -6,24 +6,7 @@ const deviceService = require('../service/device')
  * @param {*} ctx 
  * @param {*} next 
  */
-module.exports.deviceGetById = async (ctx, next) => {
-  let device = ctx.request.body;
-  let result = await deviceService.getDeviceDataById(device)
-  ctx.body = {
-    device:result.device,
-    status:result.status,
-    message:result.message
-  }
-}
-module.exports.deviceGetByName = async (ctx, next) => {
-  let device = ctx.request.body;
-  let result = await deviceService.getDeviceDataByName(device)
-  ctx.body = {
-    device:result.device,
-    status:result.status,
-    message:result.message
-  }
-}
+
 module.exports.deviceGetAllData = async (ctx, next) => {
   let result = await deviceService.getAllDeviceData()
   ctx.body = {
@@ -34,15 +17,7 @@ module.exports.deviceGetAllData = async (ctx, next) => {
     message:result.message
   }
 }
-module.exports.deviceSearch = async (ctx, next) => {
-  let search = ctx.request.body
-  let result = await deviceService.getDeviceSearch(search)
-  ctx.body = {
-    result:result.result,
-    status:result.status,
-    message:result.message
-  }
-}
+
 module.exports.deviceGetOnlyData = async (ctx, next) => {
   let result = await deviceService.getDeviceOnlyData()
   ctx.body = {
@@ -77,7 +52,33 @@ module.exports.devicePost = async (ctx, next) => {
     message:result.message
   }
 }
-
+module.exports.deviceGetById = async (ctx, next) => {
+  let device = ctx.request.body;
+  let result = await deviceService.getDeviceDataById(device)
+  ctx.body = {
+    device:result.device,
+    status:result.status,
+    message:result.message
+  }
+}
+module.exports.deviceGetByName = async (ctx, next) => {
+  let device = ctx.request.body;
+  let result = await deviceService.getDeviceDataByName(device)
+  ctx.body = {
+    device:result.device,
+    status:result.status,
+    message:result.message
+  }
+}
+module.exports.deviceSearch = async (ctx, next) => {
+  let search = ctx.request.body
+  let result = await deviceService.getDeviceSearch(search)
+  ctx.body = {
+    result:result.result,
+    status:result.status,
+    message:result.message
+  }
+}
 /**
  * 测试 delete 方法
  * @param {*} ctx 上下文

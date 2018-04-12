@@ -29,54 +29,56 @@ module.exports = () => {
  
 
   // user 相关 service 
-  router.get('/user/userGetUserData',userController.userGet)
+  
   router.get('/user/userGetAllData',userController.userGetAll)
   router.get('/user/onlyGetAllUser',userController.userGetName)
-  router.get('/user/userApply',userController.getApplys)
+  router.post('/user/userGetUserData',userController.userGet)
+  router.post('/user/userApply',userController.getApplys)
   router.post('/user/userSearchData',userController.userSearch)
   router.post('/user/userAddUser',userController.userPost) 
+  router.post('/user/modifyUserById',userController.userPut)
   router.delete('/user/userDeleteById', userController.userDelete)
-  router.put('/user/modifyUserById',userController.userPut)
+
 
   // device 相关 service
-  router.get('/device/getDeviceDataById',deviceController.deviceGetById)
-  router.get('/device/getDeviceDataByName',deviceController.deviceGetByName)
+  router.post('/device/getDeviceDataById',deviceController.deviceGetById)
+  router.post('/device/getDeviceDataByName',deviceController.deviceGetByName)
   router.get('/device/getAllDeviceData',deviceController.deviceGetAllData)
   router.get('/device/getDeviceOnlyData',deviceController.deviceGetOnlyData)
-  router.get('/device/getDeviceSearch',deviceController.deviceSearch)
+  router.post('/device/getDeviceSearch',deviceController.deviceSearch)
   router.post('/device/AddDevice',deviceController.devicePost) 
   router.delete('/device/deleteDeviceById', deviceController.deviceDelete)
   router.put('/device/modifyDeviceById',deviceController.devicePut)
 
   // message 相关 service
-  router.get('/message/getMessageDataById',messageController.messageGetById)
+  router.post('/message/getMessageDataById',messageController.messageGetById)
   router.get('/message/getAllMessageData',messageController.messageGetAll)
-  router.get('/message/getMessageSearch',messageController.messageSearch)
+  router.post('/message/getMessageSearch',messageController.messageSearch)
   router.post('/message/addMessage',messageController.messagePost) 
   router.delete('/message/deleteMessageById', messageController.messageDelete)
   router.put('/message/modifyMessageById',messageController.messagePut)
 
   // notice 相关 service
-  router.get('/info/getInfoDataById',infoController.infoGetById)
+  router.post('/info/getInfoDataById',infoController.infoGetById)
   router.get('/info/getAllInfoData',infoController.infoGetAll)
-  router.get('/info/getInfoSearch',infoController.infoSearch)
+  router.post('/info/getInfoSearch',infoController.infoSearch)
   router.post('/info/addInfo',infoController.infoPost) 
   router.delete('/info/deleteInfoById', infoController.infoDelete)
   router.put('/info/modifyInfoById',infoController.infoPut)
 
   // deviceApply 相关 service
-  router.get('/deviceApply/getApplyById',deviceApplyController.deviceApplyGetById)
+  router.post('/deviceApply/getApplyById',deviceApplyController.deviceApplyGetById)
   router.get('/deviceApply/getAllApplyData',deviceApplyController.deviceApplyGetAll)
-  router.get('/deviceApply/getApplySearch',deviceApplyController.deviceApplySearch)
+  router.post('/deviceApply/getApplySearch',deviceApplyController.deviceApplySearch)
   router.post('/deviceApply/addApply',deviceApplyController.deviceApplyPost)
   router.post('/deviceApply/addApplyFront',deviceApplyController.deviceApplyPostFront) 
   router.delete('/deviceApply/deleteApplyById', deviceApplyController.deviceApplyDelete)
   router.put('/deviceApply/modifyApplyById',deviceApplyController.deviceApplyPut)
 
   //computeApply 相关 service
-  router.get('/computeApply/getApplyById',computeApplyController.computeApplyGetById)
+  router.post('/computeApply/getApplyById',computeApplyController.computeApplyGetById)
   router.get('/computeApply/getAllApplyData',computeApplyController.computeApplyGetAll)
-  router.get('/computeApply/getApplySearch',computeApplyController.computeApplySearch)
+  router.post('/computeApply/getApplySearch',computeApplyController.computeApplySearch)
   router.post('/computeApply/addApply',computeApplyController.computeApplyPost)
   router.post('/computeApply/addApplyFront',computeApplyController.computeApplyPostFront) 
   router.delete('/computeApply/deleteApplyById', computeApplyController.computeApplyDelete)

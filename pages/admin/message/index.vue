@@ -460,8 +460,8 @@
             this.itemCounts = this.counts;
 
             // this.resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
-            // this.getDataById = await this.$axios.$get('/api/message/getMessageDataById');
-            // this.searchData = await this.$axios.$get('/api/message/getMessageSearch');
+            // this.getDataById = await this.$axios.$post('/api/message/getMessageDataById', {post: 'post'});
+            // this.searchData = await this.$axios.$post('/api/message/getMessageSearch', {post: 'post'});
             // this.getAllData = await this.$axios.$get('/api/message/getAllMessageData');
             // this.deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
             // this.putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});

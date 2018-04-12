@@ -6,17 +6,7 @@ const messageService = require('../service/message')
  * @param {*} ctx 
  * @param {*} next 
  */
-module.exports.messageGetById = async (ctx, next) => {
-  let Message = ctx.request.body;
-  let result = await messageService.getMessageDataById(Message)
-  ctx.body = {
-    thisMessage:result.thisMessage,
-    thisMessageUser:result.user,
-    thisMessageTpe:result.type,
-    status:result.status,
-    message:result.message
-  }
-}
+
 
 module.exports.messageGetAll = async (ctx, next) => {
     let result = await messageService.getAllMessageData()
@@ -28,16 +18,7 @@ module.exports.messageGetAll = async (ctx, next) => {
         message:result.message
     }
 }
-module.exports.messageSearch = async (ctx, next) => {
-  let search = ctx.request.body
-  let result = await messageService.getMessageSearch(search)
-  ctx.body = {
-    Message:result.Message,
-    status:result.status,
-    message:result.message
-  }
-  console.log(ctx.body)
-}
+
 
 
 /**
@@ -52,6 +33,27 @@ module.exports.messagePost = async (ctx, next) => {
     status:result.status,
     message:result.message
   }
+}
+module.exports.messageGetById = async (ctx, next) => {
+  let Message = ctx.request.body;
+  let result = await messageService.getMessageDataById(Message)
+  ctx.body = {
+    thisMessage:result.thisMessage,
+    thisMessageUser:result.user,
+    thisMessageTpe:result.type,
+    status:result.status,
+    message:result.message
+  }
+}
+module.exports.messageSearch = async (ctx, next) => {
+  let search = ctx.request.body
+  let result = await messageService.getMessageSearch(search)
+  ctx.body = {
+    Message:result.Message,
+    status:result.status,
+    message:result.message
+  }
+  console.log(ctx.body)
 }
 
 /**

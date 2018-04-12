@@ -357,9 +357,9 @@
             this.tableData = this.rules;
             this.itemCounts = this.counts;
 
-            // this.getDataById = await this.$axios.$get('/api/info/getInfoDataById');
+            // this.getDataById = await this.$axios.$post('/api/info/getInfoDataById', {post: 'post'});
             // this.getAllData = await this.$axios.$get('/api/info/getAllInfoData');
-            // this.searchData = await this.$axios.$get('/api/info/getInfoSearch');
+            // this.searchData = await this.$axios.$post('/api/info/getInfoSearch', {post: 'post'});
             // this.resData = await this.$axios.$post('/api/info/addInfo', {post: 'post'});
             // this.deleteData = await this.$axios.$delete('/api/info/deleteInfoById', { data:{delete: 'delete'}}) 
             // this.putData = await this.$axios.$put('/api/info/modifyInfoById', {put: 'put'});

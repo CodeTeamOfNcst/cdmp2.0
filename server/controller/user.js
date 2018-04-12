@@ -6,18 +6,6 @@ const userService = require('../service/user')
  * @param {*} ctx 
  * @param {*} next 
  */
-module.exports.userGet = async (ctx, next) => {
-  let getData = ctx.request.body;
-  let dataJSON = {
-    "id": getData,
-  }
-  let result = await userService.userGetUserData(dataJSON,10)
-  ctx.body = {
-    user:result.user,
-    status:result.status,
-    message:result.message,
-  }
-}
 module.exports.userGetAll = async (ctx, next) => {
   let result = await userService.userGetAllData()
   ctx.body = {
@@ -27,6 +15,7 @@ module.exports.userGetAll = async (ctx, next) => {
     usersDetail:result.usersDetail,
     userTypeDetail:result.userTypeDetail
   }
+  console.log(ctx.body)
 }
 module.exports.userGetName = async (ctx, next) => {
   let result = await userService.onlyGetAllUser()
@@ -35,20 +24,8 @@ module.exports.userGetName = async (ctx, next) => {
     status:result.status,
     message:result.message,
   }
-}
+  console.log(ctx.body)
 
-module.exports.getApplys = async (ctx,next) => {
-  let userId = ctx.request.body.id
-  let dataJSON = {
-    "id":userId
-  }
-  let result = await userService.userApply(dataJSON)
-  ctx.body = {
-    status:result.status,
-    message:result.message,
-    deviceResult:result.deviceResult,
-    computeResult: result.computeResult
-  }
 }
 
 /**
@@ -57,7 +34,7 @@ module.exports.getApplys = async (ctx,next) => {
  * @param {*} next 
  */
 module.exports.userPost = async (ctx, next) => {
-  let postData = ctx.request.body; //获取数据
+  let postData = ctx.request.body.post; //获取数据
   //封装
   let dataJSON = {
     "user_type": postData.user_type,
@@ -73,8 +50,36 @@ module.exports.userPost = async (ctx, next) => {
     status:result.status,
     message:result.message
   }
+  console.log(ctx.body)
 }
+module.exports.userGet = async (ctx, next) => {
+  let getData = ctx.request.body;
+  let dataJSON = {
+    "id": getData.id,
+  }
+  let result = await userService.userGetUserData(dataJSON,10)
+  ctx.body = {
+    user:result.user,
+    status:result.status,
+    message:result.message,
+  }
+  console.log(ctx.body)
+}
+module.exports.getApplys = async (ctx,next) => {
+  let userId = ctx.request.body.id
+  let dataJSON = {
+    "id":userId
+  }
+  let result = await userService.userApply(dataJSON)
+  ctx.body = {
+    status:result.status,
+    message:result.message,
+    deviceResult:result.deviceResult,
+    computeResult: result.computeResult
+  }
+  console.log(ctx.body)
 
+}
 module.exports.userSearch = async (ctx, next) => {
   let search = ctx.request.body.search;
   let dataJSON = {
@@ -87,7 +92,23 @@ module.exports.userSearch = async (ctx, next) => {
     message:result.message,
   }
 }
-
+module.exports.userPut = async (ctx, next) => {
+  let user = ctx.request.body;   //获取数据
+  let dataJSON = {
+    "id":user.id,
+    "user_type":user.userType,
+    "account": user.account,
+    "name": user.name,
+    "phone": user.phone,
+    "email": user.email,
+    "isUse": user.isUse
+  }
+  let result = await userService.modifyUserById(dataJSON)
+  ctx.body = {
+    status:result.status,
+    message:result.message
+  }
+}
 /**
  * 测试 delete 方法
  * @param {*} ctx 上下文
@@ -110,20 +131,3 @@ module.exports.userDelete = async (ctx, next) => {
  * @param {*} ctx 上下文
  * @param {*} next 
  */
-module.exports.userPut = async (ctx, next) => {
-  let user = ctx.request.body;   //获取数据
-  let dataJSON = {
-    "id":user.id,
-    "user_type":user.userType,
-    "account": user.account,
-    "name": user.name,
-    "phone": user.phone,
-    "email": user.email,
-    "isUse": user.isUse
-  }
-  let result = await userService.modifyUserById(dataJSON)
-  ctx.body = {
-    status:result.status,
-    message:result.message
-  }
-}

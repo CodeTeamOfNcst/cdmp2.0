@@ -6,30 +6,13 @@ const computeApplyService = require('../service/computeApply')
  * @param {*} ctx 
  * @param {*} next 
  */
-module.exports.computeApplyGetById = async (ctx, next) => {
-  let apply = ctx.request.body;
-  let result = await computeApplyService.getApplyById(apply)
-  ctx.body = {
-    result:result.res,
-    status:result.status,
-    message:result.message
-  }
-}
+
 
 module.exports.computeApplyGetAll = async (ctx, next) => {
   let result = await computeApplyService.getAllApplyData()
   ctx.body = {
     counts:result.counts,
     applys:result.applys,
-    status:result.status,
-    message:result.message
-  }
-}
-module.exports.computeApplySearch = async (ctx, next) => {
-  let search = ctx.request.body
-  let result = await computeApplyService.getApplySearch(search)
-  ctx.body = {
-    result:result.result,
     status:result.status,
     message:result.message
   }
@@ -54,6 +37,24 @@ module.exports.computeApplyPostFront = async (ctx, next) => {
   let user = ctx.cookies.get("authUser")
   let result = await computeApplyService.addApplyFront(apply,user)
   ctx.body = {
+    status:result.status,
+    message:result.message
+  }
+}
+module.exports.computeApplyGetById = async (ctx, next) => {
+  let apply = ctx.request.body;
+  let result = await computeApplyService.getApplyById(apply)
+  ctx.body = {
+    result:result.res,
+    status:result.status,
+    message:result.message
+  }
+}
+module.exports.computeApplySearch = async (ctx, next) => {
+  let search = ctx.request.body
+  let result = await computeApplyService.getApplySearch(search)
+  ctx.body = {
+    result:result.result,
     status:result.status,
     message:result.message
   }

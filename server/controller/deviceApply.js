@@ -6,15 +6,6 @@ const deviceApplyService = require('../service/deviceApply')
  * @param {*} ctx 
  * @param {*} next 
  */
-module.exports.deviceApplyGetById = async (ctx, next) => {
-  let apply = ctx.request.body;
-  let result = await deviceApplyService.getApplyById(apply)
-  ctx.body = {
-    result:result.res,
-    status:result.status,
-    message:result.message
-  }
-}
 
 module.exports.deviceApplyGetAll = async (ctx, next) => {
   let result = await deviceApplyService.getAllApplyData()
@@ -25,15 +16,7 @@ module.exports.deviceApplyGetAll = async (ctx, next) => {
     message:result.message
   }
 }
-module.exports.deviceApplySearch = async (ctx, next) => {
-  let search = ctx.request.body
-  let result = await deviceApplyService.getApplySearch(search)
-  ctx.body = {
-    result:result.result,
-    status:result.status,
-    message:result.message
-  }
-}
+
 
 /**
  * 测试 post 方法的参数提取
@@ -58,7 +41,24 @@ module.exports.deviceApplyPostFront = async (ctx, next) => {
     message:result.message
   }
 }
-
+module.exports.deviceApplyGetById = async (ctx, next) => {
+  let apply = ctx.request.body;
+  let result = await deviceApplyService.getApplyById(apply)
+  ctx.body = {
+    result:result.res,
+    status:result.status,
+    message:result.message
+  }
+}
+module.exports.deviceApplySearch = async (ctx, next) => {
+  let search = ctx.request.body
+  let result = await deviceApplyService.getApplySearch(search)
+  ctx.body = {
+    result:result.result,
+    status:result.status,
+    message:result.message
+  }
+}
 /**
  * 测试 delete 方法
  * @param {*} ctx 上下文

@@ -21,7 +21,7 @@
                     <el-col :span="18">
                         <el-select v-model="addForm.userType" placeholder="请选择用户类别">
                             <el-option
-                                v-for="item in userKlasses"
+                                v-for="item in userTypes"
                                 :key="item.id"
                                 :label="item.name"
                                 :value="item.id">
@@ -58,9 +58,6 @@
                 </el-form-item>
             </el-form>
         </el-popover>
-
-        
-
         <div class="headerName">
             <div class="leftSty"></div>
             <span class="bullCont">用户管理</span>
@@ -90,8 +87,7 @@
                 <div class="add">
                     <el-button v-popover:popover4 class="addContent">新增</el-button>
                 </div>
-                
-            </div>
+            </div>  
             <div class="table">
                 <el-table
                         :data="tableData"
@@ -113,7 +109,7 @@
                     </el-table-column>
                     <el-table-column
                             label="用户邮箱"
-                            width="350">
+                            width="200">
                         <template slot-scope="scope">{{ scope.row.user.email || '暂未填写'}}</template>
                     </el-table-column>
                     <el-table-column
@@ -254,21 +250,22 @@
                     }
                 },
                 async handleAdd(){
+                    console.log("45485484784")
                     if( this.addForm.password === this.addForm.repeat ){
                         let PostData = {
                             name: this.addForm.name,
                             account: this.addForm.account,
                             password: this.addForm.password,
-                            userType: this.addForm.userType,
+                            user_type: this.addForm.userType,
                             phone: this.addForm.phone,
                             email: this.addForm.email,
                             isUse: this.addForm.isUse,
                         };
                         try{
-                            let resData = await axios.post('/api/user/add', {
-                                user: PostData
+                            let resData = await this.$axios.$post('/api/user/userAddUser', {
+                                post: PostData
                             })
-                            if(resData.data.status === 1){
+                            if(resData.status === 1){
                                 this.$message({
                                     type: 'success',
                                     message: resData.data.message
@@ -290,7 +287,8 @@
                     this.addFromVisible = false
                 },
                 async handleEdit(row) {
-                    let resData = await axios.post('/api/user/getById', {
+                    this.editFromVisible = true
+                    let resData = await this.$axios.$post('/api/user/userGetUserData', {
                         id: row.user.id
                     });
                     if(resData.data.status === 1){
@@ -299,7 +297,7 @@
                     }else {
                         this.$message.error(resData.data.message);
                     }
-                    this.editFromVisible = true
+                    
                 },
                 async handleEditSubmit(row){
                     let resData = await axios.post('/api/user/modifyById', {
@@ -326,17 +324,17 @@
                             cancelButtonText: '取消',
                             type: 'warning'
                         })
-                        let resData = await axios.post('/api/user/deleteById', {
+                        let resData = await axios.delete('/api/user/userDeleteById', {
                             id: row.user.id
                         })
-                        if(resData.data.status === 1){
+                        if(resData.status === 1){
                             this.$message({
                                 type: 'success',
                                 message: '成功禁用!'
                             })
                             window.location.reload()
                         }else {
-                            this.$message.error(resData.data.message);
+                            this.$message.error(resData.message);
                         }
                     }catch (err){
                         this.$message({
@@ -380,7 +378,7 @@
                     email:'',
                     isUse: false,
                 },
-                userKlasses: [
+                userTypes: [
                     {
                         id: '1',
                         name: '管理员'
@@ -404,12 +402,13 @@
                         userType: {
                             createdAt:"2018-01-25T04:04:22.000Z",
                             id:1,
-                            isUse:true,
+                            isUse:true,  
                             name:"管理员",
                             updatedAt:"2018-01-25T04:04:22.000Z"
                         }
-                    }
+                    },
                 ],
+                getAllUsersData:'',
                 editFromVisible: false,
                 formLabelWidth: '120px',
                 addFromVisible: false,
@@ -421,31 +420,24 @@
                         label: '人员名称'
                     },
                 ],
+                
             };
         },
         async mounted() {
             // 挂载数据
             this.userTypes = this.userTypeDetail;
-            this.tableData = this.usersDetail;
             this.itemCounts = this.counts;
-            
-            //下列是此页面可能用到的返回数值（测试用，轻易不要删!）
-            // this.getOneUserData = await this.$axios.$get('/api/user/userGetUserData');
-            // this.getAllUsersData = await this.$axios.$get('/api/user/userGetAllData');
-            // this.onlyGetUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
-            // this.searchUserData = await this.$axios.$get('/api/user/userSearchData');
-            // this.getApplyData = await this.$axios.$get('/api/user/userApply');
-            // this.resData = await this.$axios.$post('/api/user/userAddUser', {post: 'post'});
-            // this.deleteUserData = await this.$axios.$delete('/api/user/userDeleteById', { data:{delete: 'delete'}}) // 这边方式稍有不同
-            // this.putUserData = await this.$axios.$put('/api/user/modifyUserById', {put: 'put'});
-        },
-        async asyncData({}) {
-            let resData  = await axios.get(`/api/user/getAll/1`);
-            return {
-                counts: resData.data.counts,
-                usersDetail: resData.data.usersDetail,
-                userKlassDetail: resData.data.userKlassDetail
-            }
+            let getAllUsersData = await this.$axios.$get('/api/user/userGetAllData');
+            let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
+            let searchUserData = await this.$axios.$post('/api/user/userSearchData',{post: 'post'});
+            let getApplyData = await this.$axios.$post('/api/user/userApply',{post: 'post'});
+            // let getOneUserData = await this.$axios.$post('/api/user/userGetUserData',{post: 'post'});
+            // let resData = await this.$axios.$post('/api/user/userAddUser', {post: 'post'});
+            let deleteUserData = await this.$axios.$delete('/api/user/userDeleteById', { data:{delete: 'delete'}}) // 这边方式稍有不同
+            let putUserData = await this.$axios.$post('/api/user/modifyUserById', {post: 'post'});
+
+            this.tableData = getAllUsersData.usersDetail;
+            this.userTypes = getAllUsersData.userTypeDetail;
         },
         head() {
             return {

@@ -16,7 +16,7 @@ module.exports.userGetUserData = async (JSON, limit) => {
   try{
     let userId = await User.findOne({
       where: {
-        account: JSON.id.account  //查询用户默认按账号查询
+        id: JSON  
       } 
     })
     let userType = await userId.getUserType()

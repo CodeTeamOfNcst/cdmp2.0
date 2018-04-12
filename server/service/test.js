@@ -1,7 +1,18 @@
 'use strict' 
 
 module.exports.testGet = (ctx) => {
-  ctx.body = 'tom'
+  let user=[]
+  let userDetail
+  let User = [{id:'1',acc:'22',pass:'123'},{id:'2',acc:'89',pass:'123'}]
+  for(let index in User){
+    user.push({
+      userDetail:User[index],
+    })
+  }
+  let res = {
+    user:user
+  }
+  return res;
 }
 
 module.exports.testPost = (ctx) => {

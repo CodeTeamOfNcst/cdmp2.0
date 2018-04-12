@@ -29,7 +29,7 @@ export default {
     let PutReturn = await this.$axios.$put('/api/test/put', {put: 'put'});
     let DeleteRerurn = await this.$axios.$delete('/api/test/delete', { data:{delete: 'delete'}}) // 这边方式稍有不同
 
-    this.GetReturn = GetReturn
+    this.GetReturn = GetReturn.get
     this.PostReturn = PostReturn
     this.PutReturn = PutReturn
     this.DeleteRerurn = DeleteRerurn

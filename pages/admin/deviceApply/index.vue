@@ -465,9 +465,9 @@
             this.tableData = this.applys;
             this.itemCounts = this.counts;
 
-            this.getDataById = await this.$axios.$get('/api/deviceApply/getApplyById');
+            this.getDataById = await this.$axios.$post('/api/deviceApply/getApplyById', {post: 'post'});
             this.getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
-            this.searchData = await this.$axios.$get('/api/deviceApply/getApplySearch');
+            this.searchData = await this.$axios.$post('/api/deviceApply/getApplySearch', {post: 'post'});
             this.postData = await this.$axios.$post('/api/deviceApply/addApply', {post: 'post'});
             this.postDataFront = await this.$axios.$post('/api/deviceApply/addApplyFront', {post: 'post'});
             this.deleteData = await this.$axios.$delete('/api/deviceApply/deleteApplyById', { data:{delete: 'delete'}}) 
