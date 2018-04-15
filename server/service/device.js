@@ -106,10 +106,11 @@ module.exports.getAllDeviceData = async () => {
         name: devices[i].name,
         description: devices[i].description,
         location: devices[i].location,
-        disable: devices[i].isUse ? '可用' : '禁用',
+        isUse: devices[i].isUse ? '可用' : '禁用',
         type: devicesType[devices[i].device_type - 1].name,
         type_id: devicesType[devices[i].device_type - 1].id,
         imgFilePath: devices[i].imgFilePath,
+        needRepair:devices[i].needRepair ? '需要' : '不需要',
         canReserve: devices[i].canReserve,
         show: true,
       })

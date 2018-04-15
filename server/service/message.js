@@ -49,10 +49,16 @@ module.exports.getAllMessageData = async () => {
         for (let index in messages) {
             let messageType = await messages[index].getMessageType();
             let messageUser = await messages[index].getMessageUser();
+            
             Messages.push({
-                message: messages[index].content,
-                messageTypeName: messageType.title,
-                messageUserName: messageUser.name
+                id: messages[index].id,
+                content:messages[index].content,
+                releaseDate:messages[index].releaseDate,
+                isRead:messages[index].isRead,
+                isUse:messages[index].isUse,
+                message_type:messageType.firstType,
+                title:messageType.title,
+                name:messageUser.name,
             });
         }
         let count = await Message.count()
@@ -75,7 +81,7 @@ module.exports.getAllMessageData = async () => {
 module.exports.getMessageSearch = async (JSON) => {
     try{
         let searchResult = await Message.findAll({
-            where: {message_user:{ [Op.like] : `%${1}%`}}
+            where: {message_user:{ [Op.like] : `%${JSON.message_user}%`}}
         })
         if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
         let result = []

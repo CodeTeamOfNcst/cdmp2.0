@@ -69,7 +69,7 @@
                             width="110">
                     </el-table-column>
                     <el-table-column
-                            prop="publishDate"
+                            prop="releaseDate"
                             label="发布日期"
                             width="110">
                     </el-table-column>
@@ -325,10 +325,10 @@
                 value: '',
                 tableData: [{
                     id: '1',
-                    publishDate: '2018-01-02',
+                    releaseDate: '2018-01-02',
                     title: '我校新添大型分析设备构成完备的微结构分析体系',
                     content:'',
-                    isUse: '否',
+                    isUse: '禁用',
                     operation:'',
                 }
                 ],
@@ -343,26 +343,21 @@
                 title: 'CDMP - 公告管理'
             }
         },
-        async asyncData(){
-            let resData = await axios.get('/api/rule/getAll/1');
-            if( resData.data.status === 1 ){
-                return{
-                    counts: resData.data.counts,
-                    rules: resData.data.rulesDetail
-                }
-            }
-        },
         async mounted(){
             this.itemCounts = this.counts;
-            this.tableData = this.rules;
+            
             this.itemCounts = this.counts;
 
-            // this.getDataById = await this.$axios.$post('/api/info/getInfoDataById', {post: 'post'});
-            // this.getAllData = await this.$axios.$get('/api/info/getAllInfoData');
-            // this.searchData = await this.$axios.$post('/api/info/getInfoSearch', {post: 'post'});
-            // this.resData = await this.$axios.$post('/api/info/addInfo', {post: 'post'});
-            // this.deleteData = await this.$axios.$delete('/api/info/deleteInfoById', { data:{delete: 'delete'}}) 
-            // this.putData = await this.$axios.$put('/api/info/modifyInfoById', {put: 'put'});
+            this.getDataById = await this.$axios.$post('/api/info/getInfoDataById', {post: 'post'});
+            let getAllData = await this.$axios.$get('/api/info/getAllInfoData');
+            this.searchData = await this.$axios.$post('/api/info/getInfoSearch', {post: 'post'});
+            this.resData = await this.$axios.$post('/api/info/addInfo', {post: 'post'});
+            this.deleteData = await this.$axios.$delete('/api/info/deleteInfoById', { data:{delete: 'delete'}}) 
+            this.putData = await this.$axios.$put('/api/info/modifyInfoById', {put: 'put'});
+
+            this.tableData = getAllData.infoDetail;
+        
+        
         }
     }
 </script>

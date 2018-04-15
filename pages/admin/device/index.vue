@@ -99,7 +99,7 @@
                     <el-table-column
                             prop="id"
                             label="设备id"
-                            width="130">
+                            width="100">
                     </el-table-column>
                     <el-table-column
                             prop="date"
@@ -112,10 +112,16 @@
                     </el-table-column>                    
                     <el-table-column
                             prop="type"
-                            label="设备类型">
+                            label="设备类型"
+                            width="150">
                     </el-table-column>
                     <el-table-column
-                            prop="disable"
+                            prop="needRepair"
+                            label="是否需要维修"
+                            width="130">
+                    </el-table-column>
+                    <el-table-column
+                            prop="isUse"
                             label="是否禁用"
                             width="110">
                     </el-table-column>
@@ -484,7 +490,8 @@ export default{
                     id: '',
                     date: '',
                     name: '',
-                    disable: '',
+                    isUse: '',
+                    needRepair:'',
                     type: '',
                     operation:'',
                 }
@@ -493,14 +500,14 @@ export default{
             addFormVisible: false,
         };
     },
-    async asyncData({}) {
-        let  resData  = await axios.get(`/api/device/getAll/1`);
-        return {
-            counts: resData.data.counts,
-            devices: resData.data.Devices,
-            deviceTypes: resData.data.DeviceTypes
-        }
-    },
+    // async asyncData({}) {
+    //     let  resData  = await axios.get(`/api/device/getAll/1`);
+    //     return {
+    //         counts: resData.data.counts,
+    //         devices: resData.data.Devices,
+    //         deviceTypes: resData.data.DeviceTypes
+    //     }
+    // },
     head() {
         return {
             title: 'CDMP - 设备管理'
@@ -509,18 +516,19 @@ export default{
     async mounted() {
         // 挂载数据
         this.itemCounts = this.counts;
-        this.tableData = this.devices
+        
         this.itemCounts = this.counts;
         //不要轻易删除！！
-        // this.resData = await this.$axios.$post('/api/device/AddDevice', {post: 'post'});
-        // this.getDataById = await this.$axios.$post('/api/device/getDeviceDataById', {post: 'post'});
-        // this.getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
-        // this.getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
-        // this.searchData = await this.$axios.$post('/api/device/getDeviceSearch', {post: 'post'});
-        // this.getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
-        // this.deleteData = await this.$axios.$delete('/api/device/deleteDeviceById', { data:{delete: 'delete'}}) 
-        // this.putData = await this.$axios.$put('/api/device/modifyDeviceById', {put: 'put'});
-
+        this.resData = await this.$axios.$post('/api/device/AddDevice', {post: 'post'});
+        this.getDataById = await this.$axios.$post('/api/device/getDeviceDataById', {post: 'post'});
+        this.getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
+        this.getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
+        this.searchData = await this.$axios.$post('/api/device/getDeviceSearch', {post: 'post'});
+        let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
+        this.deleteData = await this.$axios.$delete('/api/device/deleteDeviceById', { data:{delete: 'delete'}}) 
+        this.putData = await this.$axios.$put('/api/device/modifyDeviceById', {put: 'put'});
+        
+        this.tableData = getAllData.Devices
 
     },
 }

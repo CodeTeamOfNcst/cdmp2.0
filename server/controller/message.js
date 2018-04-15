@@ -12,11 +12,12 @@ module.exports.messageGetAll = async (ctx, next) => {
     let result = await messageService.getAllMessageData()
     ctx.body = {
         counts:result.counts,
-        messageTypes:result.MessageTypes,
+        MessageTypes:result.MessageTypes,
         Messages:result.Messages,
         status:result.status,
         message:result.message
     }
+    console.log(ctx.body)
 }
 
 
@@ -53,7 +54,6 @@ module.exports.messageSearch = async (ctx, next) => {
     status:result.status,
     message:result.message
   }
-  console.log(ctx.body)
 }
 
 /**

@@ -101,45 +101,45 @@
                         border
                         style="width: 70%;">
                     <el-table-column
-                            prop="message.id"
+                            prop="id"
                             label="消息id"
-                            width="110">
-                    </el-table-column>
-                    <el-table-column
-                            prop="messageTypeName"
-                            label="消息类别"
-                            width="110">
-                    </el-table-column>
-                    <el-table-column
-                            prop="message.publishDate"
-                            label="消息发布日期"
-                            width="">
-                    </el-table-column>
-                    <el-table-column
-                            label="消息是否发布"
-                            width="120">
-                        <template slot-scope="scope">{{ scope.row.message.isPublished ? '已发布': '未发布'}}</template>
-                    </el-table-column>
-                    <el-table-column
-                            prop="messageUserName"
-                            label="用户"
                             width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="releaseDate"
+                            label="消息发布日期"
+                            width="130">
+                    </el-table-column>
+                    <el-table-column
+                            prop="message_type"
+                            label="消息一级类别"
+                            width="130">
+                    </el-table-column>
+                    <el-table-column
+                            prop="title"
+                            label="消息二级类别"
+                            width="150">
                     </el-table-column>
                     <el-table-column
                             fit="false"
                             label="消息内容"
                             width="">
-                        <template slot-scope="scope">{{ scope.row.message.content.substr(0,10)}}</template>
+                        <template slot-scope="scope">{{ scope.row.content.substr(0,10)}}</template>
+                    </el-table-column>
+                    <el-table-column
+                            prop="name"
+                            label="消息接收人"
+                            width="120">
                     </el-table-column>
                     <el-table-column
                             label="已读"
                             width="100">
-                        <template slot-scope="scope">{{ scope.row.message.isRead ? '是': '否'}}</template>
+                        <template slot-scope="scope">{{ scope.row.isRead ? '是': '否'}}</template>
                     </el-table-column>
                     <el-table-column
                             label="是否禁用"
                             width="100">
-                        <template slot-scope="scope">{{ scope.row.message.isUse ? '可用': '不可用'}}</template>
+                        <template slot-scope="scope">{{ scope.row.isUse ? '可用': '不可用'}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="operation"
@@ -396,7 +396,6 @@
                     isRead: '',
                     isUse: false,
                 },
-                //
                 userKlasses: [
                     {
                         id: '选项1',
@@ -406,13 +405,13 @@
                 tableData: [
                     {
                         id: '1',
-                        type: '成功消息',
-                        publishDate:'2017-08-26',
-                        isPublished: '已发布',
+                        releaseDate:'2017-08-26',
                         content: '这是一条系统消息',
-                        name: '张凌雪',
                         isRead:'未读',
-                        isUse:'否',
+                        isUse:'可用',
+                        message_type:'',
+                        title:'',
+                        name:'',
                     }
                 ],
                 userTransferData:[
@@ -439,7 +438,7 @@
                             content:"这是一条成功的消息",
                             createdAt:"2018-01-25",
                             id:1,
-                            isPublished:false,
+                            releaseDate:false,
                             isRead: false,
                             isUse:true,
                             message_type:1,
@@ -447,8 +446,8 @@
                             publishDate:"2018-01-25T12:04:23.000Z",
                             updatedAt:"2018-01-25T12:04:23.000Z",
                         },
-                        messageTypeName: '成功消息',
-                        messageUserName: '张凌雪'
+                        // messageTypeName: '成功消息',
+                        // messageUserName: '张凌雪'
                     },
                 ],
                 MessageTypes: []
@@ -456,27 +455,17 @@
         },
         async mounted() {
             // 将信息挂载
-            this.tableData = this.Messages;
             this.itemCounts = this.counts;
 
-            // this.resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
-            // this.getDataById = await this.$axios.$post('/api/message/getMessageDataById', {post: 'post'});
-            // this.searchData = await this.$axios.$post('/api/message/getMessageSearch', {post: 'post'});
-            // this.getAllData = await this.$axios.$get('/api/message/getAllMessageData');
-            // this.deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
-            // this.putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
-        },
-        async asyncData({}) {
-            let  resData  = await axios.get(`/api/message/getAll/1`);
-            let resUserData = await axios.get('/api/user/onlyAll');
-            if(resData.data.status === 1 && resUserData.data.status === 1){
-                return {
-                    counts: resData.data.counts,
-                    Messages: resData.data.Messages,
-                    MessageTypes: resData.data.MessageTypes,
-                    userTransferData: resUserData.data.users
-                }
-            }
+            this.resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
+            this.getDataById = await this.$axios.$post('/api/message/getMessageDataById', {post: 'post'});
+            this.searchData = await this.$axios.$post('/api/message/getMessageSearch', {post: 'post'});
+            let getAllData = await this.$axios.$get('/api/message/getAllMessageData');
+            this.deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
+            this.putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
+
+            this.tableData = getAllData.Messages;
+            console.log(this.tableData)
         },
         head() {
             return {
