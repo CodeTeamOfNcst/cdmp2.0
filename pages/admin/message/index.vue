@@ -465,7 +465,6 @@
             this.putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
 
             this.tableData = getAllData.Messages;
-            console.log(this.tableData)
         },
         head() {
             return {
