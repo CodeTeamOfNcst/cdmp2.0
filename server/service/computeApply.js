@@ -45,14 +45,21 @@ module.exports.getAllApplyData = async () => {
             // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage, 
             limit: ItemPerPage 
         });
-        // let applys = await ComputeApply.findAll({ offset: 5, limit: 5 }); // 分页查询
-        // 教程上说由于原型链方法的原因不鼓励使用for in
         let Applys = [];
         for(let i=0; i<applys.length; i++){
+            let apply_user = await applys[i].getComputeApplyer()
+            let check_user = await applys[i].getComputeApplyChecker()
             Applys.push({
-                apply: applys[i],
-                applyUser: applys[i].apply_user,
-                checkUser: applys[i].check_user,
+                id: applys[i].id,
+                startTime:applys[i].startDate,
+                endTime:applys[i].endDate,
+                timeLimit:applys[i].hours,
+                isAgree:applys[i].isAgree,
+                isUse:applys[i].isUse,
+                createdAt:applys[i].createdAt,
+                updatedAt:applys[i].updatedAt,
+                chargePerson: apply_user.name,
+                checkUser: check_user.name,
             })
         }
         let count =  await ComputeApply.count();

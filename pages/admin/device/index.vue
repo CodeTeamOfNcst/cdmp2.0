@@ -19,6 +19,18 @@
                         <el-select v-model="addForm.deviceType" placeholder="请选择">
                             <el-option
                                     v-for="item in deviceTypes"
+                                    :key="item.key"
+                                    :label="item.label"
+                                    :value="item.key">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </el-form-item>
+                <el-form-item label="设备负责人">
+                    <div class="deviceSelect">
+                        <el-select v-model="addForm.deviceManager" placeholder="请选择">
+                            <el-option
+                                    v-for="item in deviceManager"
                                     :key="item.value"
                                     :label="item.label"
                                     :value="item.value">
@@ -118,6 +130,11 @@
                     <el-table-column
                             prop="needRepair"
                             label="是否需要维修"
+                            width="130">
+                    </el-table-column>
+                    <el-table-column
+                            prop="canReserve"
+                            label="是否可预约"
                             width="130">
                     </el-table-column>
                     <el-table-column
@@ -329,6 +346,7 @@ export default{
             //     // 处理新建仪器设备
             //     let deviceName = this.addForm.name;
             //     let deviceTypeId = this.addForm.deviceType;
+            //     let deviceManagerId = this.addForm.deviceManager;
             //     let deviceAddDate = this.addForm.addDate;
             //     let deviceDescribe = this.addForm.describe;
             //     let deviceNeedRepair = this.addForm.needRepair;
@@ -338,6 +356,7 @@ export default{
             //         let result = await axios.post('/api/device/add', {
             //             name: deviceName,
             //             TypeId: deviceTypeId,
+            //             UserId: deviceManagerId,
             //             addDate: deviceAddDate,
             //             describe: deviceDescribe,
             //             needRepair: deviceNeedRepair,
@@ -458,6 +477,12 @@ export default{
                     label: '黄金糕'
                 }
             ],
+            deviceManager:[
+                {
+                    key:'1',
+                    label:'xxx'
+                }
+            ],
             value:'',
             options1: [
                 {
@@ -468,6 +493,7 @@ export default{
             addForm: {
                 name: '',
                 deviceType: '',
+                deviceManager:'',
                 addDate: '',
                 describe: '',
                 needRepair: false,
@@ -492,6 +518,7 @@ export default{
                     name: '',
                     isUse: '',
                     needRepair:'',
+                    canReserve:'',
                     type: '',
                     operation:'',
                 }
@@ -500,14 +527,6 @@ export default{
             addFormVisible: false,
         };
     },
-    // async asyncData({}) {
-    //     let  resData  = await axios.get(`/api/device/getAll/1`);
-    //     return {
-    //         counts: resData.data.counts,
-    //         devices: resData.data.Devices,
-    //         deviceTypes: resData.data.DeviceTypes
-    //     }
-    // },
     head() {
         return {
             title: 'CDMP - 设备管理'
@@ -519,17 +538,19 @@ export default{
         
         this.itemCounts = this.counts;
         //不要轻易删除！！
-        this.resData = await this.$axios.$post('/api/device/AddDevice', {post: 'post'});
-        this.getDataById = await this.$axios.$post('/api/device/getDeviceDataById', {post: 'post'});
-        this.getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
-        this.getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
-        this.searchData = await this.$axios.$post('/api/device/getDeviceSearch', {post: 'post'});
+        let resData = await this.$axios.$post('/api/device/AddDevice', {post: 'post'});
+        let getDataById = await this.$axios.$post('/api/device/getDeviceDataById', {post: 'post'});
+        let getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
+        let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
+        let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
+        let searchData = await this.$axios.$post('/api/device/getDeviceSearch', {post: 'post'});
         let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
-        this.deleteData = await this.$axios.$delete('/api/device/deleteDeviceById', { data:{delete: 'delete'}}) 
-        this.putData = await this.$axios.$put('/api/device/modifyDeviceById', {put: 'put'});
+        let deleteData = await this.$axios.$delete('/api/device/deleteDeviceById', { data:{delete: 'delete'}}) 
+        let putData = await this.$axios.$put('/api/device/modifyDeviceById', {put: 'put'});
         
-        this.tableData = getAllData.Devices
-
+        this.tableData = getAllData.Devices;
+        this.deviceTypes = getAllData.DeviceTypes;
+        this.deviceManager = getOnlyUsersData.users;
     },
 }
 </script>

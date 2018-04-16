@@ -111,7 +111,7 @@ module.exports.getAllDeviceData = async () => {
         type_id: devicesType[devices[i].device_type - 1].id,
         imgFilePath: devices[i].imgFilePath,
         needRepair:devices[i].needRepair ? '需要' : '不需要',
-        canReserve: devices[i].canReserve,
+        canReserve: devices[i].canReserve ? '可预约':'不可预约',
         show: true,
       })
     }
@@ -179,7 +179,7 @@ module.exports.getDeviceOnlyData = async () => {
     for (let i = 0; i < devices.length; i++) {
       thisDevices.push({
         key: devices[i].id,
-        value: devices[i].id + devices[i].name
+        label: devices[i].id +'-'+ devices[i].name
       })
     }
     let result = {

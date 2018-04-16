@@ -45,16 +45,24 @@ module.exports.getAllApplyData = async () => {
         let applys = await DeviceApply.findAll({ 
             // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage, 
             limit: ItemPerPage 
-        });
-        // let applys = await DeviceApply.findAll({ offset: 5, limit: 5 }); // 分页查询
-        // 教程上说由于原型链方法的原因不鼓励使用for in
+        }); 
         let Applys = [];
         for(let i=0; i<applys.length; i++){
+            let apply_user = await applys[i].getDeviceApplyer()
+            let check_user = await applys[i].getDeviceApplyChecker()
+            let apply_device = await applys[i].getApplyDevice()
             Applys.push({
-                apply: applys[i],
-                applyUser: applys[i].apply_user,
-                checkUser: applys[i].check_user,
-                applyDevice: applys[i].apply_device,
+                id: applys[i].id,
+                startDate:applys[i].startDate,
+                endDate:applys[i].endDate,
+                vioReason:applys[i].vioReason,
+                isAgree:applys[i].isAgree,
+                isUse:applys[i].isUse,
+                createdAt:applys[i].createdAt,
+                updatedAt:applys[i].updatedAt,
+                applyUser: apply_user.name,
+                checkUser: check_user.name,
+                device: apply_device.name,
             })
         }
         let count =  await DeviceApply.count();

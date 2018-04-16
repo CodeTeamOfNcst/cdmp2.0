@@ -15,7 +15,6 @@ module.exports.userGetAll = async (ctx, next) => {
     usersDetail:result.usersDetail,
     userTypeDetail:result.userTypeDetail
   }
-  console.log(ctx.body)
 }
 module.exports.userGetName = async (ctx, next) => {
   let result = await userService.onlyGetAllUser()
@@ -24,8 +23,6 @@ module.exports.userGetName = async (ctx, next) => {
     status:result.status,
     message:result.message,
   }
-  console.log(ctx.body)
-
 }
 
 /**
@@ -50,7 +47,6 @@ module.exports.userPost = async (ctx, next) => {
     status:result.status,
     message:result.message
   }
-  console.log(ctx.body)
 }
 module.exports.userGet = async (ctx, next) => {
   let getData = ctx.request.body;
@@ -63,7 +59,6 @@ module.exports.userGet = async (ctx, next) => {
     status:result.status,
     message:result.message,
   }
-  console.log(ctx.body)
 }
 module.exports.getApplys = async (ctx,next) => {
   let userId = ctx.request.body.id
@@ -77,8 +72,6 @@ module.exports.getApplys = async (ctx,next) => {
     deviceResult:result.deviceResult,
     computeResult: result.computeResult
   }
-  console.log(ctx.body)
-
 }
 module.exports.userSearch = async (ctx, next) => {
   let search = ctx.request.body.search;

@@ -12,9 +12,9 @@
                         <el-select v-model="addForm.user" filterable placeholder="请选择用户">
                             <el-option
                                     v-for="item in users"
-                                    :key="item.value"
-                                    :label="item.key"
-                                    :value="item.value">
+                                    :key="item.key"
+                                    :label="item.label"
+                                    :value="item.key">
                             </el-option>
                         </el-select>
                     </el-col>
@@ -25,7 +25,7 @@
                             <el-option
                                     v-for="item in devices"
                                     :key="item.key"
-                                    :label="item.value"
+                                    :label="item.label"
                                     :value="item.key">
                             </el-option>
                         </el-select>
@@ -98,49 +98,47 @@
                     <el-table-column
                             label="申请id"
                             width="80">
-                        <template slot-scope="scope">{{ scope.row.apply.id }}</template>
+                        <template slot-scope="scope">{{ scope.row.id }}</template>
                     </el-table-column>
                     <el-table-column
                             label="申请用户"
-                            width="110">
-                        <template slot-scope="scope">{{ scope.row.applyUser.name }}</template>
+                            width="100">
+                        <template slot-scope="scope">{{ scope.row.applyUser }}</template>
                     </el-table-column>
                     <el-table-column
                             label="申请设备"
-                            width="170">
-                        <template slot-scope="scope">{{ scope.row.applyDevice.name }}</template>
+                            width="180">
+                        <template slot-scope="scope">{{ scope.row.device.substr(0,10) }}</template>
                     </el-table-column>
                     <el-table-column
                             label="开始使用时间"
                             width="120">
-                        <template slot-scope="scope">{{ scope.row.apply.startDate }}</template>
+                        <template slot-scope="scope">{{ scope.row.startDate }}</template>
                     </el-table-column>
                     <el-table-column
                             label="结束使用时间"
                             width="120">
-                        <template slot-scope="scope">{{ scope.row.apply.endDate }}</template>
+                        <template slot-scope="scope">{{ scope.row.endDate }}</template>
                     </el-table-column>
                     <el-table-column
                             label="申请理由"
                             width="">
-                        <template slot-scope="scope">{{ scope.row.apply.vioReason ? scope.row.apply.vioReason.substr(0,10) : '暂未填写' }}</template>
+                        <template slot-scope="scope">{{ scope.row.vioReason ? scope.row.vioReason.substr(0,10) : '暂未填写' }}</template>
                     </el-table-column>
                     <el-table-column
                             label="是否同意"
                             width="90">
-                        <template slot-scope="scope">{{ scope.row.apply.isAgree ? '是': '否' }}</template>
+                        <template slot-scope="scope">{{ scope.row.isAgree ? '是': '否' }}</template>
                     </el-table-column>
                     <el-table-column
                             label="是否禁用"
                             width="90">
-                        <template slot-scope="scope">{{ scope.row.apply.isUse ? '可用': '禁用' }}</template>
+                        <template slot-scope="scope">{{ scope.row.isUse ? '可用': '禁用' }}</template>
                     </el-table-column>
                     <el-table-column
                             label="审核状态"
                             width="90">
-                        <template slot-scope="scope">
-                            <el-button type="text">{{ scope.row.apply.createdAt == scope.row.apply.updatedAt ? '待审核': '已审核' }}</el-button>
-                        </template>
+                        <template slot-scope="scope">{{ scope.row.createdAt == scope.row.updatedAt ? '待审核': '已审核' }}</template>
                     </el-table-column>
                     <el-table-column
                             prop="operation"
@@ -397,46 +395,30 @@
                 },
                 users: [
                     {
-                        key: '1-用户名',
-                        value: '1'
+                        key: '',
+                        label: ''
                     },
                 ],
                 devices:[
                     {
-                        key: '设备1',
-                        value: '1'
+                        key: '1',
+                        label: '1-xxx'
                     }
                 ],
                 value: '',
                 tableData: [
                     {
-                        apply:{
-                            id: '1',
-                            user: '张扬果儿',
-                            device: '第一台设备',
-                            startDate: '',
-                            endDate:'',
-                            vioReason:'',
-                            isAgree:'',
-                            isUse:''
-                        },
-                        applyUser:{
-                            id: '',
-                            account: '',
-                            name: '',
-                            phone:'',
-                            email: '',
-                            isUse: ''
-                        },
-                        applyDevice:{
-                            id: '',
-                            name: '',
-                            description: '',
-                            purchaseDate: '',
-                            needRepair: '',
-                            canReserve: '',
-                            isUse: ''
-                        }
+                        id: '1',
+                        applyUser: '张扬果儿',
+                        checkUser:'',
+                        device: '第一台设备',
+                        startDate: '',
+                        endDate:'',
+                        vioReason:'',
+                        isAgree:'',
+                        isUse:'',
+                        createdAt:'',
+                        updatedAt:'',
                     }
                 ],
                 searchOption: [
@@ -447,32 +429,23 @@
                 ],
             };
         },
-        async asyncData({}) {
-            let  resData  = await axios.get(`/api/apply/getAll/1`);
-            if(resData.data.status === 1){
-                let applys = resData.data.applys;
-                return {
-                    counts: resData.data.counts,
-                    applys: applys
-                }
-            }else {
-                return {
-                    applys: []
-                }
-            }
-        },
         async mounted(){
-            this.tableData = this.applys;
             this.itemCounts = this.counts;
 
             this.getDataById = await this.$axios.$post('/api/deviceApply/getApplyById', {post: 'post'});
-            this.getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
+            let getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
+            let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
             this.searchData = await this.$axios.$post('/api/deviceApply/getApplySearch', {post: 'post'});
             this.postData = await this.$axios.$post('/api/deviceApply/addApply', {post: 'post'});
             this.postDataFront = await this.$axios.$post('/api/deviceApply/addApplyFront', {post: 'post'});
             this.deleteData = await this.$axios.$delete('/api/deviceApply/deleteApplyById', { data:{delete: 'delete'}}) 
             this.putData = await this.$axios.$put('/api/deviceApply/modifyApplyById', {put: 'put'});
+            let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
 
+
+            this.tableData = getAllData.applys;
+            this.users = getOnlyUsersData.users;
+            this.devices = getOnlyData.devices;
         },
         head() {
             return {

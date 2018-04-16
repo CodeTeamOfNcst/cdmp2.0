@@ -17,7 +17,6 @@ module.exports.messageGetAll = async (ctx, next) => {
         status:result.status,
         message:result.message
     }
-    console.log(ctx.body)
 }
 
 

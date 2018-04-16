@@ -12,9 +12,9 @@
                         <el-select v-model="addForm.user" filterable placeholder="请选择用户">
                             <el-option
                                     v-for="item in users"
-                                    :key="item.value"
-                                    :label="item.key"
-                                    :value="item.value">
+                                    :key="item.key"
+                                    :label="item.label"
+                                    :value="item.key">
                             </el-option>
                         </el-select>
                     </el-col>
@@ -124,8 +124,8 @@
                         style="width: 70%;">
                     <el-table-column
                             prop="id"
-                            label="id"
-                            width="60">
+                            label="申请id"
+                            width="100">
                     </el-table-column>
                     <el-table-column
                             prop="chargePerson"
@@ -133,20 +133,10 @@
                             width="110">
                     </el-table-column>
                     <el-table-column
-                            prop="department"
-                            label="所在院系"
-                            width="">
-                    </el-table-column>
-                    <el-table-column
                             prop="startTime"
                             label="开始时间"
                             width="150">
                     </el-table-column>
-                    <!-- <el-table-column
-                            prop="restTime"
-                            label="剩余机时"
-                            width="110">
-                    </el-table-column> -->
                     <el-table-column
                             prop="endTime"
                             label="结束时间"
@@ -155,25 +145,30 @@
                     <el-table-column
                             prop="timeLimit"
                             label="申请机时额度"
-                            width="150">
+                            width="">
+                    </el-table-column>
+                    <el-table-column
+                            prop="checkUser"
+                            label="审批人"
+                            width="100">
                     </el-table-column>
                     <el-table-column
                             prop="isAgree"
                             label="是否同意"
                             width="110">
+                            <template slot-scope="scope">{{scope.row.isAgree ? '是':'否'}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="isUse"
                             label="是否禁用"
                             width="110">
+                            <template slot-scope="scope">{{scope.row.isUse ? '是':'否'}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="isExamine"
                             label="审核状态"
                             width="110">
-                        <template slot-scope="scope">
-                            <el-button type="text">待审核</el-button>
-                        </template>
+                        <template slot-scope="scope">{{scope.row.createdAt == scope.row.updatedAt ? '待审核':'已审核'}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="operation"
@@ -516,33 +511,22 @@
                 },
                 users: [
                     {
-                        key: '1-用户名',
-                        value: '1'
+                        key: '1',
+                        label: '1-用户名'
                     },
                 ],
                 tableData: [{
                     id: '1',
                     chargePerson: '魏宝仁',
-                    department:'生命科学院',
+                    checkUser:'',
                     startTime: '2017-09-11',
                     endTime:'2018-01-01',
                     timeLimit:'20000.00',
                     isAgree:'否',
-                    isUse:'可用',                   
-                },
-                {
-                    id: '2',
-                    chargePerson: '韦广红',
-                    department:'物理系',
-                    startTime:'2017-12-22',
-                    endTime:'2018-01-01',
-                    timeLimit:'20000.00',
-                    amountUse:'880.5',
-                    maxNumber:'1400',
-                    isAgree:'否',
-                    isUse:'可用',
-                }
-                ],
+                    isUse:'可用', 
+                    createdAt:'',
+                    updatedAt:'',                  
+                }],
                 editForm: {
                     id:'',
                     department: '',
@@ -574,39 +558,25 @@
                     averNum:'30.25',
                     averWaitTime:'1.55'
                     },
-                ],
-
-                // tableRecord: [{
-                //     date: '2016-05-02',
-                //     name: '王小虎',
-                //     address: '2016-06-05'
-                //     }, {
-                //     date: '2016-06-11',
-                //     name: '王小虎',
-                //     address: '2016-07-12'
-                //     }, {
-                //     date: '2016-08-16',
-                //     name: '王小虎',
-                //     address: '2016-09-25'
-                //     }
-                // ],
-                
+                ],             
                 addFormVisible:false,            
                 editFormVisible: false,
             };
         },
         async mounted(){
-            this.tableData = this.applys;
             this.itemCounts = this.counts;
 
             this.getDataById = await this.$axios.$post('/api/computeApply/getApplyById', {post: 'post'});
-            this.getAllData = await this.$axios.$get('/api/computeApply/getAllApplyData');
+            let getAllData = await this.$axios.$get('/api/computeApply/getAllApplyData');
             this.searchData = await this.$axios.$post('/api/computeApply/getApplySearch', {post: 'post'});
             this.postData = await this.$axios.$post('/api/computeApply/addApply', {post: 'post'});
             this.postDataFront = await this.$axios.$post('/api/computeApply/addApplyFront', {post: 'post'});
             this.deleteData = await this.$axios.$delete('/api/computeApply/deleteApplyById', { data:{delete: 'delete'}}) 
             this.putData = await this.$axios.$put('/api/computeApply/modifyApplyById', {put: 'put'});
+            let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
 
+            this.tableData = getAllData.applys;
+            this.users = getOnlyUsersData.users;
         },
         head() {
             return {
