@@ -10,9 +10,18 @@
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/download">下载中心</nuxt-link></div></el-col>
                 <el-col class="right" :span="4">
-                    <div class="little"><img class="img1" src="../assets/img/index.png"/><nuxt-link to="/">首页</nuxt-link></div>
-                    <div class="little"><img class="img2" src="../assets/img/login.png"/><nuxt-link to="/">登录</nuxt-link></div>
-                    <div class="little"><img class="img3" src="../assets/img/register.png"/><nuxt-link to="/">注册</nuxt-link></div>
+                    <span class="little">
+                        <i class="iconfont icon-home"></i>
+                        <nuxt-link to="/">首页</nuxt-link>
+                    </span>
+                    <span class="little">
+                        <i class="iconfont icon-user"></i>
+                        <nuxt-link to="/">登录</nuxt-link>
+                    </span>
+                    <span class="little">
+                        <i class="iconfont icon-register"></i>
+                        <nuxt-link to="/">注册</nuxt-link>
+                    </span>
                 </el-col>
             </el-row> 
         </div>
@@ -49,6 +58,7 @@
             height:59px;;
             float:right;
             color:#fff;
+<<<<<<< HEAD
             // background-color: #6b8db4;
             .little{
                 width:25%;
@@ -74,6 +84,20 @@
                 vertical-align: middle;
                }       
             }  
+=======
+            padding-left: 15px;
+
+            .little {
+                display: inline-block;
+                height: 60px;
+                line-height: 60px;
+                margin: 10px 5px;
+
+                .iconfont {
+                    margin-right: 3px;
+                }
+            }
+>>>>>>> 2252a08a755aba83d8b11cd60f8d844425b054cb
         }
      }
     .header-item{

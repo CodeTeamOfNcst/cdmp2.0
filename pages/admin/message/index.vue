@@ -19,7 +19,7 @@
                             <el-option
                                     v-for="item in MessageTypes"
                                     :key="item.id"
-                                    :label="item.name"
+                                    :label="item.label"
                                     :value="item.id">
                             </el-option>
                         </el-select>
@@ -124,7 +124,7 @@
                             fit="false"
                             label="消息内容"
                             width="">
-                        <template slot-scope="scope">{{ scope.row.content.substr(0,10)}}</template>
+                        <template slot-scope="scope">{{ scope.row.content.substr(0,15)}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="name"
@@ -446,25 +446,31 @@
                             publishDate:"2018-01-25T12:04:23.000Z",
                             updatedAt:"2018-01-25T12:04:23.000Z",
                         },
-                        // messageTypeName: '成功消息',
-                        // messageUserName: '张凌雪'
                     },
                 ],
-                MessageTypes: []
+                MessageTypes: [
+                    {
+                        id:'1',
+                        label:'普通1-预约到期'
+                    }
+                ]
             };
         },
         async mounted() {
             // 将信息挂载
             this.itemCounts = this.counts;
 
-            this.resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
-            this.getDataById = await this.$axios.$post('/api/message/getMessageDataById', {post: 'post'});
-            this.searchData = await this.$axios.$post('/api/message/getMessageSearch', {post: 'post'});
+            let resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
+            let getDataById = await this.$axios.$post('/api/message/getMessageDataById', {post: 'post'});
+            let searchData = await this.$axios.$post('/api/message/getMessageSearch', {post: 'post'});
             let getAllData = await this.$axios.$get('/api/message/getAllMessageData');
-            this.deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
-            this.putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
+            let deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
+            let putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
+            let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
 
             this.tableData = getAllData.Messages;
+            this.MessageTypes = getAllData.MessageTypes;
+            this.userTransferData = getOnlyUsersData.users;
         },
         head() {
             return {

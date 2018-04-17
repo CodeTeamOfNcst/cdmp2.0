@@ -250,7 +250,8 @@
                     }
                 },
                 async handleAdd(){
-                    console.log("45485484784")
+                    //methods方法应该有问题！！！
+                    console.log("88888888888888888")
                     if( this.addForm.password === this.addForm.repeat ){
                         let PostData = {
                             name: this.addForm.name,

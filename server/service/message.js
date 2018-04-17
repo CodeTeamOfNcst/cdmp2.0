@@ -45,7 +45,8 @@ module.exports.getAllMessageData = async () => {
         });
         let messageTypes = await MessageType.findAll()
         let Messages = [];
-        // 格式化返回的数据
+        let MessageTypes = [];
+                // 格式化返回的数据
         for (let index in messages) {
             let messageType = await messages[index].getMessageType();
             let messageUser = await messages[index].getMessageUser();
@@ -62,9 +63,15 @@ module.exports.getAllMessageData = async () => {
             });
         }
         let count = await Message.count()
+        for(let i in messageTypes) {
+            MessageTypes.push({
+                id:messageTypes[i].id,
+                label:messageTypes[i].firstType+'-'+messageTypes[i].title
+            })
+        }
         let result = {
             counts: count,
-            MessageTypes: messageTypes,
+            MessageTypes: MessageTypes,
             Messages: Messages,
             status: 1,
             message: '成功获取全部消息'
