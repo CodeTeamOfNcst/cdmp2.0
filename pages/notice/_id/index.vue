@@ -26,7 +26,7 @@
     </section>
 </template>
 
-<style scoped>
+<style lang='less' scoped>
 .bullCont p{
     width: auto;
     float: left;

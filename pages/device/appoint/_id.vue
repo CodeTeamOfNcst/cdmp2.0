@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="headerName">
-            <div class="leftSty"></div>
+            <!-- <div class="leftSty"></div> -->
             <span class="bullCont">仪器预约</span>
         </div>
         <el-row class="headerline"></el-row>
@@ -88,7 +88,7 @@
     </div>
 </template>
 
-<style scoped>
+<style lang='less' scoped>
     .appointCont{
         width: 100%;
         margin-top: 70px;
@@ -126,7 +126,8 @@
 <script>
     import axios from 'axios'
     export default {
-        methods: {
+        methods() {
+            return {
                 async handleSubmit(){
                     if(!(this.vioReason) || !(this.date)){
                         this.$message.error("请填写所有信息")
@@ -148,6 +149,7 @@
                         this.$message.error(resData.data.message)
                     }
                 }
+            }       
         },
         data(){
             return{
@@ -161,16 +163,16 @@
             }
         },
         async mounted(){
-            if(! this.$auth.state.loggedIn) window.location.href ='/login'
-            this.user = this.$auth.state.user.login_account
+            // if(! this.$auth.state.loggedIn) window.location.href ='/login'
+            // this.user = this.$auth.state.user.login_account
         },
-        async asyncData({params}){
-            let resData = await axios.post('/api/device/getById', { id: params.id})
-            if(resData.data.status === 1){
-                return {
-                    device: resData.data.device
-                }
-            }
-        }
+        // async asyncData({params}){
+        //     let resData = await axios.post('/api/device/getById', { id: params.id})
+        //     if(resData.data.status === 1){
+        //         return {
+        //             device: resData.data.device
+        //         }
+        //     }
+        // }
     }
 </script>

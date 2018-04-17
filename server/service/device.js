@@ -2,6 +2,7 @@
 const { Device } = require('../config/models')
 const { DeviceType } = require('../config/models')
 const { DeviceApply } = require('../config/models')
+const { User } = require('../config/models')
 const { fs } = require('fs')
 const { uuid } = require('uuid')
 const { Op } = require('sequelize')
@@ -23,6 +24,11 @@ module.exports.getDeviceDataById = async (JSON) => {
         id: thisDevice.device_type
       }
     });
+    let deviceManager = await User.findOne({
+      where: {
+        id:thisDevice.device_manager
+      }
+    });
     let device = {
       id: thisDevice.id,
       name: thisDevice.name,
@@ -34,6 +40,7 @@ module.exports.getDeviceDataById = async (JSON) => {
       canReserve: thisDevice.canReserve,
       device_type: deviceType.id,
       device_type_name: deviceType.name,
+      device_manager:deviceManager.name,
       isUse: thisDevice.isUse
     };
     let result = {
@@ -62,6 +69,11 @@ module.exports.getDeviceDataByName = async (JSON) => {
         id: thisDevice.device_type
       }
     });
+    let deviceManager = await User.findOne({
+      where: {
+        id:thisDevice.device_manager
+      }
+    });
     let device = {
       id: thisDevice.id,
       name: thisDevice.name,
@@ -72,6 +84,7 @@ module.exports.getDeviceDataByName = async (JSON) => {
       needRepair: thisDevice.needRepair,
       canReserve: thisDevice.canReserve,
       device_type: deviceType.id,
+      device_manager:deviceManager.name,
       device_type_name: deviceType.name,
       isUse: thisDevice.isUse
     };
@@ -100,6 +113,7 @@ module.exports.getAllDeviceData = async () => {
     let Devices = [];
     let DevicesTypes = [];
     for (let i = 0; i < devices.length; i++) {
+      let user = await devices[i].getDeviceUser();
       Devices.push({
         id: devices[i].id,
         date: devices[i].purchaseDate,
@@ -110,6 +124,7 @@ module.exports.getAllDeviceData = async () => {
         type: devicesType[devices[i].device_type - 1].name,
         type_id: devicesType[devices[i].device_type - 1].id,
         imgFilePath: devices[i].imgFilePath,
+        device_manager:user.name,
         needRepair:devices[i].needRepair ? '需要' : '不需要',
         canReserve: devices[i].canReserve ? '可预约':'不可预约',
         show: true,

@@ -5,19 +5,19 @@
         </div>
         <el-row class="headerline"></el-row>
         <ul class="rule-list">
-            <!-- <li class="rule-item" v-for="rule in rulesDetail">
-                <a :href='"/notice/" + rule.id'>
-                    <span class="rule-item-title">{{ rule.title }}</span>
-                    <span class="rule-item-date">{{ rule.publishDate }} </span>
+            <li class="rule-item" v-for="info in infoDetail" v-bind:key="info">
+                <a :href='"/notice/" + info.id'>
+                    <span class="rule-item-title">{{ info.title }}</span>
+                    <span class="rule-item-date">{{ info.releaseDate }} </span>
                 </a>
-            </li> -->
-            <!-- <el-row class="strip">
+            </li>
+            <el-row class="strip">
                 <div >
                     <el-col :span="24">
-                        <div class="grid-content bg-purple-dark">
-                            </div></el-col>
+                        <div class="grid-content bg-purple-dark"></div>
+                    </el-col>
                 </div>
-            </el-row> -->
+            </el-row>
         </ul>
         <el-row>
             <el-col :span="24">
@@ -70,44 +70,39 @@
 
 </style>
 
-// <script>
-// import axios from 'axios'
-// export default {
-//     data(){
-//         return{
-//             data:'学校关于放假期间仪器归还问题（2018.01.15）',
-//             ruleCount: null,
-//             rulesDetail: null,
+<script>
+import axios from 'axios'
+export default {
+    data(){
+        return{
+            data:'学校关于放假期间仪器归还问题（2018.01.15）',
+            ruleCount: null,
+            infoDetail: null,
+        }
+    },
+    methods(){
+        return{
+            async handlePageChange(currentPage){
+                let resData = await axios.get(`api/rule/getAll/${currentPage}`)
+                if(resData.data.status === 1){
+                    this.rulesDetail = resData.data.rulesDetail
+                }else{
+                    this.$message.error(resData.data.message);
+                    
+                }
+            }
+        }
+    },
+    async mounted(){
+        // this.ruleCount = this.count;
+        let getAllData = await this.$axios.$get('/api/info/getAllInfoData');
+        this.infoDetail = getAllData.infoDetail
+    },
+    head(){
+        return {
+            title: 'CDMP - 通知公告'
+        }
+    }
+}
 
-//         }
-//     },
-//     async asyncData(context){
-//         let resData = await axios.get('api/rule/getAll')
-//         if(resData.data.status === 1)
-//             return {
-//                 count: resData.data.counts,
-//                 rulesDetail: resData.data.rulesDetail
-//             }
-//     },
-//     methods:{
-//         async handlePageChange(currentPage){
-//             let resData = await axios.get(`api/rule/getAll/${currentPage}`)
-//             if(resData.data.status === 1){
-//                 this.rulesDetail = resData.data.rulesDetail
-//             }else{
-//                 this.$message.error(resData.data.message);
-                
-//             }
-//         }
-//     },
-//     mounted(){
-//         this.ruleCount = this.count;
-//     },
-//     head(){
-//         return {
-//             title: 'CDMP - 通知公告'
-//         }
-//     }
-// }
-
-// </script>
+</script>
