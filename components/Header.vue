@@ -58,35 +58,7 @@
             height:59px;;
             float:right;
             color:#fff;
-<<<<<<< HEAD
-            // background-color: #6b8db4;
-            .little{
-                width:25%;
-                margin: 31px 0 0 15px;    
-                height:30px;
-                cursor:pointer;
-                color:#fff;
-                // background-color: aquamarine;
-                float:left;
-                .img1{
-                width:20px;
-                height:20px; 
-                vertical-align: middle;
-               }
-               .img2{
-                width:17px;
-                height:17px; 
-                vertical-align: middle;
-               }
-               .img3{
-                width:16px;
-                height:16px; 
-                vertical-align: middle;
-               }       
-            }  
-=======
             padding-left: 15px;
-
             .little {
                 display: inline-block;
                 height: 60px;
@@ -97,7 +69,6 @@
                     margin-right: 3px;
                 }
             }
->>>>>>> 2252a08a755aba83d8b11cd60f8d844425b054cb
         }
      }
     .header-item{
