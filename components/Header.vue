@@ -52,7 +52,7 @@
             // background-color: #6b8db4;
             .little{
                 width:25%;
-                margin: 32px 0 0 15px;    
+                margin: 31px 0 0 15px;    
                 height:30px;
                 cursor:pointer;
                 color:#fff;

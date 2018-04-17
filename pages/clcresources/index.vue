@@ -60,7 +60,9 @@
             <div style="margin-top: 20px; height: 200px;">
                     <el-collapse-transition>
                       <div v-show="show1">
-                        <div class="transition-box">el-collapse-transition</div>
+                        <div class="transition-box">
+                          <!-- el-collapse-transition -->
+                        </div>
                       </div>
                     </el-collapse-transition>
             </div>
@@ -99,22 +101,23 @@
 }
 .node{
   background-color: paleturquoise;
-  width:280px;
+  width:300px;
   height:200px;
   border-radius:8px;
+  // margin-left:100px; 
 }
 .transition-box {
-    margin-bottom: 10px;
-    width: 1210px;
-    height: 200px;
-    border-radius: 4px;
-    background-color: #409EFF;
-    text-align: center;
-    color: #fff;
-    padding: 40px 20px;
-    box-sizing: border-box;
-    margin-right: 20px;
-  }
+  margin-bottom: 10px;
+  width: 100%;
+  height: 200px;
+  border-radius: 4px;
+  background-color: #409EFF;
+  text-align: center;
+  color: #fff;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  margin-right: 20px;
+}
 
 </style>
 <script>
@@ -128,7 +131,7 @@ Vue.component(CollapseTransition.name, CollapseTransition)
     data() {
       return {
         tabPosition: 'left',
-        show1:true
+        show1:false
       };
       
     }
