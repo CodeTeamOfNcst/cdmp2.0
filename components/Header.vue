@@ -63,8 +63,7 @@
                 display: inline-block;
                 height: 60px;
                 line-height: 60px;
-                margin: 10px 5px;
-
+                margin: 11px 5px;
                 .iconfont {
                     margin-right: 3px;
                 }
