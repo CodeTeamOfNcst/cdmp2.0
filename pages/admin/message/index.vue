@@ -124,7 +124,7 @@
                             fit="false"
                             label="消息内容"
                             width="">
-                        <template slot-scope="scope">{{ scope.row.content.substr(0,15)}}</template>
+                        <template slot-scope="scope">{{ scope.row.content.substr(0,14)}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="name"

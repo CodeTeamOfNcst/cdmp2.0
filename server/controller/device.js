@@ -38,6 +38,7 @@ module.exports.devicePost = async (ctx, next) => {
   let dataJSON = {
     "name":postData.name,
     "deviceType":postData.device_type,
+    "device_manager":postData.UserId,
     "imgFilePath":postData.imgFilePath,
     "location":postData.location,
     "description":postData.description,

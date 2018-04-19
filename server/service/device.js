@@ -132,8 +132,8 @@ module.exports.getAllDeviceData = async () => {
     }
     for (let i = 0; i < devicesType.length; i++) {
         DevicesTypes.push({
-            value: devicesType[i].id,
-            label: devicesType[i].name
+            id: devicesType[i].id,
+            name: devicesType[i].name
         })
     }
     let count = await Device.count();
@@ -218,6 +218,7 @@ module.exports.AddDevice = async (JSON) => {
     let newDevice = await Device.create(
       {
         name: JSON.name,
+        device_manager:JSON.device_manager,
         description: JSON.describe,
         imgFilePath: JSON.imgFilePath,
         location: JSON.location,
@@ -233,6 +234,12 @@ module.exports.AddDevice = async (JSON) => {
         id: JSON.deviceType
       }
     });
+    let device_manager = await User.findOne({
+      where: {
+        id:JSON.device_manager
+      }
+    });
+    await newDevice.setDeviceUser(device_manager);
     await newDevice.setDeviceType(device_type);
     await newDevice.save();
     let result = {
