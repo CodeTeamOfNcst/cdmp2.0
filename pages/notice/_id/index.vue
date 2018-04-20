@@ -57,8 +57,6 @@ export default {
             publishDate: '',
             input3:'',
             date:[],
-
-
         }
     },
     async asyncData({ params }){
@@ -68,7 +66,6 @@ export default {
                 content: resData.data.rule.content,
                 title: resData.data.rule.title,
                 publishDate: resData.data.rule.publishDate,
-               
             }
         }else{
             return{
