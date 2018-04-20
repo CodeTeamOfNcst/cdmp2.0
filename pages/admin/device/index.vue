@@ -169,13 +169,18 @@
                     <el-form-item label="设备类型" :label-width="editFormLabelWidth">
                         <div class="deviceSelect">
                             <el-select v-model="editForm.deviceType" placeholder="请选择">
-                                <el-option
-                                        v-for="item in deviceTypes"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
+                                 <el-option
+                                    v-for="item in deviceTypes"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
                                 </el-option>
                             </el-select>
+                        </div>
+                    </el-form-item>
+                    <el-form-item label="设备地址" :label-width="editFormLabelWidth">
+                        <div class="inputName">
+                            <el-input v-model="editForm.location" clearable></el-input>
                         </div>
                     </el-form-item>
                     <el-form-item label="设备购买日期" :label-width="editFormLabelWidth">
@@ -309,8 +314,6 @@ export default{
     methods: {
         // return {
             async handleAdd() {
-                console.log("888888888888888")
-                // 处理新建仪器设备
                 let deviceName = this.addForm.name;
                 let deviceTypeId = this.addForm.deviceType;
                 let deviceManagerId = this.addForm.deviceManager;
@@ -350,14 +353,13 @@ export default{
                 if(! this.searchInput){
                     window.location.reload()
                 }else{
-                    console.log(this.searchInput)
-                    let resData = await axios.post('/api/device/search',{
-                        search: this.searchInput
+                    let resData = await this.$axios.$post('/api/device/getDeviceSearch',{
+                        name: this.searchInput
                     })
-                    if(resData.data.status === 1){
-                        this.tableData = resData.data.result
+                    if(resData.status === 1){
+                        this.tableData = resData.result
                     }else{
-                        this.$message.error(resData.data.message)
+                        this.$message.error(resData.message)
                     }
                 }
             },
@@ -365,8 +367,8 @@ export default{
                 let resData = await axios.post('/api/upload/deleteTempFile', {
                     path: this.editForm.deviceImageUrl
                 });
-                if(resData.data.status === 1){
-                    console.log(resData.data.message)
+                if(resData.status === 1){
+                    console.log(resData.message)
                 }else {
                     this.$message.error('服务器异常，请联系管理员')
                 }
@@ -384,51 +386,51 @@ export default{
                     this.$message.error('上传头像图片大小不能超过 2MB!');
                 }
                 return isJPG && isLt2M;
-            },
-            
+            }, 
             async handleEdit(row) {
                 let rowId = row.id;
                 this.editForm.id = rowId;
-                let resData = await axios.post('/api/device/getById',{
+                let resData = await this.$axios.$post('/api/device/getDeviceDataById',{
                     id: rowId
                 });
-                if(resData.data.status === 1){
-                    this.editForm.name = resData.data.device.name;
-                    this.editForm.deviceType = resData.data.device.device_type;
-                    this.editForm.addDate = resData.data.purchaseDate;
-                    this.editForm.describe = resData.data.device.description;
-                    this.editForm.needRepair = resData.data.device.needRepair;
-                    this.editForm.canApply = resData.data.device.canReserve;
-                    this.editForm.isUse = resData.data.device.isUse;
-                    this.editForm.deviceImageUrl = resData.data.device.imgFilePath;
+                if(resData.status === 1){
+                    this.editForm.name = resData.device.name;
+                    this.editForm.deviceType = resData.device.device_type_name;
+                    this.editForm.addDate = resData.purchaseDate;
+                    this.editForm.describe = resData.device.description;
+                    this.editForm.location = resData.device.location;
+                    this.editForm.needRepair = resData.device.needRepair;
+                    this.editForm.canApply = resData.device.canReserve;
+                    this.editForm.isUse = resData.device.isUse;
+                    this.editForm.deviceImageUrl = resData.device.imgFilePath;
                     this.editFormVisibel = true;
                 }else {
-                    this.$message.error(resData.data.message + '请联系管理员');
+                    this.$message.error(resData.message + '请联系管理员');
                 }
             },
             async handleSubmitEdit() {
                 try{
-                    let resData = await axios.post('/api/device/modifyById',{
-                        path: this.editForm.deviceImageUrl,
+                    console.log(this.editForm.deviceType)
+                    let resData = await this.$axios.$put('/api/device/modifyDeviceById',{
                         id: this.editForm.id,
                         name: this.editForm.name,
                         deviceTypeId: this.editForm.deviceType,
-                        date: this.editForm.addDate,
+                        purchaseDate: this.editForm.addDate,
                         describe: this.editForm.describe,
+                        location: this.editForm.location,
                         needRepair: this.editForm.needRepair,
                         canApply: this.editForm.canApply,
                         isUse: this.editForm.isUse,
-                        path: this.editForm.deviceImageUrl,
+                        imgFilePath: this.editForm.deviceImageUrl,
                     });
-
-                    if( resData.data.status === 1 ){
+                    if( resData.status === 1 ){
                         this.$message({
                             type: 'success',
-                            message: resData.data.message
+                            message: resData.message
                         });
                         window.location.reload()
                     }else {
-                        this.$message.error( resData.data.status );
+                        this.$message.error( resData.status );
                     }
                 }catch(err){
                     this.$message.error('服务器异常');
@@ -442,19 +444,19 @@ export default{
                         cancelButtonText: '取消',
                         type: 'warning'
                     });
-                    let result = await axios.post('/api/device/deleteById', {
+                    let result = await this.$axios.$delete('/api/device/deleteDeviceById', {data:{
                         id: row.id
-                    });
-                    if(result.data.status === 1){
+                    }});
+                    if(result.status === 1){
                         this.$message({
                             type: 'success',
-                            message: result.data.message
+                            message: result.message
                         });
                         window.location.reload()
                     }else {
                         this.$message({
                             type: 'info',
-                            message: result.data.message
+                            message: result.message
                         });
                     }
                 }catch (err){
@@ -471,8 +473,7 @@ export default{
                 }else {
                     this.$message.error(resData.data.message)
                 }
-            },
-          
+            },       
     },
     data() {
         return {
@@ -515,6 +516,7 @@ export default{
                 name: '',
                 deviceType: '',
                 addDate: '',
+                location:'',
                 describe: '',
                 needRepair: false,
                 canApply: true,
@@ -543,23 +545,15 @@ export default{
         }
     },
     async mounted() {
-        // 挂载数据
-        this.itemCounts = this.counts;
-        
-        this.itemCounts = this.counts;
-        //不要轻易删除！！
-        // let resData = await this.$axios.$post('/api/device/AddDevice', {post: 'post'});
-        let getDataById = await this.$axios.$post('/api/device/getDeviceDataById', {post: 'post'});
+        // 挂载数据        
         let getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
         let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
         let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
-        let searchData = await this.$axios.$post('/api/device/getDeviceSearch', {post: 'post'});
         let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
-        let deleteData = await this.$axios.$delete('/api/device/deleteDeviceById', { data:{delete: 'delete'}}) 
-        let putData = await this.$axios.$put('/api/device/modifyDeviceById', {put: 'put'});
-        
+
         this.tableData = getAllData.Devices;
         this.deviceTypes = getAllData.DeviceTypes;
+        this.itemCounts = getAllData.counts;
         this.deviceManagers = getOnlyUsersData.users;
     },
 }
