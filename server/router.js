@@ -10,7 +10,7 @@ const infoController = require('./controller/info')
 const deviceApplyController = require('./controller/deviceApply')
 const computeApplyController = require('./controller/computeApply')
 const authController = require('./controller/auth')
-
+const uploadController = require('./controller/upload')
 
 const upload = multer({
   dest: './static/uploads'
@@ -90,6 +90,12 @@ module.exports = () => {
   router.post('/auth/regist',authController.authRegist)
   router.post('/auth/logIn',authController.authLogin)
   router.get('/auth/logOut',authController.authLogOut)
+
+
+  //upload 相关 service
+  router.post('upload/imageUploadToTemp',uploadController.uploadPost)
+  router.post('upload/deleteTempFile',uploadController.uploadPost)
+  router.post('upload/copyTempFileToDir',uploadController.uploadCope)
   
   return router
 }

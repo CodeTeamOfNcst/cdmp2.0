@@ -19,16 +19,28 @@ module.exports.getDeviceDataById = async (JSON) => {
         id: JSON.id
       }
     });
-    let deviceType = await DeviceType.findOne({
-      where: {
-        id: thisDevice.device_type
+    let TypesDevice = []
+    let Devices = await Device.findAll()
+    for(let i = 0;i < Devices.length;i ++) {
+      if(JSON.id === Devices[i].device_type) {
+        let user = await Devices[i].getDeviceUser()
+        let Type = await Devices[i].getDeviceType()
+        TypesDevice.push({
+          id: Devices[i].id,
+          name: Devices[i].name,
+          imgFilePath: Devices[i].imgFilePath,
+          description: Devices[i].description,
+          location:Devices[i].location,
+          purchaseDate: Devices[i].purchaseDate,
+          needRepair: Devices[i].needRepair,
+          canReserve: Devices[i].canReserve ? '可预约':'不可预约',
+          type: Type.name,
+          device_manager:user.name,
+          isUse: Devices[i].isUse
+        })
       }
-    });
-    let deviceManager = await User.findOne({
-      where: {
-        id:thisDevice.device_manager
-      }
-    });
+    }
+
     let device = {
       id: thisDevice.id,
       name: thisDevice.name,
@@ -38,13 +50,13 @@ module.exports.getDeviceDataById = async (JSON) => {
       purchaseDate: thisDevice.purchaseDate,
       needRepair: thisDevice.needRepair,
       canReserve: thisDevice.canReserve,
-      device_type_id: deviceType.id,
-      device_type_name: deviceType.name,
-      device_manager:deviceManager.name,
+      device_type_id: thisDevice.device_type,
+      device_manager:thisDevice.device_manager,
       isUse: thisDevice.isUse
     };
     let result = {
       device: device,
+      TypesDevice: TypesDevice,
       status: 1,
       message: '获取设备信息成功'
     }
@@ -305,15 +317,10 @@ module.exports.modifyDeviceById = async (JSON) => {
     //     if (fs.existsSync('static/' + oldPath) && oldPath) fs.unlink('static/' + oldPath)
     //   }
     // }
-    console.log(JSON.deviceTypeId)
-    let thisType = await DeviceType.findOne({
-      where: {
-        id: JSON.deviceTypeId
-      }
-    });
-    await thisDevice.setDeviceType(thisType);
     await thisDevice.update({
       name: JSON.name,
+      device_type:JSON.deviceTypeId,
+      device_manager: JSON.deviceManager,
       purchaseDate: JSON.purchaseDate,
       needRepair: JSON.needRepair,
       location: JSON.location,

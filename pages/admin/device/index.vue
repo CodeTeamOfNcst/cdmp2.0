@@ -159,7 +159,7 @@
                 </el-table>
             </div>
 
-            <el-dialog title="编辑设备" :visible.sync="editFormVisibel" @close="editDialogClose">
+            <el-dialog title="编辑设备" :visible.sync="editFormVisibel" >
                 <el-form :model="editForm" >
                     <el-form-item label="设备名称" :label-width="editFormLabelWidth">
                         <div class="inputName">
@@ -178,6 +178,18 @@
                             </el-select>
                         </div>
                     </el-form-item>
+                    <el-form-item label="设备负责人" :label-width="editFormLabelWidth">
+                    <div class="deviceSelect">
+                        <el-select v-model="editForm.deviceManager" placeholder="请选择">
+                            <el-option
+                                    v-for="item in deviceManagers"
+                                    :key="item.key"
+                                    :label="item.label"
+                                    :value="item.key">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </el-form-item>
                     <el-form-item label="设备地址" :label-width="editFormLabelWidth">
                         <div class="inputName">
                             <el-input v-model="editForm.location" clearable></el-input>
@@ -364,7 +376,7 @@ export default{
                 }
             },
             async editDialogClose(){
-                let resData = await axios.post('/api/upload/deleteTempFile', {
+                let resData = await this.$axios.$post('/api/upload/deleteTempFile', {
                     path: this.editForm.deviceImageUrl
                 });
                 if(resData.status === 1){
@@ -395,8 +407,9 @@ export default{
                 });
                 if(resData.status === 1){
                     this.editForm.name = resData.device.name;
-                    this.editForm.deviceType = resData.device.device_type_name;
+                    this.editForm.deviceType = resData.device.device_type_id;
                     this.editForm.addDate = resData.purchaseDate;
+                    this.editForm.deviceManager = resData.device.device_manager;
                     this.editForm.describe = resData.device.description;
                     this.editForm.location = resData.device.location;
                     this.editForm.needRepair = resData.device.needRepair;
@@ -410,11 +423,11 @@ export default{
             },
             async handleSubmitEdit() {
                 try{
-                    console.log(this.editForm.deviceType)
                     let resData = await this.$axios.$put('/api/device/modifyDeviceById',{
                         id: this.editForm.id,
                         name: this.editForm.name,
                         deviceTypeId: this.editForm.deviceType,
+                        deviceManager:this.editForm.deviceManager,
                         purchaseDate: this.editForm.addDate,
                         describe: this.editForm.describe,
                         location: this.editForm.location,
@@ -433,7 +446,7 @@ export default{
                         this.$message.error( resData.status );
                     }
                 }catch(err){
-                    this.$message.error('服务器异常');
+                    this.$message.error('服务器异常!!!');
                 }
                 this.editFormVisibel = false
             },
@@ -467,11 +480,11 @@ export default{
                 }
             },
             async handleCurrentChange(val) {
-                let resData = await axios.get(`/api/device/getAll/${val}`);
-                if(resData.data.status === 1){
-                    this.tableData = resData.data.Devices
+                let resData = await this.$axios.$get(`/api/device/getAllDeviceData/${val}`);
+                if(resData.status === 1){
+                    this.tableData = resData.Devices
                 }else {
-                    this.$message.error(resData.data.message)
+                    this.$message.error(resData.message)
                 }
             },       
     },
@@ -516,6 +529,7 @@ export default{
                 name: '',
                 deviceType: '',
                 addDate: '',
+                deviceManager:'',
                 location:'',
                 describe: '',
                 needRepair: false,

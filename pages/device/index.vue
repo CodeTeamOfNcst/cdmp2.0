@@ -31,8 +31,8 @@
                                 <span slot="">全部</span>
                         </el-menu-item>
                         <div v-for="deviceType in deviceTypes" v-bind:key="deviceType">
-                            <el-menu-item :index="deviceType.value" >
-                                <span slot="">{{deviceType.label}}</span>
+                            <el-menu-item :index="deviceType.id" >
+                                <span slot="">{{deviceType.name}}</span>
                             </el-menu-item>
                         </div>
                     </el-menu>
@@ -264,49 +264,46 @@
                 phone:'1234567891',
             }
         },
-        methods() {
-            return{
-                async typeSelect(index, path){
-                //  根据选择的内容筛选相应的仪器设备
-                console.log(index)
-                    if(index == -1){
-                        let  resData  = await axios.get(`/api/device/getAll/1`);
-                        this.devices =  resData.data.Devices
-                    }else{
-                        let resData = await axios.post('/api/device/getDeviceByTypeId',{
-                            type_id: Number.parseInt(index)
-                        })
-                        console.log(resData.data.message)
-                        this.devices =  resData.data.devices
-                    }
-                    // let resData = await axios.post('/api/device/')
-                },
-                async handlePageChange(page){
-                    let resData = await axios.get(`/api/device/getAll/${page}`);
-                    if(resData.data.status === 1){
-                        this.devices = resData.data.Devices;
-                    }else {
-                        this.$message.error(resData.data.message)
-                    }
-                },
-                async search_click(){
-                    if(!this.search_input)this.$message.error("请输入搜索内容")
-                    let resData = await axios.post('/api/device/getByName',{
-                        search_input: this.search_input
+        methods: {     
+            async typeSelect(index){
+            //  根据选择的内容筛选相应的仪器设备
+            console.log(index)
+                if(index == -1){
+                    let  resData  = await this.$axios.$get(`/api/device/getAllDeviceData`);
+                    this.devices =  resData.Devices
+                }else{
+                    let resData = await this.$axios.$post('/api/device/getDeviceDataById',{
+                        id: index
                     })
-                    if(resData === 1){
-                        this.devices = resData.data.Devices;
-                    }else{
-                        this.$message.error("获取数据失败")
-                    }
+                    this.devices =  resData.TypesDevice
+                }
+            },
+            async handlePageChange(page){
+                let resData = await axios.get(`/api/device/getAll/${page}`);
+                if(resData.data.status === 1){
+                    this.devices = resData.data.Devices;
+                }else {
+                    this.$message.error(resData.data.message)
+                }
+            },
+            async search_click(){
+                if(!this.search_input)this.$message.error("请输入搜索内容")
+                let resData = await axios.post('/api/device/getByName',{
+                    search_input: this.search_input
+                })
+                if(resData === 1){
+                    this.devices = resData.data.Devices;
+                }else{
+                    this.$message.error("获取数据失败")
                 }
             } 
         },
         async mounted(){
-            // this.deviceCounts = this.counts;
+            
             let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
             this.devices = getAllData.Devices,
             this.deviceTypes = getAllData.DeviceTypes
+            this.deviceCounts = getAllData.counts;
         },
     }
 </script>
