@@ -54,7 +54,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="handleAdd">添加</el-button>
-                    <el-button  @click="handleAddCancel">取消</el-button>
+                    <el-button  @click="addFromVisible = false">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-popover>
@@ -420,7 +420,6 @@
                         label: '人员名称'
                     },
                 ],
-                
             };
         },
         async mounted() {

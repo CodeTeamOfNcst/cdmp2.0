@@ -38,7 +38,7 @@ module.exports.getDeviceDataById = async (JSON) => {
       purchaseDate: thisDevice.purchaseDate,
       needRepair: thisDevice.needRepair,
       canReserve: thisDevice.canReserve,
-      device_type: deviceType.id,
+      device_type_id: deviceType.id,
       device_type_name: deviceType.name,
       device_manager:deviceManager.name,
       isUse: thisDevice.isUse
@@ -132,8 +132,8 @@ module.exports.getAllDeviceData = async () => {
     }
     for (let i = 0; i < devicesType.length; i++) {
         DevicesTypes.push({
-            value: devicesType[i].id,
-            label: devicesType[i].name
+            id: devicesType[i].id,
+            name: devicesType[i].name
         })
     }
     let count = await Device.count();
@@ -160,16 +160,18 @@ module.exports.getDeviceSearch = async (JSON) => {
     })
     if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
     let result = []
+    let devicesType = await DeviceType.findAll();
     for(let i=0;i<searchResult.length; i++){
       result.push({
         id: searchResult[i].id,
         date: searchResult[i].purchaseDate,
         name: searchResult[i].name,
-        disable: searchResult[i].isUse ? '可用' : '禁用',
-        type: (await searchResult[i].getDeviceType).name,
-        type_id: (await searchResult[i].getDeviceType).id,
+        isUse: searchResult[i].isUse ? '可用' : '禁用',
+        type:  devicesType[searchResult[i].device_type - 1].name,
+        type_id:  devicesType[searchResult[i].device_type - 1].id,
         imgFilePath: searchResult[i].imgFilePath,
-        canReserve: searchResult[i].canReserve,
+        needRepair:searchResult[i].needRepair ? '需要' : '不需要',
+        canReserve: searchResult[i].canReserve ? '可预约':'不可预约',
         show: true,
       })
     }
@@ -218,6 +220,7 @@ module.exports.AddDevice = async (JSON) => {
     let newDevice = await Device.create(
       {
         name: JSON.name,
+        device_manager:JSON.device_manager,
         description: JSON.describe,
         imgFilePath: JSON.imgFilePath,
         location: JSON.location,
@@ -233,6 +236,12 @@ module.exports.AddDevice = async (JSON) => {
         id: JSON.deviceType
       }
     });
+    let device_manager = await User.findOne({
+      where: {
+        id:JSON.device_manager
+      }
+    });
+    await newDevice.setDeviceUser(device_manager);
     await newDevice.setDeviceType(device_type);
     await newDevice.save();
     let result = {
@@ -281,24 +290,25 @@ module.exports.modifyDeviceById = async (JSON) => {
         id: JSON.id
       }
     });
-    if (thisDevice.imgFilePath !== imagePath && imagePath) { // 判断是否上传了新的图片，没有则不改变图片
-      let oldPath = thisDevice.imgFilePath;
-      let targetPath = 'uploads/deviceImages/' + uuid.v1() + '.jpg'; //图片路径不一致，将图片copy到文件夹下
-      if (fs.existsSync('static/' + imagePath)) {
-        fs.readFile('static/' + imagePath, (err, data) => {
-          fs.writeFile('static/' + targetPath, data, (err) => {
-              if (err) console.log(err)
-          })
-        });
-        thisDevice.update({
-          imgFilePath: targetPath //直接将可以作为图片路径显示的路径存储在数据库中
-        });
-        if (fs.existsSync('static/' + oldPath) && oldPath) fs.unlink('static/' + oldPath)
-      }
-    }
+    // if (thisDevice.imgFilePath !== imagePath && imagePath) { // 判断是否上传了新的图片，没有则不改变图片
+    //   let oldPath = thisDevice.imgFilePath;
+    //   let targetPath = 'uploads/deviceImages/' + uuid.v1() + '.jpg'; //图片路径不一致，将图片copy到文件夹下
+    //   if (fs.existsSync('static/' + imagePath)) {
+    //     fs.readFile('static/' + imagePath, (err, data) => {
+    //       fs.writeFile('static/' + targetPath, data, (err) => {
+    //           if (err) console.log(err)
+    //       })
+    //     });
+    //     thisDevice.update({
+    //       imgFilePath: targetPath //直接将可以作为图片路径显示的路径存储在数据库中
+    //     });
+    //     if (fs.existsSync('static/' + oldPath) && oldPath) fs.unlink('static/' + oldPath)
+    //   }
+    // }
+    console.log(JSON.deviceTypeId)
     let thisType = await DeviceType.findOne({
       where: {
-        id: JSON.device_type
+        id: JSON.deviceTypeId
       }
     });
     await thisDevice.setDeviceType(thisType);
@@ -307,11 +317,10 @@ module.exports.modifyDeviceById = async (JSON) => {
       purchaseDate: JSON.purchaseDate,
       needRepair: JSON.needRepair,
       location: JSON.location,
-      canReserve: JSON.canReserve || true,
+      canReserve: JSON.canApply || true,
       isUse: JSON.isUse,
-      description: JSON.description
+      description: JSON.describe
     });
-    await thisDevice.setDeviceType(thisType);
     await thisDevice.save();
     let res = {
       status: 1,

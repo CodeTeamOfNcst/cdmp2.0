@@ -77,11 +77,13 @@
                             prop="title"
                             label="公告标题"
                             width="250">
+                            <template slot-scope="scope">{{scope.row.title.substr(0,14)}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="content"
                             label="公告内容"
                             width="">
+                            <template slot-scope="scope">{{scope.row.content.substr(0,30)}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="isUse"
