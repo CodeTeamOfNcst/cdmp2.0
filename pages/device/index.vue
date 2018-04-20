@@ -115,6 +115,10 @@
 </template>
 
 <style lang='less' scoped>
+    a{
+        text-decoration:none;
+        color: black;
+    }
     .pagination{
         padding: 20px;
     }
@@ -123,10 +127,6 @@
     }
     .input-with-select {
         background-color: #fff;
-    }
-    a{
-        text-decoration:none;
-        color: black;
     }
     .keyword{
         width: 240px;
