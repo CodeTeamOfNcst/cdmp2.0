@@ -20,7 +20,7 @@
                     </span>
                     <span class="little">
                         <i class="iconfont icon-register"></i>
-                        <nuxt-link to="/">注册</nuxt-link>
+                        <nuxt-link to="/signin">注册</nuxt-link>
                     </span>
                 </el-col>
             </el-row> 
