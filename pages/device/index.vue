@@ -181,14 +181,23 @@
         float: right;
         margin-top: 22px;
         /*background: #2e2f30;*/
-    }
-    .bullImg img{
+        .bullImg img{
         width: 100%;
         height: 100%;
         background-size: 100% 100%;
+        }
     }
     .topOneCol{
         margin-top: 12px;
+        .bullName{
+        width: 100%;
+        height: 100%;
+        text-align: left;
+        line-height: 25px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        }
     }
     .appoint{
         width: 100%;
@@ -197,6 +206,15 @@
     }
     .maketop{
         margin-top: 20px;
+        .contactUser{
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: left;
+        }
+        .mainInfor{
+        background: #eef2f5;;
+        }
     }
     .button_center{
         text-align: center;
@@ -204,24 +222,7 @@
     .nameFrame{
         height: 25px;
     }
-    .bullName{
-        width: 100%;
-        height: 100%;
-        text-align: left;
-        line-height: 25px;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
-    }
-    .contactUser{
-        width: 100%;
-        height: 30px;
-        line-height: 30px;
-        text-align: left;
-    }
-    .mainInfor{
-        background: #eef2f5;;
-    }
+    
     .grid-content{
         overflow:hidden;
         text-overflow:ellipsis;
