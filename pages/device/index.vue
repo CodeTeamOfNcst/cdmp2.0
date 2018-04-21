@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="grid-content bg-purple key-content">
-                <div v-for="device in devices" v-bind:key="device">
+                <div v-for="device in devices" v-bind:key="device" v-if="device.canReserve">          
                     <div class="oneDevice">
                         <el-row :gutter="20" class="leftImg">
                             <el-col :span="8" class="leftspan">
@@ -83,8 +83,8 @@
                                             <el-col :span="16"><div class="grid-content bg-purple">{{device.type}}</div></el-col>
                                         </el-row>
                                         <el-row :gutter="20" class="contactUser mainInfor">
-                                            <el-col :span="8"><div class="grid-content bg-purple">设备状态</div></el-col>
-                                            <el-col :span="16"><div class="grid-content bg-purple">{{device.canReserve}}</div></el-col>
+                                            <el-col :span="8"><div class="grid-content bg-purple">设备地址</div></el-col>
+                                            <el-col :span="16"><div class="grid-content bg-purple">{{device.location }}</div></el-col>
                                         </el-row>
                                     </el-row>
                                 </div>
@@ -266,8 +266,6 @@
         },
         methods: {     
             async typeSelect(index){
-            //  根据选择的内容筛选相应的仪器设备
-            console.log(index)
                 if(index == -1){
                     let  resData  = await this.$axios.$get(`/api/device/getAllDeviceData`);
                     this.devices =  resData.Devices
@@ -298,8 +296,7 @@
                 }
             } 
         },
-        async mounted(){
-            
+        async mounted(){  
             let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
             this.devices = getAllData.Devices,
             this.deviceTypes = getAllData.DeviceTypes

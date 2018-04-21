@@ -93,9 +93,9 @@ module.exports = () => {
 
 
   //upload 相关 service
-  router.post('upload/imageUploadToTemp',uploadController.uploadPost)
-  router.post('upload/deleteTempFile',uploadController.uploadPost)
-  router.post('upload/copyTempFileToDir',uploadController.uploadCope)
+  router.post('/upload/imageUploadToTemp',upload.single('file'),uploadController.uploadPost)
+  router.post('/upload/deleteTempFile',uploadController.uploadDelete)
+  router.post('/upload/copyTempFileToDir',uploadController.uploadCope)
   
   return router
 }
