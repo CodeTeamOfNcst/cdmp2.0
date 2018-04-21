@@ -107,7 +107,6 @@
                     <el-button v-popover:popover4 class="addContent">新增</el-button>
                 </div>
             </div>
-
             <div class="table">
                 <el-table
                         :data="tableData"
@@ -138,9 +137,10 @@
                             width="130">
                     </el-table-column>
                     <el-table-column
-                            prop="canReserve"
+                            
                             label="是否可预约"
                             width="130">
+                            <template slot-scope="scope">{{ scope.row.canReserve ? '可预约':'不可预约'}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="isUse"
@@ -158,8 +158,7 @@
                     </el-table-column>
                 </el-table>
             </div>
-
-            <el-dialog title="编辑设备" :visible.sync="editFormVisibel" >
+            <el-dialog title="编辑设备" :visible.sync="editFormVisibel" @close="editDialogClose">
                 <el-form :model="editForm" >
                     <el-form-item label="设备名称" :label-width="editFormLabelWidth">
                         <div class="inputName">
@@ -202,7 +201,7 @@
                     </el-form-item>
                     <el-form-item label="设备图片">
                         <el-upload
-                                action="/api/upload/imageUpload"
+                                action="/api/upload/imageUploadToTemp"
                                 :show-file-list="false"
                                 :on-success="handleAvatarSuccess"
                                 :before-upload="beforeAvatarUpload">
@@ -324,169 +323,171 @@ export default{
         return 'admina'
     },
     methods: {
-        // return {
-            async handleAdd() {
-                let deviceName = this.addForm.name;
-                let deviceTypeId = this.addForm.deviceType;
-                let deviceManagerId = this.addForm.deviceManager;
-                let deviceAddDate = this.addForm.addDate;
-                let location = this.addForm.location;
-                let deviceDescribe = this.addForm.describe;
-                let deviceNeedRepair = this.addForm.needRepair;
-                let deviceCanApply = this.addForm.canApply;
-                let deviceIsUse = this.addForm.isUse;
-                if(deviceName && deviceTypeId && deviceAddDate && deviceDescribe){
-                    let result = await this.$axios.$post('/api/device/AddDevice', {
-                        name: deviceName,
-                        device_type: deviceTypeId,
-                        UserId: deviceManagerId,
-                        purchaseDate: deviceAddDate,
-                        location:location,
-                        description: deviceDescribe,
-                        needRepair: deviceNeedRepair,
-                        canReserve: deviceCanApply,
-                        isUse: deviceIsUse
-                    })
-                    if(result.status === 1){
-                        this.$message({
-                            message: result.message,
-                            // type: 'success'
-                        });
-                        window.location.reload()
-                    }else {
-                        this.$message.error(result.message);
-                    }
-                }else {
-                    this.$message.error('请填写所有项');
-                }
-                this.addFormVisible = false
-            },
-            async handleSearch(){
-                if(! this.searchInput){
-                    window.location.reload()
-                }else{
-                    let resData = await this.$axios.$post('/api/device/getDeviceSearch',{
-                        name: this.searchInput
-                    })
-                    if(resData.status === 1){
-                        this.tableData = resData.result
-                    }else{
-                        this.$message.error(resData.message)
-                    }
-                }
-            },
-            async editDialogClose(){
-                let resData = await this.$axios.$post('/api/upload/deleteTempFile', {
-                    path: this.editForm.deviceImageUrl
-                });
-                if(resData.status === 1){
-                    console.log(resData.message)
-                }else {
-                    this.$message.error('服务器异常，请联系管理员')
-                }
-            },
-            handleAvatarSuccess(res, file) {
-                this.editForm.deviceImageUrl = res.imgPath;  // 将返回的图片url存储到editForm数据中
-            },
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
-            }, 
-            async handleEdit(row) {
-                let rowId = row.id;
-                this.editForm.id = rowId;
-                let resData = await this.$axios.$post('/api/device/getDeviceDataById',{
-                    id: rowId
-                });
-                if(resData.status === 1){
-                    this.editForm.name = resData.device.name;
-                    this.editForm.deviceType = resData.device.device_type_id;
-                    this.editForm.addDate = resData.purchaseDate;
-                    this.editForm.deviceManager = resData.device.device_manager;
-                    this.editForm.describe = resData.device.description;
-                    this.editForm.location = resData.device.location;
-                    this.editForm.needRepair = resData.device.needRepair;
-                    this.editForm.canApply = resData.device.canReserve;
-                    this.editForm.isUse = resData.device.isUse;
-                    this.editForm.deviceImageUrl = resData.device.imgFilePath;
-                    this.editFormVisibel = true;
-                }else {
-                    this.$message.error(resData.message + '请联系管理员');
-                }
-            },
-            async handleSubmitEdit() {
-                try{
-                    let resData = await this.$axios.$put('/api/device/modifyDeviceById',{
-                        id: this.editForm.id,
-                        name: this.editForm.name,
-                        deviceTypeId: this.editForm.deviceType,
-                        deviceManager:this.editForm.deviceManager,
-                        purchaseDate: this.editForm.addDate,
-                        describe: this.editForm.describe,
-                        location: this.editForm.location,
-                        needRepair: this.editForm.needRepair,
-                        canApply: this.editForm.canApply,
-                        isUse: this.editForm.isUse,
-                        imgFilePath: this.editForm.deviceImageUrl,
-                    });
-                    if( resData.status === 1 ){
-                        this.$message({
-                            type: 'success',
-                            message: resData.message
-                        });
-                        window.location.reload()
-                    }else {
-                        this.$message.error( resData.status );
-                    }
-                }catch(err){
-                    this.$message.error('服务器异常!!!');
-                }
-                this.editFormVisibel = false
-            },
-            async handleForbid(row) {
-                try{
-                    await this.$confirm('此操作将禁用该设备, 是否继续?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    });
-                    let result = await this.$axios.$delete('/api/device/deleteDeviceById', {data:{
-                        id: row.id
-                    }});
-                    if(result.status === 1){
-                        this.$message({
-                            type: 'success',
-                            message: result.message
-                        });
-                        window.location.reload()
-                    }else {
-                        this.$message({
-                            type: 'info',
-                            message: result.message
-                        });
-                    }
-                }catch (err){
+        async handleAdd() {
+            let deviceName = this.addForm.name;
+            let deviceTypeId = this.addForm.deviceType;
+            let deviceManagerId = this.addForm.deviceManager;
+            let deviceAddDate = this.addForm.addDate;
+            let location = this.addForm.location;
+            let deviceDescribe = this.addForm.describe;
+            let deviceNeedRepair = this.addForm.needRepair;
+            let deviceCanApply = this.addForm.canApply;
+            let deviceIsUse = this.addForm.isUse;
+            if(deviceName && deviceTypeId && deviceAddDate && deviceDescribe ){
+                let result = await this.$axios.$post('/api/device/AddDevice', {
+                    name: deviceName,
+                    device_type: deviceTypeId,
+                    UserId: deviceManagerId,
+                    purchaseDate: deviceAddDate,
+                    location:location,
+                    description: deviceDescribe,
+                    needRepair: deviceNeedRepair,
+                    canReserve: deviceCanApply,
+                    isUse: deviceIsUse
+                })
+                if(result.status === 1){
                     this.$message({
-                        type: 'info',
-                        message: ` 取消 由于 ${ err }`
+                        message: result.message,
+                        type: 'success'
                     });
-                }
-            },
-            async handleCurrentChange(val) {
-                let resData = await this.$axios.$get(`/api/device/getAllDeviceData/${val}`);
-                if(resData.status === 1){
-                    this.tableData = resData.Devices
+                    window.location.reload()
                 }else {
+                    this.$message.error(result.message);
+                }
+            }else {
+                this.$message.error('请填写所有项');
+            }
+            this.addFormVisible = false
+        },
+        async handleSearch(){
+            if(! this.searchInput){
+                window.location.reload()
+            }else{
+                let resData = await this.$axios.$post('/api/device/getDeviceSearch',{
+                    name: this.searchInput
+                })
+                if(resData.status === 1){
+                    this.tableData = resData.result
+                }else{
                     this.$message.error(resData.message)
                 }
-            },       
+            }
+        },
+        async editDialogClose(){
+            console.log(this.editForm.deviceImageUrl)
+            let resData = await this.$axios.$post('/api/upload/deleteTempFile', {
+                path: this.editForm.deviceImageUrl
+            });
+            console.log(resData)
+            if(resData.status == 1){
+                console.log(resData.message)
+            }else {
+                this.$message.error('服务器异常，请联系管理员')
+            }
+        },
+        handleAvatarSuccess(res, file) {
+            this.editForm.deviceImageUrl = res.imgPath;  // 将返回的图片url存储到editForm数据中
+            this.addForm.deviceImageUrl = res.imgPath;
+        },
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isJPG && isLt2M;
+        }, 
+        async handleEdit(row) {
+            let rowId = row.id;
+            this.editForm.id = rowId;
+            let resData = await this.$axios.$post('/api/device/getDeviceDataById',{
+                id: rowId
+            });
+            if(resData.status === 1){
+                this.editForm.name = resData.device.name;
+                this.editForm.deviceType = resData.device.device_type_id;
+                this.editForm.addDate = resData.purchaseDate;
+                this.editForm.deviceManager = resData.device.device_manager;
+                this.editForm.describe = resData.device.description;
+                this.editForm.location = resData.device.location;
+                this.editForm.needRepair = resData.device.needRepair;
+                this.editForm.canApply = resData.device.canReserve;
+                this.editForm.isUse = resData.device.isUse;
+                this.editForm.deviceImageUrl = resData.device.imgFilePath;
+                this.editFormVisibel = true;
+            }else {
+                this.$message.error(resData.message + '请联系管理员');
+            }
+        },
+        async handleSubmitEdit(file) {
+            try{
+                let resData = await this.$axios.$put('/api/device/modifyDeviceById',{
+                    id: this.editForm.id,
+                    name: this.editForm.name,
+                    deviceTypeId: this.editForm.deviceType,
+                    deviceManager:this.editForm.deviceManager,
+                    purchaseDate: this.editForm.addDate,
+                    describe: this.editForm.describe,
+                    location: this.editForm.location,
+                    needRepair: this.editForm.needRepair,
+                    canApply: this.editForm.canApply,
+                    isUse: this.editForm.isUse,
+                    path: this.editForm.deviceImageUrl,
+                });
+                if( resData.status === 1 ){
+                    this.$message({
+                        type: 'success',
+                        message: resData.message
+                    });
+                    window.location.reload()
+                }else {
+                    this.$message.error( resData.message );
+                }
+            }catch(err){
+                this.$message.error('服务器异常!!!');
+            }
+            this.editFormVisibel = false
+        },
+        async handleForbid(row) {
+            try{
+                await this.$confirm('此操作将禁用该设备, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                });
+                let result = await this.$axios.$delete('/api/device/deleteDeviceById', {data:{
+                    id: row.id
+                }});
+                if(result.status === 1){
+                    this.$message({
+                        type: 'success',
+                        message: result.message
+                    });
+                    window.location.reload()
+                }else {
+                    this.$message({
+                        type: 'info',
+                        message: result.message
+                    });
+                }
+            }catch (err){
+                this.$message({
+                    type: 'info',
+                    message: ` 取消 由于 ${ err }`
+                });
+            }
+        },
+        async handleCurrentChange(val) {
+            let resData = await this.$axios.$get(`/api/device/getAllDeviceData/${val}`);
+            if(resData.status === 1){
+                this.tableData = resData.Devices
+            }else {
+                this.$message.error(resData.message)
+            }
+        },       
     },
     data() {
         return {
@@ -523,6 +524,7 @@ export default{
                 needRepair: false,
                 canApply: true,
                 isUse: true,
+                deviceImageUrl:null,
             },
             editForm: {
                 id: '',
@@ -560,8 +562,8 @@ export default{
     },
     async mounted() {
         // 挂载数据        
-        let getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
-        let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
+        // let getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
+        // let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
         let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
         let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
 

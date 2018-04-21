@@ -3,8 +3,8 @@ const { Device } = require('../config/models')
 const { DeviceType } = require('../config/models')
 const { DeviceApply } = require('../config/models')
 const { User } = require('../config/models')
-const { fs } = require('fs')
-const { uuid } = require('uuid')
+const  fs  = require('fs')
+const  uuid  = require('uuid')
 const { Op } = require('sequelize')
 /**
  * 
@@ -40,7 +40,6 @@ module.exports.getDeviceDataById = async (JSON) => {
         })
       }
     }
-
     let device = {
       id: thisDevice.id,
       name: thisDevice.name,
@@ -138,7 +137,7 @@ module.exports.getAllDeviceData = async () => {
         imgFilePath: devices[i].imgFilePath,
         device_manager:user.name,
         needRepair:devices[i].needRepair ? '需要' : '不需要',
-        canReserve: devices[i].canReserve ? '可预约':'不可预约',
+        canReserve: devices[i].canReserve ,
         show: true,
       })
     }
@@ -228,13 +227,12 @@ module.exports.getDeviceOnlyData = async () => {
 
 module.exports.AddDevice = async (JSON) => {
   try {
-    if(!JSON.name){throw("设备名称未定义")}
+    if(!JSON.name) {throw("设备名称未定义")}
     let newDevice = await Device.create(
       {
         name: JSON.name,
         device_manager:JSON.device_manager,
         description: JSON.describe,
-        imgFilePath: JSON.imgFilePath,
         location: JSON.location,
         purchaseDate: JSON.addDate,
         needRepair: JSON.needRepair,
@@ -302,21 +300,22 @@ module.exports.modifyDeviceById = async (JSON) => {
         id: JSON.id
       }
     });
-    // if (thisDevice.imgFilePath !== imagePath && imagePath) { // 判断是否上传了新的图片，没有则不改变图片
-    //   let oldPath = thisDevice.imgFilePath;
-    //   let targetPath = 'uploads/deviceImages/' + uuid.v1() + '.jpg'; //图片路径不一致，将图片copy到文件夹下
-    //   if (fs.existsSync('static/' + imagePath)) {
-    //     fs.readFile('static/' + imagePath, (err, data) => {
-    //       fs.writeFile('static/' + targetPath, data, (err) => {
-    //           if (err) console.log(err)
-    //       })
-    //     });
-    //     thisDevice.update({
-    //       imgFilePath: targetPath //直接将可以作为图片路径显示的路径存储在数据库中
-    //     });
-    //     if (fs.existsSync('static/' + oldPath) && oldPath) fs.unlink('static/' + oldPath)
-    //   }
-    // }
+    let imagePath = JSON.path;
+    console.log(imagePath)
+    if (thisDevice.imgFilePath !== imagePath && imagePath) { // 判断是否上传了新的图片，没有则不改变图片
+      let oldPath = thisDevice.imgFilePath;
+      let targetPath = '/uploads/deviceImages/' + uuid.v1() + '.jpg'; //图片路径不一致，将图片copy到文件夹下
+      if (fs.existsSync('static/' + imagePath)) {
+        fs.readFile('static/' + imagePath, (err, data) => {
+          fs.writeFile('static/' + targetPath, data, (err) => {
+              if (err) console.log(err)
+          })
+        });
+        thisDevice.update({
+          imgFilePath: targetPath //直接将可以作为图片路径显示的路径存储在数据库中
+        });
+      }
+    }
     await thisDevice.update({
       name: JSON.name,
       device_type:JSON.deviceTypeId,
@@ -324,7 +323,7 @@ module.exports.modifyDeviceById = async (JSON) => {
       purchaseDate: JSON.purchaseDate,
       needRepair: JSON.needRepair,
       location: JSON.location,
-      canReserve: JSON.canApply || true,
+      canReserve: JSON.canApply,
       isUse: JSON.isUse,
       description: JSON.describe
     });

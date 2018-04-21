@@ -1,5 +1,5 @@
 'use strict'
-const upload = require('../service/upload')
+const uploadService = require('../service/upload')
 
 /**
  * 测试 post 方法的参数提取
@@ -7,7 +7,8 @@ const upload = require('../service/upload')
  * @param {*} next 
  */
 module.exports.uploadPost = async (ctx, next) => {
-  let res = await upload.imageUploadToTemp(ctx.req.file)
+  let postData = ctx.req.file
+  let res = await uploadService.imageUploadToTemp(postData)
   ctx.body = {
     imgPath:res.imgPath,
     status:res.status,
@@ -16,7 +17,7 @@ module.exports.uploadPost = async (ctx, next) => {
 }
 module.exports.uploadDelete = async (ctx, next) => {
     let postData = ctx.request.body.path
-    let res = await upload.deleteTempFile(postData)
+    let res = await uploadService.deleteTempFile(postData)
     ctx.body = {
       imgPath:res.imgPath,
       status:res.status,
@@ -25,7 +26,7 @@ module.exports.uploadDelete = async (ctx, next) => {
   }
   module.exports.uploadCope = async (ctx, next) => {
     let postData = ctx.request.body.path
-    let res = await upload.copyTempFileToDir(postData)
+    let res = await uploadService.copyTempFileToDir(postData)
     ctx.body = {
       imgPath:res.imgPath,
       status:res.status,
