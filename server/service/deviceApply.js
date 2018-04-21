@@ -72,6 +72,7 @@ module.exports.getAllApplyData = async () => {
             status: 1,
             message: '成功获取信息'
         }
+        
         return result;
     }catch(err){
         let result = {
@@ -84,17 +85,30 @@ module.exports.getAllApplyData = async () => {
 
 module.exports.getApplySearch = async (JSON) => {
     try{
-        //暂定以申请理由搜索，后期改为以申请人搜索
+        let deviceId = await Device.findOne({
+            where:{
+                name:JSON.device
+            }
+        })
         let searchResult = await DeviceApply.findAll({
-            where: { vioReason:{ [Op.like] : `%${JSON.vioReason}%`}}
+            where: { apply_device:{ [Op.like] : `%${deviceId.id}%`}}
         })
         if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
         let result = []
         for(let i =0; i< searchResult.length; i++){
+            let apply_user = await searchResult[i].getDeviceApplyer()
+            let check_user = await searchResult[i].getDeviceApplyChecker()
+            let apply_device = await searchResult[i].getApplyDevice()
             result.push({
-                apply: searchResult[i],
-                applyUser: searchResult[i].apply_user,
-                applyDevice:  searchResult[i].apply_device
+                id: searchResult[i].id,
+                applyUser: apply_user.name,
+                checkUser: check_user.name,
+                device: apply_device.name,
+                startDate:searchResult[i].startDate,
+                endDate:searchResult[i].endDate,
+                vioReason:searchResult[i].vioReason,
+                isAgree:searchResult[i].isAgree,
+                isUse:searchResult[i].isUse,
             })
         }
         let res = {
@@ -114,23 +128,27 @@ module.exports.getApplySearch = async (JSON) => {
 
 module.exports.addApply = async (JSON) => {   
     try{
-        if((!JSON.vioReason) || 
-            (!JSON.apply_user) || 
-            (!JSON.apply_device)
+        if((!JSON.device.vioReason) || 
+            (!JSON.device.user) || 
+            (!JSON.device.device)
         ) throw("预约信息填写有误")
         let newDevice = await DeviceApply.create({
-            startDate: JSON.date[0],
-            endDate: JSON.date[1],
-            isAgree: JSON.isAgree,
-            vioReason: JSON.vioReason,
-            isUse: JSON.isUse
+            startDate: JSON.device.date[0],
+            endDate: JSON.device.date[1],
+            isAgree: JSON.device.isAgree,
+            vioReason: JSON.device.vioReason,
+            isUse: JSON.device.isUse
         });
+        let checker = await User.findOne({
+            where:{id:JSON.device.check_user}
+        })
         let applyer = await User.findOne({
-            where:{id: JSON.apply_user }
+            where:{id: JSON.device.user }
         });
         let applyDevice = await Device.findOne({
-            where: {id: JSON.apply_device}
+            where: {id: JSON.device.device}
         });
+        await newDevice.setDeviceApplyChecker(checker)
         await newDevice.setDeviceApplyer(applyer);
         await newDevice.setApplyDevice(applyDevice);
         await newDevice.save();
@@ -223,6 +241,9 @@ module.exports.modifyApplyById = async (JSON) => {
             where: {id: JSON.id}
         });
         await thisApply.update({
+            apply_user:JSON.apply_user,
+            check_user:JSON.check_user,
+            apply_device:JSON.device,
             vioReason: JSON.vioReason,
             isAgree: JSON.isAgree,
             isUse: JSON.isUse,

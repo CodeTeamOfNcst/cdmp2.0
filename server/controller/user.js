@@ -31,18 +31,8 @@ module.exports.userGetName = async (ctx, next) => {
  * @param {*} next 
  */
 module.exports.userPost = async (ctx, next) => {
-  let postData = ctx.request.body.post; //获取数据
-  //封装
-  let dataJSON = {
-    "user_type": postData.user_type,
-    "account": postData.account,
-    "password": postData.password,
-    "name": postData.name,
-    "phone": postData.phone,
-    "email": postData.email,
-    "isUse": postData.isUse
-  }
-  let result = await userService.userAddUser(dataJSON)
+  let postData = ctx.request.body; //获取数据
+  let result = await userService.userAddUser(postData)
   ctx.body = {
     status:result.status,
     message:result.message
@@ -50,10 +40,7 @@ module.exports.userPost = async (ctx, next) => {
 }
 module.exports.userGet = async (ctx, next) => {
   let getData = ctx.request.body;
-  let dataJSON = {
-    "id": getData.id,
-  }
-  let result = await userService.userGetUserData(dataJSON,10)
+  let result = await userService.userGetUserData(getData)
   ctx.body = {
     user:result.user,
     status:result.status,
@@ -74,11 +61,8 @@ module.exports.getApplys = async (ctx,next) => {
   }
 }
 module.exports.userSearch = async (ctx, next) => {
-  let search = ctx.request.body.search;
-  let dataJSON = {
-    "name":search,
-  }
-  let result = await userService.userSearchData(dataJSON)
+  let search = ctx.request.body.name;
+  let result = await userService.userSearchData(search)
   ctx.body = {
     result:result.result,
     status:result.status,
@@ -87,16 +71,7 @@ module.exports.userSearch = async (ctx, next) => {
 }
 module.exports.userPut = async (ctx, next) => {
   let user = ctx.request.body;   //获取数据
-  let dataJSON = {
-    "id":user.id,
-    "user_type":user.userType,
-    "account": user.account,
-    "name": user.name,
-    "phone": user.phone,
-    "email": user.email,
-    "isUse": user.isUse
-  }
-  let result = await userService.modifyUserById(dataJSON)
+  let result = await userService.modifyUserById(user)
   ctx.body = {
     status:result.status,
     message:result.message
@@ -109,10 +84,7 @@ module.exports.userPut = async (ctx, next) => {
  */
 module.exports.userDelete = async (ctx, next) => {
   let userId = ctx.request.body;
-  let dataJSON = {
-    "id":userId.id
-  }
-  let result = await userService.userDeleteById(dataJSON)
+  let result = await userService.userDeleteById(userId)
   ctx.body = {
     status:result.status,
     message:result.message

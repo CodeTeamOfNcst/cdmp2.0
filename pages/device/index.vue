@@ -45,7 +45,7 @@
                             <el-col :span="8" class="leftspan">
                                 <div class="grid-content bg-purple bullImg">
                                     <a :href="`device/details/${device.id}`">
-                                        <img :src="device.imgFilePath" alt="Nuxt.js Logo" class="logo" />
+                                        <img :src="device.imgFilePath" alt="Nuxt.js Logo"  />
                                     </a>
                                 </div>
                             </el-col>
@@ -180,7 +180,6 @@
         height: 110px;
         float: right;
         margin-top: 22px;
-        /*background: #2e2f30;*/
         .bullImg img{
         width: 100%;
         height: 100%;
@@ -268,7 +267,7 @@
         methods: {     
             async typeSelect(index){
                 if(index == -1){
-                    let  resData  = await this.$axios.$get(`/api/device/getAllDeviceData`);
+                    let resData  = await this.$axios.$get(`/api/device/getAllDeviceData`);
                     this.devices =  resData.Devices
                 }else{
                     let resData = await this.$axios.$post('/api/device/getDeviceDataById',{

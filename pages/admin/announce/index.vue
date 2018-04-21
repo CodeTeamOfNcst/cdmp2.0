@@ -17,7 +17,7 @@
                         <el-date-picker type="date" placeholder="选择日期" v-model="addForm.publishDate" style="width: 100%;"></el-date-picker>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="禁用标识">
+                <el-form-item label="可用标识">
                     <el-switch v-model="addForm.isUse" />
                 </el-form-item>
                 <el-form-item label="公告内容">
@@ -113,7 +113,7 @@
                             <el-date-picker type="date" placeholder="选择日期" v-model="editForm.publishDate" style="width: 100%;"></el-date-picker>
                         </el-col>
                     </el-form-item>
-                    <el-form-item label="禁用标识">
+                    <el-form-item label="可用标识">
                         <el-switch v-model="editForm.isUse" />
                     </el-form-item>
                     <el-form-item label="公告内容">
@@ -184,120 +184,126 @@
         layout(){
             return 'admina'
         },
-        methods() {
-            return{
-                async handleSearch(){
-                    if(! this.searchInput){
-                        window.location.reload()
+        methods: {
+            async handleSearch(){
+                if(! this.searchInput){
+                    window.location.reload()
+                }else{
+                    let resData = await this.$axios.$post('/api/info/getInfoSearch',{
+                        title: this.searchInput
+                    })
+                    if(resData.status === 1){
+                        this.tableData = resData.details
                     }else{
-                        let resData = await axios.post('/api/rule/search',{
-                            search: this.searchInput
-                        })
-                        if(resData.data.status === 1){
-                            this.tableData = resData.data.result
-                        }else{
-                            this.$message.error(resData.data.message)
-                        }
+                        this.$message.error(resData.message)
                     }
-                },
-                async handleAdd(){
-                    try{
-                        let resData = await axios.post('/api/rule/add',{
-                            rule: this.addForm
+                }
+            },
+            async handleAdd(){
+                try{
+                    let resData = await this.$axios.$post('/api/info/addInfo',{
+                        title:this.addForm.title,
+                        releaseDate:this.addForm.publishDate,
+                        content:this.addForm.content,
+                        isUse:this.addForm.isUse,
+                    });
+                    if(resData.status === 1){
+                        this.$message({
+                            type: 'success',
+                            message: resData.message
                         });
-                        if(resData.data.status === 1){
-                            this.$message({
-                                type: 'success',
-                                message: resData.data.message
-                            });
-                            window.location.reload()
-                        }else {
-                            this.$message.error(resData.data.message);
-                        }
-                    }catch (err){
-                        this.$message.error(`${err}`);
+                        window.location.reload()
+                    }else {
+                        this.$message.error(resData.message);
                     }
-                    this.addFormVisible = false
-                },
-                handleAddCancel(){
+                }catch (err){
+                    this.$message.error(`${err}`);
+                }
+                this.addFormVisible = false
+            },
+            handleAddCancel(){
+                this.$message({
+                    type: 'info',
+                    message: '已取消'
+                });
+                this.addFormVisible = false
+            },
+            async handleEdit(row){
+                try{
+                    let resData = await this.$axios.$post('/api/info/getInfoDataById',{
+                        id: row.id
+                    });
+                    if(resData.status === 1){
+                        this.editForm = resData.infoDetails
+                    }else {
+                        this.$message.error(resData.message);
+                    }
+                }catch(err) {
+                    this.$message.error(`异常 由于 ${err}`);
+                }
+                this.editFormVisible = true
+            },
+            async handleEditSubmit(){
+                try{
+                    console.log(this.editForm.id)
+                    let resData = await this.$axios.$post('/api/info/modifyInfoById',{
+                        id: this.editForm.id,
+                        title:this.editForm.title,
+                        content:this.editForm.content,
+                        isUse:this.editForm.isUse,
+                        releaseDate:this.editForm.publishDate
+                    })
+                    if(resData.status === 1){
+                        this.$message({
+                            type: 'success',
+                            message: resData.message
+                        });
+                        window.location.reload()
+                    }else {
+                        this.$message.error(resData.message);
+                    }
+                }catch (err){
+                    this.$message.error(` 由于 ${err}`);
+                }
+                this.editFormVisible = false
+            },
+            handleEditCanacel(){
+                this.editFormVisible = false
+            },
+            async forbidRule(row) {
+                try{
+                    await this.$confirm('此操作将禁用该设备, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    });
+                    let resData = await this.$axios.$post('/api/info/deleteInfoById', {
+                        id: row.id
+                    });
+                    if(resData.status === 1){
+                        this.$message({
+                            type: 'success',
+                            message: '成功禁用'
+                        });
+                        window.location.reload()
+                    }else {
+                        this.$message.error(resData.message);
+                    }
+                }catch (err){
                     this.$message({
                         type: 'info',
                         message: '已取消'
                     });
-                    this.addFormVisible = false
-                },
-                async handleEdit(row){
-                    try{
-                        let resData = await axios.post('/api/rule/getById',{
-                            id: row.id
-                        });
-                        if(resData.data.status === 1){
-                            this.editForm = resData.data.rule
-                        }else {
-                            this.$message.error(resData.data.message);
-                        }
-                    }catch(err) {
-                        this.$message.error(`异常 由于 ${err}`);
-                    }
-                    this.editFormVisible = true
-                },
-                async handleEditSubmit(){
-                    try{
-                        let resData = await axios.post('/api/rule/modifyById',{
-                            rule: this.editForm
-                        })
-                        if(resData.data.status === 1){
-                            this.$message({
-                                type: 'success',
-                                message: resData.data.message
-                            });
-                            window.location.reload()
-                        }else {
-                            this.$message.error(resData.data.message);
-                        }
-                    }catch (err){
-                        this.$message.error(`异常 由于 ${err}`);
-                    }
-                    this.editFormVisible = false
-                },
-                handleEditCanacel(){
-                    this.editFormVisible = false
-                },
-                async forbidRule(row) {
-                    try{
-                        await this.$confirm('此操作将永久删除该公告, 是否继续?', '提示', {
-                            confirmButtonText: '确定',
-                            cancelButtonText: '取消',
-                            type: 'warning'
-                        });
-                        let resData = await axios.post('/api/rule/deleteById', {
-                            id: row.id
-                        });
-                        if(resData.data.status === 1){
-                            this.$message({
-                                type: 'success',
-                                message: '成功禁用'
-                            });
-                            window.location.reload()
-                        }else {
-                            this.$message.error(resData.data.message);
-                        }
-                    }catch (err){
-                        this.$message({
-                            type: 'info',
-                            message: '已取消'
-                        });
-                    }
-                },
-                async handleCurrentChange(val) {
-                    let resData = await axios.get(`/api/rule/getAll/${val}`)
-                    if(resData.data.status === 1){
-                        this.tableData = resData.data.rulesDetail;
-                    }else {
-                        this.$message.error(resData.data.message)
-                    }
-                },
-            }
+                }
+            },
+            async handleCurrentChange(val) {
+                let resData = await this.$axios.$get(`/api/info/getAll/${val}`)
+                if(resData.data.status === 1){
+                    this.tableData = resData.infoDetail;
+                }else {
+                    this.$message.error(resData.message)
+                }
+            },
         },
         data() {
             return {
@@ -309,7 +315,7 @@
                     publishDate: '',
                     title: '',
                     content:'',
-                    isUse: '',
+                    isUse: 'false',
                 },
                 editForm: {
                     id:'',
@@ -346,19 +352,10 @@
             }
         },
         async mounted(){
-            this.itemCounts = this.counts;
-            
-            this.itemCounts = this.counts;
-
-            this.getDataById = await this.$axios.$post('/api/info/getInfoDataById', {post: 'post'});
             let getAllData = await this.$axios.$get('/api/info/getAllInfoData');
-            this.searchData = await this.$axios.$post('/api/info/getInfoSearch', {post: 'post'});
-            this.resData = await this.$axios.$post('/api/info/addInfo', {post: 'post'});
-            this.deleteData = await this.$axios.$delete('/api/info/deleteInfoById', { data:{delete: 'delete'}}) 
-            this.putData = await this.$axios.$put('/api/info/modifyInfoById', {put: 'put'});
 
             this.tableData = getAllData.infoDetail;
-        
+            this.itemCounts = getAllData.counts;
         
         }
     }

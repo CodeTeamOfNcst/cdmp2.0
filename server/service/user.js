@@ -12,11 +12,11 @@ const { Op } = require('sequelize')
  * @param { Number } limit 限制数据的条数，默认为 comfig 中的条数
  */
 
-module.exports.userGetUserData = async (JSON, limit) => {
+module.exports.userGetUserData = async (JSON) => {
   try{
     let userId = await User.findOne({
       where: {
-        id: JSON  
+        id: JSON.id  
       } 
     })
     let userType = await userId.getUserType()
@@ -95,15 +95,26 @@ module.exports.onlyGetAllUser = async () => {
 };
 module.exports.userSearchData = async (JSON) => {
   try{
-    let searchResult = await User.findAll({
-      where: {name:{ [Op.like] : `%${JSON.name}%`}}
+    let searchData = await User.findAll({
+      where: {name:{ [Op.like] : `%${JSON}%`}}
     })
-    if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
+    if(! searchData || searchData.length === 0) throw("未匹配到结果")
+    let user = {}
     let result = []
-    for(let i=0;i<searchResult.length; i++){
+    for(let i=0;i<searchData.length; i++){
+      let user_type = await searchData[i].getUserType()
+      let User = {
+        id: searchData[i].id,
+        name: searchData[i].name,
+        account:searchData[i].account,
+        password:searchData[i].password,
+        phone:searchData[i].phone,
+        email:searchData[i].email,
+        isUse: searchData[i].isUse
+      }
       result.push({
-        user: searchResult[i],
-        userType: (await searchResult[i].getUserType()).name,
+        user:User,
+        userType:user_type
       })
     }
     let res = {
@@ -160,6 +171,7 @@ module.exports.userApply = async (JSON) => {
 
 module.exports.userAddUser = async (JSON) => {
   try {
+    if(!JSON.name && !JSON.account && !JSON.user_type){throw("请务必填写前三项")}
     let users = await User.findAll();
     for(let index in users) {
       if(JSON.account == users[index].account) {
@@ -228,7 +240,7 @@ module.exports.modifyUserById = async (JSON) => {
   try {
     let thisUser = await User.findOne({
         where: {
-            id: 1
+          account:JSON.account, 
         }
     }); 
     let userType = await UserType.findOne({
@@ -237,7 +249,6 @@ module.exports.modifyUserById = async (JSON) => {
       }
     });
     await thisUser.update({
-      id:JSON.id,
       user_type:JSON.user_type,
       account: JSON.account,
       password:JSON.password,

@@ -37,7 +37,7 @@ module.exports = () => {
   router.post('/user/userSearchData',userController.userSearch)
   router.post('/user/userAddUser',userController.userPost) 
   router.post('/user/modifyUserById',userController.userPut)
-  router.delete('/user/userDeleteById', userController.userDelete)
+  router.post('/user/userDeleteById', userController.userDelete)
 
 
   // device 相关 service
@@ -63,8 +63,8 @@ module.exports = () => {
   router.get('/info/getAllInfoData',infoController.infoGetAll)
   router.post('/info/getInfoSearch',infoController.infoSearch)
   router.post('/info/addInfo',infoController.infoPost) 
-  router.delete('/info/deleteInfoById', infoController.infoDelete)
-  router.put('/info/modifyInfoById',infoController.infoPut)
+  router.post('/info/deleteInfoById', infoController.infoDelete)
+  router.post('/info/modifyInfoById',infoController.infoPut)
 
   // deviceApply 相关 service
   router.post('/deviceApply/getApplyById',deviceApplyController.deviceApplyGetById)
@@ -72,8 +72,8 @@ module.exports = () => {
   router.post('/deviceApply/getApplySearch',deviceApplyController.deviceApplySearch)
   router.post('/deviceApply/addApply',deviceApplyController.deviceApplyPost)
   router.post('/deviceApply/addApplyFront',deviceApplyController.deviceApplyPostFront) 
-  router.delete('/deviceApply/deleteApplyById', deviceApplyController.deviceApplyDelete)
-  router.put('/deviceApply/modifyApplyById',deviceApplyController.deviceApplyPut)
+  router.post('/deviceApply/deleteApplyById', deviceApplyController.deviceApplyDelete)
+  router.post('/deviceApply/modifyApplyById',deviceApplyController.deviceApplyPut)
 
   //computeApply 相关 service
   router.post('/computeApply/getApplyById',computeApplyController.computeApplyGetById)

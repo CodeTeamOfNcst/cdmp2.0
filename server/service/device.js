@@ -21,6 +21,7 @@ module.exports.getDeviceDataById = async (JSON) => {
     });
     let TypesDevice = []
     let Devices = await Device.findAll()
+    //按type_id分类筛选符合的设备数据
     for(let i = 0;i < Devices.length;i ++) {
       if(JSON.id === Devices[i].device_type) {
         let user = await Devices[i].getDeviceUser()
@@ -33,13 +34,14 @@ module.exports.getDeviceDataById = async (JSON) => {
           location:Devices[i].location,
           purchaseDate: Devices[i].purchaseDate,
           needRepair: Devices[i].needRepair,
-          canReserve: Devices[i].canReserve ? '可预约':'不可预约',
+          canReserve: Devices[i].canReserve,
           type: Type.name,
           device_manager:user.name,
           isUse: Devices[i].isUse
         })
       }
     }
+    //按单个设备id获取单个设备的数据
     let device = {
       id: thisDevice.id,
       name: thisDevice.name,

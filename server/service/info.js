@@ -9,7 +9,7 @@ const { Op } = require('sequelize')
 const ItemPerPage = 10;
 module.exports.getInfoDataById = async (JSON) => {
     try{
-        let thisInfo = await Info.findOne({where: {id: 1}})
+        let thisInfo = await Info.findOne({where: {id: JSON.id}})
         let infoDetails = {
             id: thisInfo.id,
             releaseDate: thisInfo.releaseDate,
@@ -70,7 +70,6 @@ module.exports.getInfoSearch = async (JSON) => {
         let searchResult = await Info.findAll({
             where: { title: { [Op.like] : `%${JSON.title}%`}}
         })
-        console.log(searchResult)
         if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
         let result = []
         for(let i=0;i<searchResult.length; i++){
@@ -102,9 +101,9 @@ module.exports.addInfo = async (JSON) => {
         if((!JSON.title) && (!JSON.content)) throw("公告标题或内容未定义")
         let newInfo = await Info.create({
             releaseDate: JSON.releaseDate,
-            title: "测试公告",
-            content: "这是测试内容",
-            isUse: 1
+            title: JSON.title,
+            content: JSON.content,
+            isUse: JSON.isUse
         })
         await newInfo.save()
         let res = {
@@ -142,7 +141,11 @@ module.exports.deleteInfoById = async (JSON) => {
 
 module.exports.modifyInfoById = async (JSON) => {
     try{
-        let thisInfo = await Info.findOne({where: {id: JSON.id}})
+        let thisInfo = await Info.findOne({
+            where: {
+                id: JSON.id
+            }
+        });
         await thisInfo.update({
             releaseDate: JSON.releaseDate,
             title: JSON.title,

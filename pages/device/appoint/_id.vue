@@ -12,7 +12,7 @@
                         <p>仪器名称:</p>
                         <div class="fillOutName">
                             <el-input
-                                    placeholder="全自动智能倒置显微镜及金相分析系统"
+                                    placeholder="跳转自动获得"
                                     v-model="device.name"
                                     :disabled="true">
                             </el-input>
@@ -27,7 +27,7 @@
                         <div class="fillOutName">
                             <el-input
                                     placeholder="xxxxxxxxxxxx"
-                                    v-model="device.device_type_name"
+                                    v-model="device.name"
                                     :disabled="true">
                             </el-input>
                         </div>
@@ -126,53 +126,53 @@
 <script>
     import axios from 'axios'
     export default {
-        methods() {
-            return {
-                async handleSubmit(){
-                    if(!(this.vioReason) || !(this.date)){
-                        this.$message.error("请填写所有信息")
-                        return
-                    }
-                    let resData = await axios.post('/api/apply/addApplyFront', {
-                        deviceId: this.device.id,
-                        vioReason: this.vioReason,
-                        startDate: this.date[0],
-                        endDate: this.date[1]
-                    })
-                    if(resData.data.status === 1){
-                        this.$message({
-                            message: resData.data.message,
-                            type: 'success'
-                        });
-                        window.location.href = '/device'
-                    }else{
-                        this.$message.error(resData.data.message)
-                    }
+        methods:{
+            async handleSubmit(){
+                if(!(this.vioReason) || !(this.date)){
+                    this.$message.error("请填写所有信息")
+                    return
                 }
-            }       
+                let resData = await axios.post('/api/deviceApply/addApplyFront', {
+                    deviceId: this.device.id,
+                    vioReason: this.vioReason,
+                    startDate: this.date[0],
+                    endDate: this.date[1]
+                })
+                if(resData.data.status === 1){
+                    this.$message({
+                        message: resData.data.message,
+                        type: 'success'
+                    });
+                    window.location.href = '/device'
+                }else{
+                    this.$message.error(resData.data.message)
+                }
+            } , 
         },
         data(){
             return{
-                device_name: null,
+                name: null,
                 deviceType: null,
                 content: null,
                 date: [],
                 vioReason: '',
                 user: null,
-                device: {},
+                device: {
+                    name:''
+                },
             }
         },
         async mounted(){
             // if(! this.$auth.state.loggedIn) window.location.href ='/login'
             // this.user = this.$auth.state.user.login_account
         },
-        // async asyncData({params}){
-        //     let resData = await axios.post('/api/device/getById', { id: params.id})
-        //     if(resData.data.status === 1){
-        //         return {
-        //             device: resData.data.device
-        //         }
-        //     }
-        // }
+        async asyncData({params}){
+            let resData = await axios.post('/api/device/getDeviceDataById', { id: params.id})
+            if(resData.status === 1){
+                return {
+                    device: resData.device
+                }
+            }
+        }
     }
 </script>

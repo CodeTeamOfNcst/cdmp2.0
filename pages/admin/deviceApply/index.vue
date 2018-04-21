@@ -19,6 +19,18 @@
                         </el-select>
                     </el-col>
                 </el-form-item>
+                <el-form-item label="审批人员">
+                    <el-col :span="18">
+                        <el-select v-model="addForm.check_user" filterable placeholder="请选择用户">
+                            <el-option
+                                    v-for="item in users"
+                                    :key="item.key"
+                                    :label="item.label"
+                                    :value="item.key">
+                            </el-option>
+                        </el-select>
+                    </el-col>
+                </el-form-item>
                 <el-form-item label="申请设备">
                     <el-col :span="18">
                         <el-select v-model="addForm.device" filterable placeholder="请选择对应的设备">
@@ -155,12 +167,38 @@
                 <el-form ref="form" :model="editForm" label-width="90px">
                     <el-form-item label="申请人" >
                         <el-col :span="18">
-                            <el-input v-model="editForm.user"  :disabled="true"/>
+                            <el-select v-model="editForm.user" filterable placeholder="请选择用户">
+                                <el-option
+                                        v-for="item in users"
+                                        :key="item.key"
+                                        :label="item.label"
+                                        :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="审批人" >
+                        <el-col :span="18">
+                            <el-select v-model="editForm.checker" filterable placeholder="请选择用户">
+                                <el-option
+                                        v-for="item in users"
+                                        :key="item.key"
+                                        :label="item.label"
+                                        :value="item.key">
+                                </el-option>
+                            </el-select>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="申请设备">
                         <el-col :span="18">
-                            <el-input v-model="editForm.device"  :disabled="true"/>
+                           <el-select v-model="editForm.device" filterable placeholder="请选择对应的设备">
+                                <el-option
+                                        v-for="item in devices"
+                                        :key="item.key"
+                                        :label="item.label"
+                                        :value="item.key">
+                                </el-option>
+                        </el-select>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="开始时间">
@@ -250,120 +288,118 @@
         layout(){
             return  'admina'
         },
-        methods() {
-            return{
-                async handleSearch(){
-                    if(! this.searchInput){
-                        window.location.reload()
+        methods: {
+            async handleSearch(){
+                if(! this.searchInput){
+                    window.location.reload()
+                }else{
+                    let resData = await this.$axios.$post('/api/deviceApply/getApplySearch',{
+                        device: this.searchInput
+                    })
+                    if(resData.status == 1){
+                        this.tableData = resData.result
                     }else{
-                        console.log(this.searchInput)
-                        let resData = await axios.post('/api/apply/search',{
-                            search: this.searchInput
-                        })
-                        if(resData.data.status === 1){
-                            this.tableData = resData.data.result
-                        }else{
-                            this.$message.error(resData.data.message)
-                        }
+                        this.$message.error(resData.message)
                     }
-                },
-                async handleAddOpen(){
-                    let resDataUser = await axios.get('/api/user/onlyAll');
-                    let resDataDevice = await axios.get('/api/device/onlyAll');
-                    if(resDataUser.data.status === 1 && resDataDevice.data.status === 1){
-                        this.users = resDataUser.data.users;
-                        this.devices = resDataDevice.data.devices
-                    }else {
-                        this.$message.error('从服务端获取信息失败')
-                    }
-                },
-                async handleAdd(){
-                    // 之后要加上手动验证逻辑
-                    let resData = await axios.post('api/apply/add', {
-                        device: this.addForm
+                }
+            },
+            async handleAdd(){
+                // 之后要加上手动验证逻辑
+                let resData = await this.$axios.$post('api/deviceApply/addApply', {
+                    device: this.addForm
+                });
+                if( resData.status == 1){
+                    this.$message({
+                        message: resData.message,
+                        type: 'success'
                     });
-                    if( resData.data.status === 1){
-                        this.$message({
-                            message: resData.data.message,
-                            type: 'success'
-                        });
-                        window.location.reload()
-                    }else {
-                        this.$message.error(resData.data.message)
-                    }
-                },
-                handleAddCancel(){
-                    this.addFromVisible = false
-                },
-                async handleEdit(row) {
-                    let resData = await axios.post('/api/apply/getById', {
-                        id: row.apply.id        
+                    window.location.reload()
+                }else {
+                    this.$message.error(resData.message)
+                }
+            },
+            handleAddCancel(){
+                this.addFromVisible = false
+            },
+            async handleEdit(row) {
+                let resData = await this.$axios.$post('/api/deviceApply/getApplyById', {
+                    id: row.id        
+                });
+                this.editForm.id = row.id;
+                if( resData.status === 1){
+                    this.editForm.device = resData.result.apply_device;
+                    this.editForm.date = [resData.result.startDate, resData.result.endDate];
+                    this.editForm.vioReason= resData.result.vioReason;
+                    this.editForm.isAgree= resData.result.isAgree;
+                    this.editForm.isUse= resData.result.isUse;
+                    this.editForm.user = resData.result.apply_user;
+                    this.editForm.checker = resData.result.check_user;
+                    this.editFromVisible = true
+                }else {
+                    this.$message.error(resData.data.message)
+                }
+            },
+            async handleEditSubmit(){
+                try{
+                    console.log(this.editForm)
+                    let resData = await this.$axios.$post('/api/deviceApply/modifyApplyById', {
+                        id: this.editForm.id,
+                        apply_user:this.editForm.user,
+                        check_user:this.editForm.checker,
+                        device:this.editForm.device,
+                        vioReason:this.editForm.vioReason,
+                        isAgree:this.editForm.isAgree,
+                        isUse:this.editForm.isUse,
+                        date:this.editForm.date,
                     });
-                    if( resData.data.status === 1){
-                        this.editForm.id = resData.data.apply.id;
-                        this.editForm.user = resData.data.applyUser.name;
-                        this.editForm.device = resData.data.applyDevice.name;
-                        this.editForm.date = [resData.data.apply.startDate, resData.data.apply.endDate];
-                        this.editForm.vioReason= resData.data.apply.vioReason;
-                        this.editForm.isAgree= resData.data.apply.isAgree;
-                        this.editForm.isUse= resData.data.apply.isUse;
-
-                        this.editFromVisible = true
-                    }else {
-                        this.$message.error(resData.data.message)
-                    }
-                },
-                async handleEditSubmit(){
-                    let resData = await axios.post('/api/apply/modifyById', {
-                        apply: this.editForm
-                    });
-                    if(resData.data.status === 1){
+                    if(resData.status === 1){
                         this.$message({
                             type: 'success',
-                            message: resData.data.message
+                            message: resData.message
                         });
                         window.location.reload()
                     }else {
-                        this.$message.error(resData.data.message);
+                        this.$message.error(resData.message);
                     }
-                    this.editFromVisible = false
-                },
-                handleEditCancle(){
-                    this.editFromVisible = false
-                },
-                async handleDelete(row) {
-                    try{
-                        await this.$confirm('此操作将禁用该用户, 是否继续?', '提示', {
-                            confirmButtonText: '确定',
-                            cancelButtonText: '取消',
-                            type: 'warning'
+                }catch(err){
+                    this.$message.error('服务器异常!!!');
+                }
+                this.editFromVisible = false
+            },
+            handleEditCancle(){
+                this.editFromVisible = false
+            },
+            async handleDelete(row) {
+                try{
+                    await this.$confirm('此操作将禁用该用户, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    });
+                    let resData = await this.$axios.$post('/api/deviceApply/deleteApplyById', {
+                        id: row.id
+                    });
+                    if(resData.status === 1){
+                        this.$message({
+                            type: 'success',
+                            message: resData.message
                         });
-                        let resData = await axios.post('/api/apply/deleteById', {
-                            id: row.apply.id
-                        });
-                        if(resData.data.status === 1){
-                            this.$message({
-                                type: 'success',
-                                message: resData.data.message
-                            });
-                            window.location.reload()
-                        }else {
-                            this.$message.error(resData.data.message);
-                        }
-                    }catch (err){
-                        this.$message.error('已取消');
-                    }
-                },
-                async handleCurrentChange(val) {
-                    let resData = await axios.get(`/api/apply/getAll/${val}`);
-                    if(resData.data.status === 1){
-                        this.tableData = resData.data.applys
+                        window.location.reload()
                     }else {
-                        this.$message.error(resData.data.message)
+                        this.$message.error(resData.message);
                     }
-                },
-            }
-            
+                }catch (err){
+                    this.$message.error('已取消');
+                }
+            },
+            async handleCurrentChange(val) {
+                let resData = await this.$axios.$get(`/api/deviceApply/getAll/${val}`);
+                if(resData.data.status === 1){
+                    this.tableData = resData.data.applys
+                }else {
+                    this.$message.error(resData.data.message)
+                }
+            },
         },
         data() {
             return {
@@ -379,18 +415,20 @@
                     user: '',
                     device:'',
                     date: '',
+                    check_user:'',
                     vioReason: '',
-                    isAgree: '',
+                    isAgree: false,
                     isUse: false,
 
                 },
                 editForm: {
                     id:"",
                     user: '',
+                    checker:'',
                     device: '',
                     date:[],
                     vioReason:'',
-                    isAgree:'',
+                    isAgree:false,
                     isUse: false,
                 },
                 users: [
@@ -410,7 +448,7 @@
                     {
                         id: '1',
                         applyUser: '张扬果儿',
-                        checkUser:'',
+                        checkUser:'名字',
                         device: '第一台设备',
                         startDate: '',
                         endDate:'',
@@ -424,28 +462,20 @@
                 searchOption: [
                     {
                         value: '1',
-                        label: '申请理由'
+                        label: '申请设备'
                     }
                 ],
             };
         },
         async mounted(){
-            this.itemCounts = this.counts;
-
-            this.getDataById = await this.$axios.$post('/api/deviceApply/getApplyById', {post: 'post'});
             let getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
             let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
-            this.searchData = await this.$axios.$post('/api/deviceApply/getApplySearch', {post: 'post'});
-            this.postData = await this.$axios.$post('/api/deviceApply/addApply', {post: 'post'});
             this.postDataFront = await this.$axios.$post('/api/deviceApply/addApplyFront', {post: 'post'});
-            this.deleteData = await this.$axios.$delete('/api/deviceApply/deleteApplyById', { data:{delete: 'delete'}}) 
-            this.putData = await this.$axios.$put('/api/deviceApply/modifyApplyById', {put: 'put'});
             let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
-
-
             this.tableData = getAllData.applys;
             this.users = getOnlyUsersData.users;
             this.devices = getOnlyData.devices;
+            this.itemCounts = getAllData.counts;
         },
         head() {
             return {

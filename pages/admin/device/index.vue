@@ -374,15 +374,13 @@ export default{
             }
         },
         async editDialogClose(){
-            console.log(this.editForm.deviceImageUrl)
             let resData = await this.$axios.$post('/api/upload/deleteTempFile', {
                 path: this.editForm.deviceImageUrl
             });
-            console.log(resData)
             if(resData.status == 1){
                 console.log(resData.message)
             }else {
-                this.$message.error('服务器异常，请联系管理员')
+                this.$message.error('取消编辑')
             }
         },
         handleAvatarSuccess(res, file) {
@@ -476,8 +474,9 @@ export default{
             }catch (err){
                 this.$message({
                     type: 'info',
-                    message: ` 取消 由于 ${ err }`
+                    message: ` 已取消禁用 `
                 });
+                
             }
         },
         async handleCurrentChange(val) {
@@ -562,8 +561,6 @@ export default{
     },
     async mounted() {
         // 挂载数据        
-        // let getDataByName = await this.$axios.$post('/api/device/getDeviceDataByName', {post: 'post'});
-        // let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
         let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
         let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
 

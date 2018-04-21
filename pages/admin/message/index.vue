@@ -253,124 +253,121 @@
         layout(){
             return  'admina'
         },
-        methods() {
-            return{
-                async handleSearch(){
-                    if(! this.searchInput){
-                        window.location.reload()
+        methods: {
+            async handleSearch(){
+                if(! this.searchInput){
+                    window.location.reload()
+                }else{
+                    console.log(this.searchInput)
+                    let resData = await axios.post('/api/message/search',{
+                        search: this.searchInput
+                    })
+                    if(resData.status === 1){
+                        this.tableData = resData.result
                     }else{
-                        console.log(this.searchInput)
-                        let resData = await axios.post('/api/message/search',{
-                            search: this.searchInput
-                        })
-                        if(resData.data.status === 1){
-                            this.tableData = resData.data.result
-                        }else{
-                            this.$message.error(resData.data.message)
-                        }
+                        this.$message.error(resData.message)
                     }
-                },
-                userFilterMethod(query, item){
-                    return item.key.indexOf(query) > -1;
-                },
-                handleAddOpen() {
-                },
-                async handleAdd(){
-                    if( this.addForm.selected_user.length !== 0){
-                        let resData = await axios.post('api/message/add', {
-                            message: this.addForm
-                        });
-                        if(resData.data.status === 1){
-                            this.$message({
-                                type: 'success',
-                                message: resData.data.message
-                            });
-                            window.location.reload()
-                        }else{
-                            this.$message.error(resData.data.message);
-                        }
-                    }else {
-                        this.$message.error('至少选择一个用户');
-                        this.addFromVisible = false
-                    }
-                },
-                handleAddCancel(){
-                    console.log(this.addForm.selected_user);
-                    this.addFromVisible = false
-                },
-                async handleEdit(row) {
-                    let resData = await axios.post('/api/message/getById', {
-                        id: row.message.id
+                }
+            },
+        //     userFilterMethod(query, item){
+        //         return item.key.indexOf(query) > -1;
+        //     },
+            handleAddOpen() {
+            },
+            async handleAdd(){
+                if( this.addForm.selected_user.length !== 0){
+                    let resData = await axios.post('api/message/add', {
+                        message: this.addForm
                     });
-                    if(resData.data.status === 1){
-                        this.editForm.id = row.message.id;
-                        this.editForm.type = resData.data.thisMessage.message_type;
-                        this.editForm.user = resData.data.user;
-                        this.editForm.publishDate = resData.data.thisMessage.publishDate;
-                        this.editForm.isPublished = resData.data.thisMessage.isPublished;
-                        this.editForm.isRead = resData.data.thisMessage.isRead;
-                        this.editForm.isUse = resData.data.thisMessage.isUse;
-                        this.editForm.content = resData.data.thisMessage.content;
-                        console.log(this.editForm)
-                    }else {
-                        this.$message.error(resData.data.message)
-                    }
-                    this.editFromVisible = true
-                },
-                async handleEditSubmit(){
-                    let resData = await axios.post('/api/message/modifyById',{
-                        message: this.editForm
-                    });
-                    if(resData.data.status === 1){
+                    if(resData.status === 1){
                         this.$message({
                             type: 'success',
-                            message: resData.data.message
+                            message: resData.message
                         });
                         window.location.reload()
-                    }else {
-                        this.$message.error(resData.data.message)
+                    }else{
+                        this.$message.error(resData.message);
                     }
-                    this.editFromVisible = false
-                },
-                handleEditCancle(){
-                    this.editFromVisible = false
-                },
-                async handleDelete(row) {
-                    try{
-                        await this.$confirm('此操作将使该记录失效, 是否继续?', '提示', {
-                            confirmButtonText: '确定',
-                            cancelButtonText: '取消',
-                            type: 'warning'
-                        });
-                        let resData = await axios.post('/api/message/deleteById',{
-                            id: row.message.id
-                        });
-                        if(resData.data.status === 1){
-                            this.$message({
-                                type: 'success',
-                                message: resData.data.message
-                            })
-                            window.location.reload()
-                        }else {
-                            this.$message.error(resData.data.message)
-                        }
-                    }catch (err){
+                }else {
+                    this.$message.error('至少选择一个用户');
+                    this.addFromVisible = false
+                }
+            },
+            handleAddCancel(){
+                console.log(this.addForm.selected_user);
+                this.addFromVisible = false
+            },
+            async handleEdit(row) {
+                let resData = await axios.post('/api/message/getById', {
+                    id: row.message.id
+                });
+                if(resData.status === 1){
+                    this.editForm.id = row.message.id;
+                    this.editForm.type = resData.thisMessage.message_type;
+                    this.editForm.user = resData.user;
+                    this.editForm.publishDate = resData.thisMessage.publishDate;
+                    this.editForm.isPublished = resData.thisMessage.isPublished;
+                    this.editForm.isRead = resData.thisMessage.isRead;
+                    this.editForm.isUse = resData.thisMessage.isUse;
+                    this.editForm.content = resData.thisMessage.content;
+                    console.log(this.editForm)
+                }else {
+                    this.$message.error(resData.message)
+                }
+                this.editFromVisible = true
+            },
+            async handleEditSubmit(){
+                let resData = await axios.post('/api/message/modifyById',{
+                    message: this.editForm
+                });
+                if(resData.status === 1){
+                    this.$message({
+                        type: 'success',
+                        message: resData.message
+                    });
+                    window.location.reload()
+                }else {
+                    this.$message.error(resData.message)
+                }
+                this.editFromVisible = false
+            },
+            handleEditCancle(){
+                this.editFromVisible = false
+            },
+            async handleDelete(row) {
+                try{
+                    await this.$confirm('此操作将使该记录失效, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    });
+                    let resData = await axios.post('/api/message/deleteById',{
+                        id: row.message.id
+                    });
+                    if(resData.status === 1){
                         this.$message({
-                            type: 'info',
-                            message: '已取消删除'
-                        });
-                    }
-                },
-                async handleCurrentChange(val) {
-                    let resData = await axios.get(`/api/message/getAll/${val}`)
-                    if(resData.data.status === 1){
-                        this.tableData = resData.data.Messages;
+                            type: 'success',
+                            message: resData.message
+                        })
+                        window.location.reload()
                     }else {
-                        this.$message.error(resData.data.message)
+                        this.$message.error(resData.message)
                     }
-                },
-            }
-            
+                }catch (err){
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                }
+            },
+            async handleCurrentChange(val) {
+                let resData = await this.$axios.$get(`/api/message/getAllMessageData/${val}`)
+                if(resData.status === 1){
+                    this.tableData = resData.Messages;
+                }else {
+                    this.$message.error(resData.message)
+                }
+            }, 
         },
         data() {
             return {
@@ -458,8 +455,6 @@
         },
         async mounted() {
             // 将信息挂载
-            this.itemCounts = this.counts;
-
             let resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
             let getDataById = await this.$axios.$post('/api/message/getMessageDataById', {post: 'post'});
             let searchData = await this.$axios.$post('/api/message/getMessageSearch', {post: 'post'});
@@ -471,6 +466,8 @@
             this.tableData = getAllData.Messages;
             this.MessageTypes = getAllData.MessageTypes;
             this.userTransferData = getOnlyUsersData.users;
+            this.itemCounts = getAllData.counts;
+
         },
         head() {
             return {
