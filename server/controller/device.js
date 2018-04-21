@@ -58,6 +58,7 @@ module.exports.deviceGetById = async (ctx, next) => {
   let result = await deviceService.getDeviceDataById(device)
   ctx.body = {
     device:result.device,
+    TypesDevice:result.TypesDevice,
     status:result.status,
     message:result.message
   }
