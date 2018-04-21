@@ -8,9 +8,9 @@
         <el-row class="headerline"></el-row>
         <div class="contentList">
             <el-row class="strip">
-                <!-- <div v-for="rule in rulesDetail">
+                <div v-for="rule in rulesDetail" v-bind:key="rule">
                     <el-col :span="24"><div class="grid-content bg-purple-dark"><a :href='"/notice/" + rule.id'>{{ rule.title }} 发布时间：{{ rule.publishDate }} </a></div></el-col>
-                </div> -->
+                </div>
             </el-row>
         </div>
         <el-row>
@@ -62,45 +62,45 @@
     }
  
 </style>
-// <script>
-// import axios from 'axios'
-// export default {
-//     data(){
-//         return{
-//             data:'学校关于放假期间仪器归还问题（2018.01.15）',
-//             ruleCount: null,
-//             rulesDetail: null,
+<script>
+import axios from 'axios'
+export default {
+    data(){
+        return{
+            data:'学校关于放假期间仪器归还问题（2018.01.15）',
+            ruleCount: null,
+            rulesDetail: null,
 
-//         }
-//     },
-//     async asyncData(context){
-//         let resData = await axios.get('api/rule/getAll')
-//         if(resData.data.status === 1)
-//             return {
-//                 count: resData.data.counts,
-//                 rulesDetail: resData.data.rulesDetail
-//             }
-//     },
-//     methods:{
-//         async handlePageChange(currentPage){
-//             let resData = await axios.get(`api/rule/getAll/${currentPage}`)
-//             if(resData.data.status === 1){
-//                 this.rulesDetail = resData.data.rulesDetail
-//             }else{
-//                 this.$message.error(resData.data.message);
+        }
+    },
+    async asyncData(context){
+        let resData = await axios.get('api/rule/getAll')
+        if(resData.data.status === 1)
+            return {
+                count: resData.data.counts,
+                rulesDetail: resData.data.rulesDetail
+            }
+    },
+    methods:{
+        async handlePageChange(currentPage){
+            let resData = await axios.get(`api/rule/getAll/${currentPage}`)
+            if(resData.data.status === 1){
+                this.rulesDetail = resData.data.rulesDetail
+            }else{
+                this.$message.error(resData.data.message);
                 
-//             }
-//         }
-//     },
-//     mounted(){
-//         this.ruleCount = this.count;
-//     },
-//     head(){
-//         return {
-//             title: 'CDMP - 通知公告'
-//         }
-//     }
-// }
+            }
+        }
+    },
+    mounted(){
+        this.ruleCount = this.count;
+    },
+    head(){
+        return {
+            title: 'CDMP - 通知公告'
+        }
+    }
+}
 
-// </script>
+</script>
 
