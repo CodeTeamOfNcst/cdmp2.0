@@ -39,20 +39,7 @@
 <style lang="less" scoped>
     a {
         text-decoration: none;
-    }
-    .rule-list {
-        padding: 5px 30px;
-        .rule-item {
-        overflow: hidden;
-        color: #3675a8;
-        .rule-item-title {
-        float: left;
-        margin-bottom: 10px;
-       }
-        .rule-item-date {
-            float: right;
-        }
-     }
+        color:black;
     }
     .grid-content{
         float:left;
@@ -68,7 +55,20 @@
         width: 40%;
         margin-left: 30%;
     }
-
+    .rule-list {
+        padding: 5px 30px;
+        .rule-item {
+        overflow: hidden;
+        color: #3675a8;
+        .rule-item-title {
+        float: left;
+        margin-bottom: 10px;
+       }
+        .rule-item-date {
+            float: right;
+        }
+     }
+    }
 </style>
 
 <script>

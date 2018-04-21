@@ -16,7 +16,7 @@
                     </span>
                     <span class="little">
                         <i class="iconfont icon-user"></i>
-                        <nuxt-link to="/">登录</nuxt-link>
+                        <nuxt-link to="/login">登录</nuxt-link>
                     </span>
                     <span class="little">
                         <i class="iconfont icon-register"></i>
