@@ -69,7 +69,10 @@
 </template>
 <style lang="less" scoped>
 a{
-        text-decoration: none;
+text-decoration: none;
+}
+.all{
+    margin-top:20px;
 }
 .el-tabs {
     border: 0;
