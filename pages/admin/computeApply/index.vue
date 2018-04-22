@@ -19,37 +19,30 @@
                         </el-select>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="所在院系">
-                    <el-col :span="18">
-                        <el-input v-model="addForm.department" clearable />
-                    </el-col>
-                </el-form-item>
                 <el-form-item label="机时额度">
                     <el-col :span="18">
-                        <el-input v-model="addForm.department" clearable />
+                        <el-input v-model="addForm.hours" clearable />
                     </el-col>
                 </el-form-item>
-                <el-form-item label="申请起止时间">
+                <el-form-item label="使用时间">
                     <el-date-picker
-                        v-model="applytime"
-                        type="datetimerange"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        :default-time="['12:00:00']">
+                            v-model="addForm.date"
+                            type="daterange"
+                            range-separator="至"
+                            start-placeholder="开始使用日期"
+                            end-placeholder="结束使用日期">
                     </el-date-picker>
                 </el-form-item>
-                <!-- <el-form-item label="是否禁用">
+                <el-form-item label="是否同意">
+                    <el-col :span="18">
+                        <el-switch v-model="addForm.isAgree"/>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="是否禁用">
                     <el-col :span="18">
                         <el-switch v-model="addForm.isUse"/>
                     </el-col>
-                </el-form-item> -->
-                <el-form-item label="申请状态">
-                        <el-switch
-                            v-model="addForm.isUse"
-                            active-text="审核通过"
-                            inactive-text="审核未通过">
-                        </el-switch>
-                    </el-form-item>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="handleAdd">添加</el-button>
                     <el-button  @click="handleAddCancel">取消</el-button>
@@ -355,148 +348,147 @@
         layout(){
             return  'admina'
         },
-        methods() {
-            return{
-                handleSizeChange(val) {
-                    console.log(`每页 ${val} 条`);
-                },
-                handleCurrentChange(val) {
-                    console.log(`当前页: ${val}`);
-                },
-                async handleSearch(){
-                    if(! this.searchInput){
-                        window.location.reload()
+        methods: {
+            handleSizeChange(val) {
+                console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {
+                console.log(`当前页: ${val}`);
+            },
+            async handleSearch(){
+                if(! this.searchInput){
+                    window.location.reload()
+                }else{
+                    let resData = await axios.post('',{
+                        search: this.searchInput
+                    })
+                    if(resData.data.status === 1){
+                        this.tableData = resData.data.result
                     }else{
-                        let resData = await axios.post('',{
-                            search: this.searchInput
-                        })
-                        if(resData.data.status === 1){
-                            this.tableData = resData.data.result
-                        }else{
-                            this.$message.error(resData.data.message)
-                        }
-                    }
-                },
-                async handleAddOpen(){
-                    let resDataUser = await axios.get('/api/user/onlyAll');
-                    if(resDataUser.data.status === 1){
-                        this.users = resDataUser.data.users;
-                    }else {
-                        this.$message.error('从服务端获取信息失败')
-                    }
-                },
-                async handleAdd(){
-                    // 之后要加上手动验证逻辑
-                    let resData = await axios.post('', {
-                        device: this.addForm
-                    });
-                    if( resData.data.status === 1){
-                        this.$message({
-                            message: resData.data.message,
-                            type: 'success'
-                        });
-                        window.location.reload()
-                    }else {
                         this.$message.error(resData.data.message)
                     }
-                },
-                handleAddCancel(){
-                    this.addFormVisible = false
-                },
-                async handleEdit(row){
-                    try{
-                        let resData = await axios.post('/api/apply/getById',{
-                            id: row.apply.id
-                        });
-                        if(resData.data.status === 1){
-                            this.editForm.id = resData.data.apply.id;
-                            this.editForm.chargePerson = resData.data.applyUser.name;
-                            this.editForm.isUse= resData.data.apply.isUse;
-                            
-                            this.editFromVisible = true
-                        }else {
-                            this.$message.error(resData.data.message);
-                        }
-                    }catch(err) {
-                        this.$message.error(`异常 由于 ${err}`);
-                    }
-                    this.editFormVisible = true
-                },
-                async forbidRule(row) {
-                    try{
-                        await this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-                            confirmButtonText: '确定',
-                            cancelButtonText: '取消',
-                            type: 'warning'
-                        });
-                        let resData = await axios.post('', {
-                            id: row.id
-                        });
-                        if(resData.data.status === 1){
-                            this.$message({
-                                type: 'success',
-                                message: '成功禁用'
-                            });
-                            window.location.reload()
-                        }else {
-                            this.$message.error(resData.data.message);
-                        }
-                    }catch (err){
-                        this.$message({
-                            type: 'info',
-                            message: '已取消'
-                        });
-                    }
-                },
-                async handleEditSubmit(){
-                    try{
-                        let resData = await axios.post('',{
-                            rule: this.editForm
-                        })
-                        if(resData.data.status === 1){
-                            this.$message({
-                                type: 'success',
-                                message: resData.data.message
-                            });
-                            window.location.reload()
-                        }else {
-                            this.$message.error(resData.data.message);
-                        }
-                    }catch (err){
-                        this.$message.error(`异常 由于 ${err}`);
-                    }
-                    this.editFormVisible = false
-                },
-                handleEditCanacel(){
-                    this.editFormVisible = false
-                },  
-                getSummaries(param) {
-                    const { columns, data } = param;
-                    const sums = [];
-                    columns.forEach((column, index) => {
-                        if (index === 0) {
-                            sums[index] = '';
-                            return;
-                        }
-                        const values = data.map(item => Number(item[column.property]));
-                        if (!values.every(value => isNaN(value))) {
-                            sums[index] = values.reduce((prev, curr) => {
-                                const value = Number(curr);
-                                if (!isNaN(value)) {
-                                    return prev + curr;
-                                } else {
-                                    return prev;
-                                }
-                            }, 0);
-                            sums[index] += '';
-                        } else {
-                            sums[index] = '';
-                        }
+                }
+            },
+            async handleAdd(){
+                // let checkUser = await this.$axios.$post('/api/user/userGetUserData', {
+                //     id: 5
+                // });
+                let resData = await this.$axios.$post('/api/computeApply/addApply', {
+                    hours: this.addForm.hours,
+                    apply_user:this.addForm.user,
+                    startDate:this.addForm.date[0],
+                    endDate:this.addForm.date[1], 
+                    isUse:this.addForm.isUse,
+                    account:'687432',
+                    password:'123456',
+                    isAgree:this.addForm.isAgree,
+                    check_user:5,   
+                });
+                if( resData.status === 1){
+                    this.$message({
+                        message: resData.message,
+                        type: 'success'
                     });
-                    return sums;
-                }       
-            }
-              
+                    window.location.reload()
+                }else {
+                    this.$message.error(resData.message)
+                }
+            },
+            handleAddCancel(){
+                this.addFormVisible = false
+            },
+            async handleEdit(row){
+                try{
+                    let resData = await axios.post('/api/apply/getById',{
+                        id: row.apply.id
+                    });
+                    if(resData.data.status === 1){
+                        this.editForm.id = resData.data.apply.id;
+                        this.editForm.chargePerson = resData.data.applyUser.name;
+                        this.editForm.isUse= resData.data.apply.isUse;
+                        
+                        this.editFromVisible = true
+                    }else {
+                        this.$message.error(resData.data.message);
+                    }
+                }catch(err) {
+                    this.$message.error(`异常 由于 ${err}`);
+                }
+                this.editFormVisible = true
+            },
+            async forbidRule(row) {
+                try{
+                    await this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    });
+                    let resData = await axios.post('', {
+                        id: row.id
+                    });
+                    if(resData.data.status === 1){
+                        this.$message({
+                            type: 'success',
+                            message: '成功禁用'
+                        });
+                        window.location.reload()
+                    }else {
+                        this.$message.error(resData.data.message);
+                    }
+                }catch (err){
+                    this.$message({
+                        type: 'info',
+                        message: '已取消'
+                    });
+                }
+            },
+            async handleEditSubmit(){
+                try{
+                    let resData = await axios.post('',{
+                        rule: this.editForm
+                    })
+                    if(resData.data.status === 1){
+                        this.$message({
+                            type: 'success',
+                            message: resData.data.message
+                        });
+                        window.location.reload()
+                    }else {
+                        this.$message.error(resData.data.message);
+                    }
+                }catch (err){
+                    this.$message.error(`异常 由于 ${err}`);
+                }
+                this.editFormVisible = false
+            },
+            handleEditCanacel(){
+                this.editFormVisible = false
+            },  
+            getSummaries(param) {
+                const { columns, data } = param;
+                const sums = [];
+                columns.forEach((column, index) => {
+                    if (index === 0) {
+                        sums[index] = '';
+                        return;
+                    }
+                    const values = data.map(item => Number(item[column.property]));
+                    if (!values.every(value => isNaN(value))) {
+                        sums[index] = values.reduce((prev, curr) => {
+                            const value = Number(curr);
+                            if (!isNaN(value)) {
+                                return prev + curr;
+                            } else {
+                                return prev;
+                            }
+                        }, 0);
+                        sums[index] += '';
+                    } else {
+                        sums[index] = '';
+                    }
+                });
+                return sums;
+            }            
         },
         data() {
             return {
@@ -504,9 +496,9 @@
                 itemCounts:1,
                 addForm: {
                     user: '',
-                    department: '',
-                    timeLimit:'',
-                    applytime:'',
+                    hours: '',
+                    date:'',
+                    isAgree:'false',
                     isUse: 'false',
                 },
                 users: [
@@ -564,11 +556,9 @@
             };
         },
         async mounted(){
-
             this.getDataById = await this.$axios.$post('/api/computeApply/getApplyById', {post: 'post'});
             let getAllData = await this.$axios.$get('/api/computeApply/getAllApplyData');
             this.searchData = await this.$axios.$post('/api/computeApply/getApplySearch', {post: 'post'});
-            this.postData = await this.$axios.$post('/api/computeApply/addApply', {post: 'post'});
             this.postDataFront = await this.$axios.$post('/api/computeApply/addApplyFront', {post: 'post'});
             this.deleteData = await this.$axios.$delete('/api/computeApply/deleteApplyById', { data:{delete: 'delete'}}) 
             this.putData = await this.$axios.$put('/api/computeApply/modifyApplyById', {put: 'put'});
