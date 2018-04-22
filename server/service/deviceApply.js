@@ -179,7 +179,7 @@ module.exports.addApplyFront = async (JSON,userJSON) => {
             });
             if(thisUser){
                 let thisDevice = await Device.findOne({
-                    where: {id: JSON.apply_device}
+                    where: {id: JSON.deviceId}
                 })
                 let thisApply = await DeviceApply.create({
                     vioReason: JSON.vioReason,

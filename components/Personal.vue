@@ -4,7 +4,7 @@
             <el-tabs :tab-position="tabPosition">
                 <el-tab-pane label="云计算资源预约记录">
                     <!-- 历史记录版块开始 -->
-                    <div v-if="chance">
+                    <!-- <div v-if="chance">
                         <el-table
                                 :data="tableData1"
                                 stripe
@@ -43,11 +43,11 @@
                                 </template>
                             </el-table-column>
                         </el-table>
-                    </div>
+                    </div> -->
                     <!-- 历史记录版块结束 -->
 
                     <!-- 正在使用信息开始 -->
-                    <div v-else>
+                    <div>
                         <el-table
                                 :data="tableData0"
                                 stripe
@@ -99,16 +99,18 @@
                         </el-dialog>
                     </div>
                     <!-- 正在使用信息结束 -->
-                    <el-row style="margin-top:10px;float:right;">
+
+                    <!-- <el-row style="margin-top:10px;float:right;">
                         <el-switch
                             v-model="chance"
                             active-text="历史记录"
                             inactive-text="正在使用">
                         </el-switch>
-                    </el-row>
+                    </el-row> -->
+                    
                 </el-tab-pane>
                 <el-tab-pane label="仪器设备预约记录">
-                    <div v-for="data in result" v-bind:key="data" v-if="data.applyUserId === 3">
+                    <div v-for="data in result" v-bind:key="data" v-if="data.applyUserId === 5">
                         <div class="history">
                             <img :src="data.Img" >
                             <div class="hisCont">
@@ -250,6 +252,7 @@
                     password: '',
                     email: '',
                     phone:'',
+                    user_type:'',
                 },
                 dialogFormVisible: false,
                 form2: {
@@ -289,14 +292,17 @@
         },  
         methods: {
             async onSubmit(){
+                //此处用到登录用户的id
+                let getUser = await this.$axios.$post('/api/user/userGetUserData',{id:'8'})
                 let resData = await this.$axios.$post('/api/user/modifyUserById', {
                     userId: this.form.id,
                     account: this.form.account,
                     name: this.form.name,
                     phone: this.form.phone,
                     email:this.form.email,
+                    user_type:getUser.user.userType,
                     password: this.form.password,
-                    isUse:1,
+                    isUse:getUser.user.isUse,
                 })
                 if(resData.status === 1){
                     this.$message({
@@ -327,9 +333,10 @@
             },    
         },
         async mounted(){     
-            let getDataById = await this.$axios.$post('/api/computeApply/getApplySearch',{apply_user:'3'});
+            let getDataById = await this.$axios.$post('/api/computeApply/getApplySearch',{apply_user:'5'});
             let getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
-            let getUser = await this.$axios.$post('/api/user/userGetUserData',{id:'8'})
+            //此处用到登录用户的id
+            let getUser = await this.$axios.$post('/api/user/userGetUserData',{id:'5'})
             this.tableData1 = getDataById.result;
             this.tableData0 = getDataById.result;
             this.result = getAllData.applys;

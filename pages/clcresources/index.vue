@@ -82,34 +82,7 @@
             </el-col>
             <el-col>
               <div class="appointCont">
-                <el-row>
-                  <el-col :span="24">
-                      <div class="grid-content bg-purple-dark instruName">
-                          <p>资源名称:</p>
-                          <div class="fillOutName">
-                              <el-input
-                                      placeholder="跳转自动获得"
-                                      v-model="device.name"
-                                      :disabled="true">
-                              </el-input>
-                          </div>
-                      </div>
-                  </el-col>
-              </el-row>
-              <el-row>
-                  <el-col :span="24">
-                      <div class="grid-content bg-purple-dark instruName">
-                          <p>资源类型:</p>
-                          <div class="fillOutName">
-                              <el-input
-                                      placeholder="xxxxxxxxxxxx"
-                                      v-model="device.name"
-                                      :disabled="true">
-                              </el-input>
-                          </div>
-                      </div>
-                  </el-col>
-              </el-row>
+                
               <el-row>
                   <el-col :span="24">
                       <div class="grid-content bg-purple-dark instruName">
@@ -120,6 +93,16 @@
                                       v-model="user"
                                       :disabled="true">
                               </el-input>
+                          </div>
+                      </div>
+                  </el-col>
+              </el-row>
+              <el-row>
+                  <el-col :span="24">
+                      <div class="grid-content bg-purple-dark instruName">
+                          <p>申请额度:</p>
+                          <div class="fillOutName">
+                              <el-input v-model="timeLimt" placeholder="请输入内容" ></el-input>
                           </div>
                       </div>
                   </el-col>
