@@ -1,22 +1,24 @@
 'use strict'
 const authService = require('../service/auth')
-
+const  jsonwebtoken  = require('jsonwebtoken')
 /**
  * 测试Get方法的参数提取
  * @param {*} ctx 
  * @param {*} next 
  */
 module.exports.authGetUser = async (ctx, next) => {
-  let getData = ctx.cookies.get('account');
-  let result = await authService.getUser(getData)
-  ctx.body = {
-    user:result.user,
-  }
+  let getData =  ctx.cookies.get('auth.strategy');
+  console.log(getData)
+  let result =  authService.user(getData)
+  // ctx.body = {
+  //   user:result.user,
+  // }
+  ctx.body = null
 }
 
 module.exports.authCheckLogin = async (ctx, next) => {
-    let getData = ctx.cookies.get('account');
-    let result = await authService.checkLogIn(getData)
+    let getData = ctx.cookies.get('user');
+    let result =  authService.checkLogIn(getData)
     ctx.body = {
         user:result.user,
         user_is_admin:result.user_is_admin,
@@ -26,7 +28,7 @@ module.exports.authCheckLogin = async (ctx, next) => {
 }
 module.exports.authLogOut = async (ctx, next) => {
     let putData = ctx.cookies;
-    let result = await authService.logOut(putData)
+    let result =  authService.logOut(putData)
     ctx.body = {
       status:result.status,
     }
@@ -46,15 +48,19 @@ module.exports.authRegist = async (ctx, next) => {
   }
 }
 module.exports.authLogin = async (ctx, next) => {
-    let putData = ctx.request.body;
-    let result = await authService.logIn(putData)
-    ctx.body = {
-      user:result.user, 
-      user_is_admin:result.user_is_admin,
-      status:result.status,
-      message:result.message
-    }
+
+  let putData = ctx.request.body;
+  console.log('cookie is ' + await ctx.cookies.get('auth._token.local'))
+  await ctx.cookies.set('cookie', 'cookie')
+  console.log(await ctx.cookies.get('cookie'))
+  let result = await authService.logIn(putData)
+  ctx.body = {
+    user:result.user, 
+    user_is_admin:result.user_is_admin,
+    status:result.status,
+    message:result.message
   }
+}
 
 /**
  * 测试 delete 方法

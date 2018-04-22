@@ -1,7 +1,7 @@
 <template>
     <section class="">
         <div class="headerName">
-            <div class="leftSty"></div>
+            <!-- <div class="leftSty"></div> -->
             <span class="bullCont">
                 <p>通知公告--</p>
                 <p class="bulletinName">{{title}}</p>
@@ -60,12 +60,12 @@ export default {
         }
     },
     async asyncData({ params }){
-        let resData = await axios.post('/api/rule/getById',{id: params.id})
+        let resData = await axios.post('/api/info/getInfoDataById',{id: params.id})
         if(resData.data.status === 1){
             return{
-                content: resData.data.rule.content,
-                title: resData.data.rule.title,
-                publishDate: resData.data.rule.publishDate,
+                content: resData.data.infoDetails.content,
+                title: resData.data.infoDetails.title,
+                publishDate: resData.data.infoDetails.releaseDate,
             }
         }else{
             return{

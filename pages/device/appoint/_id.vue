@@ -12,7 +12,7 @@
                         <p>仪器名称:</p>
                         <div class="fillOutName">
                             <el-input
-                                    placeholder="跳转自动获得"
+                                    placeholder="跳转后自动获得"
                                     v-model="device.name"
                                     :disabled="true">
                             </el-input>
@@ -27,7 +27,7 @@
                         <div class="fillOutName">
                             <el-input
                                     placeholder="xxxxxxxxxxxx"
-                                    v-model="device.name"
+                                    v-model="device.device_type_name"
                                     :disabled="true">
                             </el-input>
                         </div>
@@ -163,14 +163,15 @@
             }
         },
         async mounted(){
-            // if(! this.$auth.state.loggedIn) window.location.href ='/login'
-            // this.user = this.$auth.state.user.login_account
+            if(!this.$auth.state.loggedIn) 
+                window.location.href ='/login'
+            this.user = this.$auth.state.user
         },
         async asyncData({params}){
             let resData = await axios.post('/api/device/getDeviceDataById', { id: params.id})
-            if(resData.status === 1){
+            if(resData.data.status === 1){
                 return {
-                    device: resData.device
+                    device: resData.data.device
                 }
             }
         }

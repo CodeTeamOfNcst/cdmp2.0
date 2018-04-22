@@ -38,7 +38,9 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
+        middleware: 'auth',
         data(){
             return {
                 account: '',
@@ -54,17 +56,17 @@
                 if(!this.account || !this.password){
                     this.$message.error("请输入用户名和密码");
                 }else{
-                    let resData =  await this.$auth.login({
-                                    data: {
-                                        account: this.account,
-                                        passwd: this.password
-                                    }
+                    let res = await this.$auth.loginWith('local',{
+                        data:{
+                            account: this.account,
+                            password: this.password
+                        }
                     })
-                    if(this.$auth.state.user.account){
+                    if(this.$store.state.auth.user){
                         window.location.href = '/'
                     }else{
                         this.$message.error("用户名或密码错误")
-                    }
+                    }     
                 }
             },
         }

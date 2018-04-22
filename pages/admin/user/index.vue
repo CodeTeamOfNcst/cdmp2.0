@@ -432,11 +432,6 @@
             // 挂载数据
             let getAllUsersData = await this.$axios.$get('/api/user/userGetAllData');
             let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
-            let getApplyData = await this.$axios.$post('/api/user/userApply',{post: 'post'});
-            // let getOneUserData = await this.$axios.$post('/api/user/userGetUserData',{post: 'post'});
-            // let resData = await this.$axios.$post('/api/user/userAddUser', {post: 'post'});
-            let deleteUserData = await this.$axios.$delete('/api/user/userDeleteById', { data:{delete: 'delete'}}) // 这边方式稍有不同
-            let putUserData = await this.$axios.$post('/api/user/modifyUserById', {post: 'post'});
 
             this.tableData = getAllUsersData.usersDetail;
             this.itemCounts = getAllUsersData.counts;

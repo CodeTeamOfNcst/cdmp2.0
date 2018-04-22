@@ -25,8 +25,8 @@
     background: #fff;
     .mainwidth{
     width: 80%;
+    min-height: 800px;
     margin: 0 auto;
-    // border: 1px solid #eee;
     border-radius: 5px;
     background: #fff;
     }

@@ -1,14 +1,14 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add eslint
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @nuxtjs/auth4.2.0
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\ChrisProsise\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.1\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.1\libnvvp;C:\Program Files\Python36\Scripts;C:\Program Files\Python36;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\dotnet;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Python35;C:\Program Files (x86)\Python35\Scripts;C:\Program Files (x86)\Python35\wget;C:\Program Files\Git\cmd;C:\Python27\Lib\site-packages\theano;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64;C:\Program Files\MATLAB\R2016a\runtime\win64;C:\Program Files\MATLAB\R2016a\bin;C:\Program Files\MATLAB\R2016a\polyspace\bin;C:\TDM-GCC-64\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Calibre2;E:\Redis;C:\Program Files\MATLAB\v84\runtime\win64;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\MongoDB\Server\3.4\bin;C:\ProgramData\nvm;C:\Program Files\nodejs;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Users\ChrisProsise\AppData\Local\Microsoft\WindowsApps;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin; %CUDA_SDK_PATH%\common\lib\x64; %CUDA_SDK_PATH%\bin\x64;C:\Users\ChrisProsise\AppData\Local\atom\bin;C:\Users\ChrisProsise\AppData\Local\Microsoft\WindowsApps;C:\Users\ChrisProsise\AppData\Local\Yarn\bin;E:\Microsoft VS Code\bin
+  C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Git\cmd;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\MATLAB\R2017b\bin;C:\java\jdk-9.0.1\bin;C:\java\jdk-9.0.1\java2\bin;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\Doctrine extensions for PHP\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin;C:\ProgramData\nvm;C:\Program Files\nodejs;C:\ProgramData\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs;C:\Users\zhanglingxue\AppData\Local\Microsoft\WindowsApps;C:\Users\zhanglingxue\AppData\Local\Yarn\bin;C:\nvm;C:\Program Files\Microsoft VS Code\bin
 
 Yarn version: 
   1.3.2
 
 Node version: 
-  9.8.0
+  9.3.0
 
 Platform: 
   win32 x64
@@ -29,9 +29,9 @@ npm manifest:
       "precommit": "npm run lint"
     },
     "dependencies": {
-      "@nuxtjs/auth": "^4.0.0-rc.3",
       "@nuxtjs/axios": "^5.0.0",
       "element-ui": "^2.3.0",
+      "jsonwebtoken": "^8.2.1",
       "koa": "^2.3.0",
       "koa-bodyparser": "^4.2.0",
       "koa-logger": "^3.2.0",
@@ -40,6 +40,7 @@ npm manifest:
       "koa2-cors": "^2.0.5",
       "less": "^3.0.1",
       "less-loader": "^4.1.0",
+      "moment": "^2.21.0",
       "mysql2": "^1.5.3",
       "nuxt": "^1.0.0",
       "sequelize": "^4.37.5"
@@ -138,17 +139,7 @@ Lockfile:
       lodash "^4.2.0"
       to-fast-properties "^2.0.0"
   
-  "@nuxtjs/auth@^4.0.0-rc.3":
-    version "4.0.0-rc.3"
-    resolved "http://registry.npm.taobao.org/@nuxtjs/auth/download/@nuxtjs/auth-4.0.0-rc.3.tgz#8db725d1854c41761becf5ee719f747d90aff9ef"
-    dependencies:
-      "@nuxtjs/axios" "^5.0.0-rc.2"
-      cookie "^0.3.1"
-      dotprop "^1.0.2"
-      js-cookie "^2.2.0"
-      lodash "^4.17.4"
-  
-  "@nuxtjs/axios@^5.0.0", "@nuxtjs/axios@^5.0.0-rc.2":
+  "@nuxtjs/axios@^5.0.0":
     version "5.1.1"
     resolved "http://registry.npm.taobao.org/@nuxtjs/axios/download/@nuxtjs/axios-5.1.1.tgz#2aec0bfc6cee8dc682b05402af25c0c6bc72a70c"
     dependencies:
@@ -1070,6 +1061,10 @@ Lockfile:
     version "1.2.3"
     resolved "http://registry.npm.taobao.org/base64-js/download/base64-js-1.2.3.tgz#fb13668233d9614cf5fb4bce95a9ba4096cdf801"
   
+  base64url@2.0.0, base64url@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/base64url/-/base64url-2.0.0.tgz#eac16e03ea1438eff9423d69baa36262ed1f70bb"
+  
   base@^0.11.1:
     version "0.11.2"
     resolved "http://registry.npm.taobao.org/base/download/base-0.11.2.tgz#7bde5ced145b6d551a90db87f83c558b4eb48a8f"
@@ -1256,6 +1251,10 @@ Lockfile:
     dependencies:
       caniuse-lite "^1.0.30000792"
       electron-to-chromium "^1.3.30"
+  
+  buffer-equal-constant-time@1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz#f8e71132f7ffe6e01a5c9697a4c6f3e48d5cc819"
   
   buffer-from@^1.0.0:
     version "1.0.0"
@@ -1523,14 +1522,13 @@ Lockfile:
     version "2.1.2"
     resolved "http://registry.npm.taobao.org/clone/download/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   
-  <<<<<<< HEAD
   cls-bluebird@^2.1.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/cls-bluebird/-/cls-bluebird-2.1.0.tgz#37ef1e080a8ffb55c2f4164f536f1919e7968aee"
     dependencies:
       is-bluebird "^1.0.2"
       shimmer "^1.1.0"
-  =======
+  
   co-body@^5.1.0:
     version "5.1.1"
     resolved "http://registry.npm.taobao.org/co-body/download/co-body-5.1.1.tgz#d97781d1e3344ba4a820fd1806bddf8341505236"
@@ -1539,7 +1537,6 @@ Lockfile:
       qs "^6.4.0"
       raw-body "^2.2.0"
       type-is "^1.6.14"
-  >>>>>>> 297fb1e6cb7f851676cccaac931b7891417cd34e
   
   co@^4.6.0:
     version "4.6.0"
@@ -2193,10 +2190,6 @@ Lockfile:
     dependencies:
       is-obj "^1.0.0"
   
-  dotprop@^1.0.2:
-    version "1.0.2"
-    resolved "http://registry.npm.taobao.org/dotprop/download/dotprop-1.0.2.tgz#0559e898156f3dddb6be62794e5d6ef30eceb705"
-  
   dottie@^2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/dottie/-/dottie-2.0.0.tgz#da191981c8b8d713ca0115d5898cf397c2f0ddd0"
@@ -2223,6 +2216,13 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/ecc-jsbn/download/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
     dependencies:
       jsbn "~0.1.0"
+  
+  ecdsa-sig-formatter@1.0.9:
+    version "1.0.9"
+    resolved "https://registry.yarnpkg.com/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.9.tgz#4bc926274ec3b5abb5016e7e1d60921ac262b2a1"
+    dependencies:
+      base64url "^2.0.0"
+      safe-buffer "^5.0.1"
   
   ee-first@1.1.1:
     version "1.1.1"
@@ -3315,15 +3315,13 @@ Lockfile:
     version "0.0.1"
     resolved "http://registry.npm.taobao.org/indexof/download/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
   
-  <<<<<<< HEAD
-  inflection@1.12.0:
-    version "1.12.0"
-    resolved "https://registry.yarnpkg.com/inflection/-/inflection-1.12.0.tgz#a200935656d6f5f6bc4dc7502e1aecb703228416"
-  =======
   inflation@^2.0.0:
     version "2.0.0"
     resolved "http://registry.npm.taobao.org/inflation/download/inflation-2.0.0.tgz#8b417e47c28f925a45133d914ca1fd389107f30f"
-  >>>>>>> 297fb1e6cb7f851676cccaac931b7891417cd34e
+  
+  inflection@1.12.0:
+    version "1.12.0"
+    resolved "https://registry.yarnpkg.com/inflection/-/inflection-1.12.0.tgz#a200935656d6f5f6bc4dc7502e1aecb703228416"
   
   inflight@^1.0.4:
     version "1.0.6"
@@ -3445,7 +3443,7 @@ Lockfile:
   
   is-ci@^1.0.10:
     version "1.1.0"
-    resolved "http://registry.npm.taobao.org/is-ci/download/is-ci-1.1.0.tgz#247e4162e7860cebbdaf30b774d6b0ac7dcfe7a5"
+    resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-1.1.0.tgz#247e4162e7860cebbdaf30b774d6b0ac7dcfe7a5"
     dependencies:
       ci-info "^1.0.0"
   
@@ -3686,10 +3684,6 @@ Lockfile:
     version "2.4.3"
     resolved "http://registry.npm.taobao.org/js-base64/download/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
   
-  js-cookie@^2.2.0:
-    version "2.2.0"
-    resolved "http://registry.npm.taobao.org/js-cookie/download/js-cookie-2.2.0.tgz#1b2c279a6eece380a12168b92485265b35b1effb"
-  
   js-tokens@^3.0.0, js-tokens@^3.0.2:
     version "3.0.2"
     resolved "http://registry.npm.taobao.org/js-tokens/download/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -3764,6 +3758,21 @@ Lockfile:
     version "0.0.0"
     resolved "http://registry.npm.taobao.org/jsonify/download/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
   
+  jsonwebtoken@^8.2.1:
+    version "8.2.1"
+    resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.2.1.tgz#333ee39aa8f238f32fa41693e7a2fb7e42f82b31"
+    dependencies:
+      jws "^3.1.4"
+      lodash.includes "^4.3.0"
+      lodash.isboolean "^3.0.3"
+      lodash.isinteger "^4.0.4"
+      lodash.isnumber "^3.0.3"
+      lodash.isplainobject "^4.0.6"
+      lodash.isstring "^4.0.1"
+      lodash.once "^4.0.0"
+      ms "^2.1.1"
+      xtend "^4.0.1"
+  
   jsprim@^1.2.2:
     version "1.4.1"
     resolved "http://registry.npm.taobao.org/jsprim/download/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
@@ -3772,6 +3781,23 @@ Lockfile:
       extsprintf "1.3.0"
       json-schema "0.2.3"
       verror "1.10.0"
+  
+  jwa@^1.1.4:
+    version "1.1.5"
+    resolved "https://registry.yarnpkg.com/jwa/-/jwa-1.1.5.tgz#a0552ce0220742cd52e153774a32905c30e756e5"
+    dependencies:
+      base64url "2.0.0"
+      buffer-equal-constant-time "1.0.1"
+      ecdsa-sig-formatter "1.0.9"
+      safe-buffer "^5.0.1"
+  
+  jws@^3.1.4:
+    version "3.1.4"
+    resolved "https://registry.yarnpkg.com/jws/-/jws-3.1.4.tgz#f9e8b9338e8a847277d6444b1464f61880e050a2"
+    dependencies:
+      base64url "^2.0.0"
+      jwa "^1.1.4"
+      safe-buffer "^5.0.1"
   
   keygrip@~1.0.2:
     version "1.0.2"
@@ -3993,13 +4019,37 @@ Lockfile:
     version "4.3.0"
     resolved "http://registry.npm.taobao.org/lodash.camelcase/download/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
   
+  lodash.includes@^4.3.0:
+    version "4.3.0"
+    resolved "https://registry.yarnpkg.com/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
+  
+  lodash.isboolean@^3.0.3:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
+  
+  lodash.isinteger@^4.0.4:
+    version "4.0.4"
+    resolved "https://registry.yarnpkg.com/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
+  
+  lodash.isnumber@^3.0.3:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz#3ce76810c5928d03352301ac287317f11c0b1ffc"
+  
   lodash.isplainobject@^4.0.6:
     version "4.0.6"
     resolved "http://registry.npm.taobao.org/lodash.isplainobject/download/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
   
+  lodash.isstring@^4.0.1:
+    version "4.0.1"
+    resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
+  
   lodash.memoize@^4.1.2:
     version "4.1.2"
     resolved "http://registry.npm.taobao.org/lodash.memoize/download/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
+  
+  lodash.once@^4.0.0:
+    version "4.1.1"
+    resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   
   lodash.template@^4.2.4, lodash.template@^4.4.0:
     version "4.4.0"
@@ -4159,7 +4209,7 @@ Lockfile:
   
   micromatch@^3.1.4:
     version "3.1.10"
-    resolved "http://registry.npm.taobao.org/micromatch/download/micromatch-3.1.10.tgz#70859bc95c9840952f359a068a3fc49f9ecfac23"
+    resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.10.tgz#70859bc95c9840952f359a068a3fc49f9ecfac23"
     dependencies:
       arr-diff "^4.0.0"
       array-unique "^0.3.2"
@@ -4258,21 +4308,15 @@ Lockfile:
     dependencies:
       minimist "0.0.8"
   
-  <<<<<<< HEAD
   moment-timezone@^0.5.14:
     version "0.5.14"
     resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.14.tgz#4eb38ff9538b80108ba467a458f3ed4268ccfcb1"
     dependencies:
       moment ">= 2.9.0"
   
-  "moment@>= 2.9.0", moment@^2.20.0:
+  "moment@>= 2.9.0", moment@^2.20.0, moment@^2.21.0:
     version "2.21.0"
     resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
-  =======
-  moment@^2.21.0:
-    version "2.21.0"
-    resolved "http://registry.npm.taobao.org/moment/download/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
-  >>>>>>> 297fb1e6cb7f851676cccaac931b7891417cd34e
   
   move-concurrently@^1.0.1:
     version "1.0.1"
@@ -4288,6 +4332,10 @@ Lockfile:
   ms@2.0.0:
     version "2.0.0"
     resolved "http://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+  
+  ms@^2.1.1:
+    version "2.1.1"
+    resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   
   multer@1.3.0:
     version "1.3.0"
@@ -7200,7 +7248,7 @@ Lockfile:
     version "1.0.0"
     resolved "http://registry.npm.taobao.org/xml-char-classes/download/xml-char-classes-1.0.0.tgz#64657848a20ffc5df583a42ad8a277b4512bbc4d"
   
-  xtend@^4.0.0, xtend@~4.0.1:
+  xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
     version "4.0.1"
     resolved "http://registry.npm.taobao.org/xtend/download/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
   
@@ -7256,10 +7304,14 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  SyntaxError: c:\Users\ChrisProsise\Desktop\cdmp\云计算及设备预约管理系统\init\package.json: Unexpected token < in JSON at position 779
-      at JSON.parse (<anonymous>)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:770:59
-      at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:92:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:103:13
-      at <anonymous>
+  Error: https://registry.yarnpkg.com/@nuxtjs%2fauth4.2.0: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:62098:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:123085:22)
+      at Request.emit (events.js:159:13)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:124068:10)
+      at Request.emit (events.js:159:13)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:123988:12)
+      at Object.onceWrapper (events.js:254:19)
+      at IncomingMessage.emit (events.js:164:20)
+      at endReadableNT (_stream_readable.js:1062:12)
+      at process._tickCallback (internal/process/next_tick.js:152:19)

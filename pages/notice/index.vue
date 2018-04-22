@@ -1,7 +1,7 @@
 <template>
     <section class="container">
         <div class="headerName">
-            <div class="leftSty"></div>
+            <!-- <div class="leftSty"></div> -->
             <span class="bullCont">通知公告</span>
         </div>
         <el-row class="headerline"></el-row>
@@ -57,6 +57,7 @@
     }
     .rule-list {
         padding: 5px 30px;
+        min-height: 600px;
         .rule-item {
         overflow: hidden;
         color: #3675a8;
@@ -81,8 +82,7 @@ export default {
             infoDetail: null,
         }
     },
-    methods(){
-        return{
+    methods:{
             async handlePageChange(currentPage){
                 let resData = await axios.get(`api/rule/getAll/${currentPage}`)
                 if(resData.data.status === 1){
@@ -92,12 +92,11 @@ export default {
                     
                 }
             }
-        }
     },
     async mounted(){
-        // this.ruleCount = this.count;
         let getAllData = await this.$axios.$get('/api/info/getAllInfoData');
         this.infoDetail = getAllData.infoDetail
+        this.ruleCount = getAllData.counts;
     },
     head(){
         return {

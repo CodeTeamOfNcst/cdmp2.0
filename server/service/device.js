@@ -42,6 +42,8 @@ module.exports.getDeviceDataById = async (JSON) => {
       }
     }
     //按单个设备id获取单个设备的数据
+    let type = await thisDevice.getDeviceType()
+    let deviceUser = await thisDevice.getDeviceUser()
     let device = {
       id: thisDevice.id,
       name: thisDevice.name,
@@ -52,7 +54,9 @@ module.exports.getDeviceDataById = async (JSON) => {
       needRepair: thisDevice.needRepair,
       canReserve: thisDevice.canReserve,
       device_type_id: thisDevice.device_type,
+      device_type_name :type.name,
       device_manager:thisDevice.device_manager,
+      deviceUser:deviceUser,
       isUse: thisDevice.isUse
     };
     let result = {

@@ -45,30 +45,38 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
+    '@nuxtjs/axios',
     '@nuxtjs/auth',
-    '@nuxtjs/axios'
   ],   
   auth: {
-    endpoints: {
-      login: { url: '/api/auth/login', method: 'post', propertyName: 'user' },
-      logout: { url: '/api/auth/logout', method: 'get' },
-      user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/auth/logIn', method: 'post', propertyName: 'token' },
+          logout: { url: '/api/auth/logOut', method: 'get' },
+          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+        },
+        tokenRequired: true,
+        tokenType: 'bearer',
+      }
     },
+     
     cookie: {
-      name: 'user',
+      name: 'token',
       options: {
         path: '/'
       }
     },
-    fetchUserOnLogin: true,
-    watchLoggedIn: true
+    fetchUserOnLogin: false,
+    watchLoggedIn: false
   },
   /*
   ** Axios module configuration
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    proxyHeaders:false
+    proxyHeaders:true,
+    credentials: true 
   },
 
   /*

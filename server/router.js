@@ -85,7 +85,7 @@ module.exports = () => {
   router.put('/computeApply/modifyApplyById',computeApplyController.computeApplyPut)
 
   //auth 相关 service
-  router.get('/auth/getUser',authController.authGetUser)
+  router.get('/auth/user',authController.authGetUser)
   router.get('/auth/checkLogIn',authController.authCheckLogin)
   router.post('/auth/regist',authController.authRegist)
   router.post('/auth/logIn',authController.authLogin)

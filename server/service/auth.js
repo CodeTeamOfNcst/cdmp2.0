@@ -1,29 +1,24 @@
 'use strict' 
 const { User } = require('../config/models')
 const { UserType } = require('../config/models')
-const { jsonwebtoken } = require('jsonwebtoken')
+const  jsonwebtoken  = require('jsonwebtoken')
 /**
  * 
  * @param { JSON } options 相当于查询的条件
  * @param { Number } limit 限制数据的条数，默认为 comfig 中的条数
  */
-module.exports.getUser = async ( JSON ) => {
-    let user;
+module.exports.user = async ( JSON ) => {
+    let user
     jsonwebtoken.verify(JSON, 'secretKey', function (err, decoded) {
         if (!err){
-             //会输出123，如果过了60秒，则有错误。
-                user = decoded
+            console.log('Json is ' + JSON)
+            user = decoded
          }
     })
-
-    // let user = await User.findOne({
-    //     where: { account:JSON }
-    // })
-    // let userType = await user.getUserType()
     let res = {
         user: user,
     }  
-    return res;
+    return null;
 }
 module.exports.checkLogIn = async (JSON) => {
     if(JSON){
@@ -80,7 +75,7 @@ module.exports.logIn = async (JSON) => {
             account: account
         }
     });
-    if (user.password == password) {
+    if (user && user.password === password) {
         let userType = await user.getUserType()
         let userIsAdmin = false
         if(userType.id === 1){
@@ -90,14 +85,14 @@ module.exports.logIn = async (JSON) => {
         }
         const accessToken = jsonwebtoken.sign(
             {
-                login_account: user.account,
+                login_account: JSON.account,
                 rand: Math.random() * 1000,
                 scope: ['test', 'user', userIsAdmin?'admin':null]
             },
             'secretKey'
         )
         let res = {
-            user: user,
+            user: accessToken,
             user_is_admin: userIsAdmin,
             status: 1,
             message: '登陆成功'
@@ -113,7 +108,7 @@ module.exports.logIn = async (JSON) => {
 };
 
 module.exports.logOut = async (JSON) => {
-    JSON.set('account', null)
+    JSON.set('user', null)
     let res = {
         status: 'ok'
     }
