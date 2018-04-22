@@ -1,19 +1,17 @@
 'use strict'
 const authService = require('../service/auth')
-const  jsonwebtoken  = require('jsonwebtoken')
+const jsonwebtoken  = require('jsonwebtoken')
 /**
  * 测试Get方法的参数提取
  * @param {*} ctx 
  * @param {*} next 
  */
 module.exports.authGetUser = async (ctx, next) => {
-  let getData =  ctx.cookies.get('auth.strategy');
-  console.log(getData)
+  let getData =  ctx.cookies.get('token');
   let result =  authService.user(getData)
-  // ctx.body = {
-  //   user:result.user,
-  // }
-  ctx.body = null
+  ctx.body = {
+    user:result.user,
+  }
 }
 
 module.exports.authCheckLogin = async (ctx, next) => {
@@ -48,11 +46,7 @@ module.exports.authRegist = async (ctx, next) => {
   }
 }
 module.exports.authLogin = async (ctx, next) => {
-
   let putData = ctx.request.body;
-  console.log('cookie is ' + await ctx.cookies.get('auth._token.local'))
-  await ctx.cookies.set('cookie', 'cookie')
-  console.log(await ctx.cookies.get('cookie'))
   let result = await authService.logIn(putData)
   ctx.body = {
     user:result.user, 

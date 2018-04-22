@@ -51,6 +51,7 @@ module.exports.getAllApplyData = async () => {
             let apply_user = await applys[i].getDeviceApplyer()
             let check_user = await applys[i].getDeviceApplyChecker()
             let apply_device = await applys[i].getApplyDevice()
+            let Type = await apply_device.getDeviceType()
             Applys.push({
                 id: applys[i].id,
                 startDate:applys[i].startDate,
@@ -60,9 +61,12 @@ module.exports.getAllApplyData = async () => {
                 isUse:applys[i].isUse,
                 createdAt:applys[i].createdAt,
                 updatedAt:applys[i].updatedAt,
+                applyUserId:applys[i].apply_user,
                 applyUser: apply_user.name,
                 checkUser: check_user.name,
                 device: apply_device.name,
+                Img:apply_device.imgFilePath,
+                deviceType:Type.name,
             })
         }
         let count =  await DeviceApply.count();

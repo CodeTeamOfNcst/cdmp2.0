@@ -8,7 +8,7 @@
 
 <script>
     import axios from 'axios'
-    import MyPersonal from '../../components/Personal.vue'
+    import MyPersonal from '~/components/Personal.vue'
 
     export default {
         components: {

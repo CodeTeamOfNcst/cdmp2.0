@@ -70,7 +70,7 @@
                             type: 'success',
                             message: resData.message
                         });
-                        window.location.reload()
+                        window.location.href = '/login'
                     }else {
                         this.$message.error(resData.message);
                     }

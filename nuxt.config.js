@@ -67,7 +67,7 @@ module.exports = {
         path: '/'
       }
     },
-    fetchUserOnLogin: false,
+    fetchUserOnLogin: true,
     watchLoggedIn: false
   },
   /*

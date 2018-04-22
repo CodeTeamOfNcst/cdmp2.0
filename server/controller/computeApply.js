@@ -13,6 +13,7 @@ module.exports.computeApplyGetAll = async (ctx, next) => {
   ctx.body = {
     counts:result.counts,
     applys:result.applys,
+    ApplysOk:result.ApplysOk,
     status:result.status,
     message:result.message
   }

@@ -71,6 +71,7 @@ module.exports.userSearch = async (ctx, next) => {
 }
 module.exports.userPut = async (ctx, next) => {
   let user = ctx.request.body;   //获取数据
+  console.log(ctx.request.body)
   let result = await userService.modifyUserById(user)
   ctx.body = {
     status:result.status,

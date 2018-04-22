@@ -46,6 +46,7 @@ module.exports.getAllApplyData = async () => {
             limit: ItemPerPage 
         });
         let Applys = [];
+        let ApplysOk = [];
         for(let i=0; i<applys.length; i++){
             let apply_user = await applys[i].getComputeApplyer()
             let check_user = await applys[i].getComputeApplyChecker()
@@ -60,12 +61,30 @@ module.exports.getAllApplyData = async () => {
                 updatedAt:applys[i].updatedAt,
                 chargePerson: apply_user.name,
                 checkUser: check_user.name,
-            })
+            });
+            if(applys[i].isAgree){
+                ApplysOk.push({
+                    id: applys[i].id,
+                    startTime:applys[i].startDate,
+                    endTime:applys[i].endDate,
+                    timeLimit:applys[i].hours,
+                    isAgree:applys[i].isAgree,
+                    account:applys[i].account,
+                    password:applys[i].password,
+                    isUse:applys[i].isUse,
+                    createdAt:applys[i].createdAt,
+                    updatedAt:applys[i].updatedAt,
+                    chargePerson: apply_user.name,
+                    checkUser: check_user.name,
+                })
+            }
+
         }
         let count =  await ComputeApply.count();
         let result = {
             counts: count,
             applys: Applys,
+            ApplysOk:ApplysOk,
             status: 1,
             message: '成功获取信息'
         }

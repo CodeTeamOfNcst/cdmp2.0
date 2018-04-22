@@ -35,7 +35,7 @@ module.exports.userGetUserData = async (JSON) => {
         status: 1,
         message: '查询用户信息成功'
     }
-    return res
+    return res;
   }catch(err){
     let res = {
       status: 0,

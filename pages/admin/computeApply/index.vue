@@ -564,7 +564,6 @@
             };
         },
         async mounted(){
-            this.itemCounts = this.counts;
 
             this.getDataById = await this.$axios.$post('/api/computeApply/getApplyById', {post: 'post'});
             let getAllData = await this.$axios.$get('/api/computeApply/getAllApplyData');
@@ -577,6 +576,7 @@
 
             this.tableData = getAllData.applys;
             this.users = getOnlyUsersData.users;
+            this.itemCounts = getAllData.counts;
         },
         head() {
             return {

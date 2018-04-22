@@ -18,7 +18,7 @@ module.exports.user = async ( JSON ) => {
     let res = {
         user: user,
     }  
-    return null;
+    return res;
 }
 module.exports.checkLogIn = async (JSON) => {
     if(JSON){
@@ -92,7 +92,7 @@ module.exports.logIn = async (JSON) => {
             'secretKey'
         )
         let res = {
-            user: accessToken,
+            token: accessToken,
             user_is_admin: userIsAdmin,
             status: 1,
             message: '登陆成功'

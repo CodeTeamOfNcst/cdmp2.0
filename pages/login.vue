@@ -1,5 +1,6 @@
 <template>
     <div class="all">
+        <b-alert v-if="error" show variant="danger">{{ error + '' }}</b-alert>
         <div class="AnotherLogin">
             <el-row :gutter="20">
                 <el-col :span="16" :offset="4"><div class="grid-content bg-purple">
@@ -37,6 +38,30 @@
     </div>
 </template>
 
+<style scoped>
+ .all{
+    width:700px;
+    height:500px;
+    margin:auto auto;
+    /*background-color: #3498DB;*/
+}
+.AnotherLogin{
+    display: inline-block;
+    width:70%;
+    height:70%;
+    margin:10% 15%;
+    background-color: #fff;
+ }
+ 
+.loginbutton{
+    margin-left: 200px;
+}
+h2{
+    display: block;
+    margin-left:170px;
+}
+</style>
+
 <script>
     import axios from 'axios'
     export default {
@@ -67,32 +92,8 @@
                     }else{
                         this.$message.error("用户名或密码错误")
                     }     
-                }
+                }   
             },
         }
     }
 </script>
-
-<style scoped>
- .all{
-    width:700px;
-    height:500px;
-    margin:auto auto;
-    /*background-color: #3498DB;*/
-}
-.AnotherLogin{
-    display: inline-block;
-    width:70%;
-    height:70%;
-    margin:10% 15%;
-    background-color: #fff;
- }
- 
-.loginbutton{
-    margin-left: 200px;
-}
-h2{
-    display: block;
-    margin-left:170px;
-}
-</style>
