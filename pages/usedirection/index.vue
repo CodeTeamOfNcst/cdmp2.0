@@ -1,14 +1,10 @@
 <template>
 <div class="all">
   <el-tabs :tab-position="tabPosition" type = "card" style="height: 700px;">
+     
     <el-tab-pane label="平台概况介绍">
         <div class="leftSty"></div>
         <span class="bullCont"><i class="el-icon-d-arrow-right"></i>平台概况介绍</span>
-        <el-row class="headerline"></el-row> 
-    </el-tab-pane>
-    <el-tab-pane label="平台使用说明">
-        <div class="leftSty"></div>
-        <span class="bullCont"><i class="el-icon-d-arrow-right"></i>平台使用说明</span>
         <el-row class="headerline"></el-row> 
         <el-row class="video">
             <el-col :span="16">
@@ -31,7 +27,9 @@
         <el-row class="headerline"></el-row>  
          <div class="contentList">
             <el-row class="strip">
-                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="#">云计算资源及仪器预约平台使用守则 发布时间： 2018-01-01 </a></div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/one">实验室仪器使用守则 发布时间： 2018-01-01 </a></div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/two">云计算资源及仪器预约平台使用守则 发布时间： 2018-01-01 </a></div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/three">云计算资源及仪器预约平台使用守则 发布时间： 2018-01-01 </a></div></el-col>
             </el-row>
         </div>
     </el-tab-pane>
@@ -43,6 +41,7 @@
 <style lang="less" scoped>
 a{
 text-decoration: none;
+color:black;
 }
 .all{
     margin-top:20px;
