@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="headerName">
-            <!-- <div class="leftSty"></div> -->
+            <div class="leftSty"></div>
             <span class="bullCont">仪器预约</span>
         </div>
         <el-row class="headerline"></el-row>
