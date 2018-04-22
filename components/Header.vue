@@ -3,12 +3,12 @@
         <div class="header-logo">
             <!--<img src="../assets/img/r_bg.jpg"/>-->
             <el-row  >
-                <el-col :span="3" :offset="2" ><div class="header-item grid-content bg-purple-light"><h1>CDMP</h1></div></el-col>
-                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/clcresources">计算资源</nuxt-link></div></el-col>
-                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/device">仪器列表</nuxt-link></div></el-col>
-                <el-col :span="3"><div class="header-item grid-content bg-purple"><nuxt-link class="button" to="/notice">通知公告</nuxt-link></div></el-col>
-                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
-                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/download">下载中心</nuxt-link></div></el-col>
+                <el-col :span="3" :offset="1" ><div class="header-item grid-content bg-purple-light"><h1>CDMP</h1></div></el-col>
+                <el-col :span="4"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/clcresources">计算资源</nuxt-link></div></el-col>
+                <el-col :span="4"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/device">仪器列表</nuxt-link></div></el-col>
+                <el-col :span="4"><div class="header-item grid-content bg-purple"><nuxt-link class="button" to="/notice">通知公告</nuxt-link></div></el-col>
+                <el-col :span="4"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
+                 
                 <el-col class="right" :span="4">
                     <span class="little">
                         <i class="iconfont icon-home"></i>

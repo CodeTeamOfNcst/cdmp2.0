@@ -14,18 +14,6 @@
             <el-row>
               <el-col :span="6">
                 <div class="grid-content bg-purple">
-                  <div class="node" @click="show1 = !show1">各节点使用情况</div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="node">
-                    作业使用情况
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
                   <div class="node">
                     各机柜实时资源使用状况
                   </div>
@@ -259,8 +247,6 @@ import Vue from 'vue'
 
 Vue.component(CollapseTransition.name, CollapseTransition)
   export default {
-     
-     
     data() {
       return {
         tabPosition: 'left',

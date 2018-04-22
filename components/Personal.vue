@@ -206,7 +206,7 @@
     </section>
 </template>
 
-<style scoped>    
+<style lang="less" scoped>    
     .instruName p{
         width: 35%;
         min-width: 73px;
