@@ -34,11 +34,11 @@ module.exports = (sequelize, DataTypes) => {
             },//申请机时
             account: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             },//分配账号
             password: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             },//分配密码
             isAgree: {
                 type: DataTypes.BOOLEAN,

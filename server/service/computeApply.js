@@ -132,18 +132,22 @@ module.exports.addApply = async (JSON) => {
         if((!JSON.hours) || 
             (!JSON.apply_user)) throw("预约信息填写有误")
         let newDevice = await ComputeApply.create({
-            startDate: JSON.date[0],
-            endDate: JSON.date[1],
+            startDate: JSON.startDate,
+            endDate: JSON.endDate,
             isAgree: JSON.isAgree,
+            account:JSON.account,
+            password:JSON.password,
             hours: JSON.hours,
-            account: JSON.account,
-            password: JSON.password,
             isUse: JSON.isUse
         });
         let applyer = await User.findOne({
             where:{id: JSON.apply_user }
         });
+        let check_user = await User.findOne({
+            where:{id:JSON.check_user }
+        })
         await newDevice.setComputeApplyer(applyer);
+        await newDevice.setComputeApplyChecker(check_user);
         await newDevice.save();
         let result ={
             status: 1,
