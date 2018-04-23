@@ -231,8 +231,9 @@ module.exports.modifyMessageByIdFront = async (JSON) => {
             releaseDate: thisMessage.releaseDate,
             content: thisMessage.content,
             isRead: thisMessage.isRead,
-            isUse: 0
+            isUse: false
         });
+        console.log(thisMessage.isUse)
         await thisMessage.setMessageType(thisMessageType);
         await thisMessage.save()
         let result = {

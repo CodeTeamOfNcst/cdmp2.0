@@ -307,13 +307,14 @@ export default {
       let userMessages = UserMessages.Message
       for(let i in userMessages){
         if(userMessages[i].isUse){
+          console.log(userMessages[i].isUse)
           const h = this.$createElement;
           this.$notify({
             title: userMessages[i].messageTypeName,
             message: h('i', { style: 'color: teal'}, userMessages[i].message),
             duration: 0
           });
-          let resData = await this.$axios.$post('/api/message/modifyMessageByIdFront',{
+          await this.$axios.$put('/api/message/modifyMessageByIdFront',{
             id: userMessages[i].id,
           });
         }  

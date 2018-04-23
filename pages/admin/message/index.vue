@@ -276,7 +276,7 @@
             },
             async handleAdd(){
                 if( this.addForm.selected_user.length !== 0){
-                    let resData = await axios.post('api/message/add', {
+                    let resData = await this.$axios.$post('api/message/addMessage', {
                         message: this.addForm
                     });
                     if(resData.status === 1){
