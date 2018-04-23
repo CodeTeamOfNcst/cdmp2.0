@@ -87,19 +87,26 @@ module.exports.getAllMessageData = async () => {
 }
 module.exports.getMessageSearch = async (JSON) => {
     try{
+        let user = await User.findOne({
+            where:{
+                name:JSON.message_user
+            }
+        })
         let searchResult = await Message.findAll({
-            where: {message_user:{ [Op.like] : `%${JSON.message_user}%`}}
+            where: {message_user:{ [Op.like] : `%${user.id}%`}}
         })
         if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
         let result = []
         for(let i=0;i<searchResult.length; i++){
             result.push({
-                message: searchResult[i].content,
+                content: searchResult[i].content,
+                isRead:searchResult[i].isRead,
+                title:(await searchResult[i].getMessageType()).title,
                 isUse:searchResult[i].isUse,
                 id:searchResult[i].id,
                 releaseDate:searchResult[i].releaseDate,
-                messageTypeName: (await searchResult[i].getMessageType()).title,
-                messageUserName: (await searchResult[i].getMessageUser()).name
+                message_type: (await searchResult[i].getMessageType()).firstType,
+                name: (await searchResult[i].getMessageUser()).name
             })
         }
         let res = {
@@ -119,9 +126,9 @@ module.exports.getMessageSearch = async (JSON) => {
 
 module.exports.addMessage = async (JSON) => {   
     try {
-        if(!JSON.message_user) 
-            throw("未选择用户")
-        for (let index in JSON.message_user) {
+        if(!JSON.selected_user && !JSON.message_type) 
+            throw("信息未选择完整")
+        for (let index in JSON.selected_user) {
             let newMessage = await Message.create({
                 releaseDate: JSON.releaseDate,
                 isUse: JSON.isUse,
@@ -135,7 +142,7 @@ module.exports.addMessage = async (JSON) => {
             });
             let messageUser = await User.findOne({
                 where: {
-                    id: JSON.message_user[index]
+                    id: JSON.selected_user[index]
                 }
             });
             await newMessage.setMessageType(messageType);
@@ -230,8 +237,8 @@ module.exports.modifyMessageByIdFront = async (JSON) => {
         await thisMessage.update({
             releaseDate: thisMessage.releaseDate,
             content: thisMessage.content,
-            isRead: thisMessage.isRead,
-            isUse: false
+            isRead:true,
+            isUse: thisMessage.isRead
         });
         console.log(thisMessage.isUse)
         await thisMessage.setMessageType(thisMessageType);

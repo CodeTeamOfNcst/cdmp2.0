@@ -285,15 +285,18 @@
                 }
             },
             async search_click(){
-                if(!this.search_input)this.$message.error("请输入搜索内容")
-                let resData = await axios.post('/api/device/getByName',{
-                    search_input: this.search_input
-                })
-                if(resData === 1){
-                    this.devices = resData.data.Devices;
+                if(!this.search_input){
+                    this.$message.error("请输入搜索内容")
                 }else{
-                    this.$message.error("获取数据失败")
-                }
+                    let resData = await this.$axios.$post('/api/device/getDeviceSearch',{
+                        name: this.search_input
+                    })
+                    if(resData.status === 1){
+                        this.devices = resData.result
+                    }else{
+                        this.$message.error(resData.message)
+                    }
+                } 
             } 
         },
         async mounted(){  

@@ -306,8 +306,7 @@ export default {
       });
       let userMessages = UserMessages.Message
       for(let i in userMessages){
-        if(userMessages[i].isUse){
-          console.log(userMessages[i].isUse)
+        if(!userMessages[i].isRead || userMessages[i],isUse){
           const h = this.$createElement;
           this.$notify({
             title: userMessages[i].messageTypeName,

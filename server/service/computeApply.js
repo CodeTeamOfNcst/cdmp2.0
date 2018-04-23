@@ -103,15 +103,33 @@ module.exports.getAllApplyData = async () => {
 module.exports.getApplySearch = async (JSON) => {
     try{
         //以申请人搜索
+        let user = await User.findOne({
+            where:{
+                name:JSON.apply_user
+            }
+        })
         let searchResult = await ComputeApply.findAll({
-            where: { apply_user:{ [Op.like] : `%${JSON.apply_user}%`}}
+            where: { apply_user:{ [Op.like] : `%${user.id}%`}}
         })
         if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
         let result = []
         for(let i =0; i< searchResult.length; i++){
+            let check_user = await User.findOne({
+                where:{
+                    id:searchResult[i].check_user
+                }
+            })
             result.push({
-                apply: searchResult[i],
-                applyUser: searchResult[i].apply_user,
+                id: searchResult[i].id,
+                chargePerson:JSON.apply_user,
+                checkUser:check_user.name,
+                startTime:searchResult[i].startDate,
+                endTime:searchResult[i].endDate,
+                timeLimit:searchResult[i].hours,
+                isAgree:searchResult[i].isAgree,
+                isUse:searchResult[i].isUse,
+                createdAt:searchResult[i].createdAt,
+                updatedAt:searchResult[i].updatedAt
             })
         }
         let res = {
