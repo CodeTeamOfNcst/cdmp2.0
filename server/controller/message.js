@@ -55,6 +55,7 @@ module.exports.messageSearch = async (ctx, next) => {
   }
 }
 
+
 /**
  * 测试 delete 方法
  * @param {*} ctx 上下文
@@ -77,6 +78,15 @@ module.exports.messageDelete = async (ctx, next) => {
 module.exports.messagePut = async (ctx, next) => {
   let putData = ctx.request.body;
   let result = await messageService.modifyMessageById(putData)
+  ctx.body = {
+    status:result.status,
+    message:result.message
+  }
+}
+
+module.exports.messagePutFront = async (ctx, next) => {
+  let putData = ctx.request.body;
+  let result = await messageService.modifyMessageByIdFront(putData)
   ctx.body = {
     status:result.status,
     message:result.message

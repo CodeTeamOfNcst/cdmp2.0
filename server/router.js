@@ -58,6 +58,8 @@ module.exports = () => {
   router.post('/message/addMessage',messageController.messagePost) 
   router.delete('/message/deleteMessageById', messageController.messageDelete)
   router.put('/message/modifyMessageById',messageController.messagePut)
+  router.put('/message/modifyMessageByIdFront',messageController.messagePutFront)
+
 
   // notice 相关 service
   router.post('/info/getInfoDataById',infoController.infoGetById)

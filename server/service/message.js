@@ -95,6 +95,9 @@ module.exports.getMessageSearch = async (JSON) => {
         for(let i=0;i<searchResult.length; i++){
             result.push({
                 message: searchResult[i].content,
+                isUse:searchResult[i].isUse,
+                id:searchResult[i].id,
+                releaseDate:searchResult[i].releaseDate,
                 messageTypeName: (await searchResult[i].getMessageType()).title,
                 messageUserName: (await searchResult[i].getMessageUser()).name
             })
@@ -195,6 +198,40 @@ module.exports.modifyMessageById = async (JSON) => {
             content: JSON.content,
             isRead: JSON.isRead,
             isUse: JSON.isUse
+        });
+        await thisMessage.setMessageType(thisMessageType);
+        await thisMessage.save()
+        let result = {
+            status: 1,
+            message: '更新成功'
+        }
+        return result;
+    } catch (err) {
+        let result = {
+            status: 0,
+            message: `更新失败， 由于${err}`
+        }
+        return result;
+    }
+}
+
+module.exports.modifyMessageByIdFront = async (JSON) => {
+    try {
+        let thisMessage = await Message.findOne({
+            where: {
+                id: JSON.id
+            }
+        });
+        let thisMessageType = await MessageType.findOne({
+            where: {
+                id: thisMessage.message_type
+            }
+        });
+        await thisMessage.update({
+            releaseDate: thisMessage.releaseDate,
+            content: thisMessage.content,
+            isRead: thisMessage.isRead,
+            isUse: 0
         });
         await thisMessage.setMessageType(thisMessageType);
         await thisMessage.save()

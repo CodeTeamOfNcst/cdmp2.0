@@ -108,8 +108,7 @@
           </el-col>
           </div>
         </el-col>
-    </el-row>
-   
+    </el-row>  
   </section>
 </template>
 
@@ -263,10 +262,41 @@ export default {
     }    
   },
   async mounted(){   
-    let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
-    this.img = getAllData.Devices;
+    let getAllData = await this.$axios.$get('/api/device/getAllDeviceData'); 
     let getAllInfoData = await this.$axios.$get('/api/info/getAllInfoData');
-    this.infoDetail = getAllInfoData.infoDetail 
+
+    this.img = getAllData.Devices;
+    this.infoDetail = getAllInfoData.infoDetail ;
+    if(this.$store.state.auth.user || this.$auth.state.loggedIn){
+      
+      let Data = await this.$axios.$get('/api/user/userGetAllData');
+      let userData = Data.usersDetail;
+      let user;
+      for(let index in userData){
+        if(userData[index].user.account === this.$auth.state.user.user){
+          user = userData[index].user.id;
+        }
+      }  
+      
+      let UserMessages = await this.$axios.$post('/api/message/getMessageSearch',{
+        message_user:user,
+      });
+      let userMessages = UserMessages.Message
+      for(let i in userMessages){
+        if(userMessages[i].isUse){
+          const h = this.$createElement;
+          this.$notify({
+            title: userMessages[i].messageTypeName,
+            message: h('i', { style: 'color: teal'}, userMessages[i].message),
+            duration: 0
+          });
+          let resData = await this.$axios.$post('/api/message/modifyMessageByIdFront',{
+            id: userMessages[i].id,
+          });
+        }  
+      }
+    }
+    
   },
   async asyncData({ app }){
     let resData = await app.$axios.$get('/api/test/')

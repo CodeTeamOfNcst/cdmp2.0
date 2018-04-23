@@ -455,12 +455,7 @@
         },
         async mounted() {
             // 将信息挂载
-            let resData = await this.$axios.$post('/api/message/addMessage', {post: 'post'});
-            let getDataById = await this.$axios.$post('/api/message/getMessageDataById', {post: 'post'});
-            let searchData = await this.$axios.$post('/api/message/getMessageSearch', {post: 'post'});
             let getAllData = await this.$axios.$get('/api/message/getAllMessageData');
-            let deleteData = await this.$axios.$delete('/api/message/deleteMessageById', { data:{delete: 'delete'}}) 
-            let putData = await this.$axios.$put('/api/message/modifyMessageById', {put: 'put'});
             let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
 
             this.tableData = getAllData.Messages;
