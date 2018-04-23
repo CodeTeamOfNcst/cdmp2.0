@@ -19,7 +19,12 @@
     <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
     <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
   </el-row>
-  <div class="middle">
+  <div class="middle"> 
+<el-carousel :interval="4000" type="card" height="400px">
+    <el-carousel-item v-for="item in img" :key="item">
+      <img :src="item.imgFilePath" alt="Nuxt.js Logo" class="Img" />
+    </el-carousel-item>
+  </el-carousel>
   </div>
   <el-row class="content" :gutter="20">
     <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
@@ -71,14 +76,32 @@
     background-color: aquamarine;
     border-radius: @border-radius;
   }
-  
   .device{
     height:200px;
     border-radius:@border-radius;
     background-color: burlywood;
   }
 }
-
+.el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+  .Img{
+    width: 100%;
+    height: 100%;
+    background-size:100% 100%; 
+  }
 // .title
 // {
 //   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
@@ -111,15 +134,17 @@ export default {
     Logo
   },
   data(){
-    title: ''
-    Myname: ''
+    return{
+    title: '',
+    Myname: '',
+    img:'',
+    }
+    
   },
   async mounted(){
-    let resData = await this.$axios.$get('/api/test')
-    console.log(resData)
-    this.Myname = resData
-
     
+    let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
+    this.img = getAllData.Devices;
     // this.getDataById = await this.$axios.$get('/api/auth/getUser');
     // this.getDataById = await this.$axios.$get('/api/auth/checkLogIn');
     // this.putData = await this.$axios.$get('/api/auth/logOut');

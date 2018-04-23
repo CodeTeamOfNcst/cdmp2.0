@@ -132,20 +132,20 @@
                     this.$message.error("请填写所有信息")
                     return
                 }
-                let resData = await axios.post('/api/deviceApply/addApplyFront', {
+                let resData = await this.$axios.$post('/api/deviceApply/addApplyFront', {
                     deviceId: this.device.id,
                     vioReason: this.vioReason,
                     startDate: this.date[0],
                     endDate: this.date[1]
                 })
-                if(resData.data.status === 1){
+                if(resData.status === 1){
                     this.$message({
-                        message: resData.data.message,
+                        message: resData.message,
                         type: 'success'
                     });
                     window.location.href = '/device'
                 }else{
-                    this.$message.error(resData.data.message)
+                    this.$message.error(resData.message)
                 }
             } , 
         },
@@ -163,9 +163,9 @@
             }
         },
         async mounted(){
-            if(!this.$auth.state.loggedIn) 
-                window.location.href ='/login'
-            this.user = this.$auth.state.user
+            // if(!this.$auth.state.loggedIn) 
+            //     window.location.href ='/login'
+            // this.user = this.$auth.state.user
         },
         async asyncData({params}){
             let resData = await axios.post('/api/device/getDeviceDataById', { id: params.id})

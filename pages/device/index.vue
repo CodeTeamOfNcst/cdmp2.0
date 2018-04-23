@@ -2,7 +2,7 @@
     <div>
         <section class="container">
             <div class="headerName">
-                <div class="leftSty"></div>
+                <!-- <div class="leftSty"></div> -->
                 <el-row :gutter="20">
                     <el-col :span="15" class="padding">
                         <div class="grid-content bg-purple">
