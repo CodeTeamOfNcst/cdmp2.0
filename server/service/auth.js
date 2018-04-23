@@ -8,15 +8,15 @@ const  jsonwebtoken  = require('jsonwebtoken')
  * @param { Number } limit 限制数据的条数，默认为 comfig 中的条数
  */
 module.exports.user = async ( JSON ) => {
-    let user
-    jsonwebtoken.verify(JSON, 'secretKey', function (err, decoded) {
+    let User
+    let newJson = JSON.substring(7)
+    jsonwebtoken.verify(newJson, 'secretKey', function (err, decoded) {
         if (!err){
-            console.log('Json is ' + JSON)
-            user = decoded
-         }
+            User = decoded
+        }
     })
     let res = {
-        user: user,
+        user: User,
     }  
     return res;
 }
@@ -85,14 +85,14 @@ module.exports.logIn = async (JSON) => {
         }
         const accessToken = jsonwebtoken.sign(
             {
-                login_account: JSON.account,
+                user: user.account,
                 rand: Math.random() * 1000,
                 scope: ['test', 'user', userIsAdmin?'admin':null]
             },
             'secretKey'
         )
         let res = {
-            token: accessToken,
+            user: accessToken,
             user_is_admin: userIsAdmin,
             status: 1,
             message: '登陆成功'

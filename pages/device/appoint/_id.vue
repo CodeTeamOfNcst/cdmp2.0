@@ -133,6 +133,7 @@
                     return
                 }
                 let resData = await this.$axios.$post('/api/deviceApply/addApplyFront', {
+                    userAccount:this.$auth.state.user.user,
                     deviceId: this.device.id,
                     vioReason: this.vioReason,
                     startDate: this.date[0],
@@ -162,11 +163,6 @@
                 },
             }
         },
-        async mounted(){
-            // if(!this.$auth.state.loggedIn) 
-            //     window.location.href ='/login'
-            // this.user = this.$auth.state.user
-        },
         async asyncData({params}){
             let resData = await axios.post('/api/device/getDeviceDataById', { id: params.id})
             if(resData.data.status === 1){
@@ -174,6 +170,17 @@
                     device: resData.data.device
                 }
             }
-        }
+        },
+        async mounted(){
+            if(!this.$auth.state.loggedIn) 
+                window.location.href ='/login'
+            let Data = await this.$axios.$get('/api/user/userGetAllData')
+            let userData = Data.usersDetail;
+            for(let index in userData){
+                if(userData[index].user.account === this.$auth.state.user.user){
+                    this.user = userData[index].user.name
+                }
+            }     
+        },
     }
 </script>

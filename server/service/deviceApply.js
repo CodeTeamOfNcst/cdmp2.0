@@ -170,13 +170,16 @@ module.exports.addApply = async (JSON) => {
     }
 }
 
-module.exports.addApplyFront = async (JSON,userJSON) => {   
-    if(userJSON){
+module.exports.addApplyFront = async (JSON) => {   
+    if(JSON.userAccount){
         try{
-            let thisUserAccount = userJSON;
+            let thisUserAccount = JSON.userAccount;
             let thisUser = await User.findOne({
                 where: { account:thisUserAccount }
             });
+            let checker = await User.findOne({
+                where:{id:3}
+            })
             if(thisUser){
                 let thisDevice = await Device.findOne({
                     where: {id: JSON.deviceId}
@@ -186,9 +189,10 @@ module.exports.addApplyFront = async (JSON,userJSON) => {
                     startDate: JSON.startDate,
                     endDate: JSON.endDate
                 })
+                thisApply.setDeviceApplyChecker(checker)
                 thisApply.setDeviceApplyer(thisUser);
-                thisApply.setApplyDevice(thisDevice)
-
+                thisApply.setApplyDevice(thisDevice);
+                thisApply.save();
                 let result = {
                     status: 1,
                     message: '成功'

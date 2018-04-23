@@ -34,8 +34,7 @@ module.exports.deviceApplyPost = async (ctx, next) => {
 
 module.exports.deviceApplyPostFront = async (ctx, next) => {
   let apply = ctx.request.body
-  let user = ctx.cookies.get("authUser")
-  let result = await deviceApplyService.addApplyFront(apply,user)
+  let result = await deviceApplyService.addApplyFront(apply)
   ctx.body = {
     status:result.status,
     message:result.message

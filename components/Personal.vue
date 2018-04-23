@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-        <div v-if="result">
+        <div v-if="res">
             <el-tabs :tab-position="tabPosition">
                 <el-tab-pane label="云计算资源预约记录">
                     <!-- 历史记录版块开始 -->
@@ -92,25 +92,16 @@
                                     <el-input v-model="form2.email" clearable></el-input>
                                 </el-form-item>
                             </el-form>
-                            <div slot="footer" class="dialog-footer">
+                            <!-- <div slot="footer" class="dialog-footer">
                                 <el-button @click="dialogFormVisible = false">取 消</el-button>
                                 <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                            </div>
+                            </div> -->
                         </el-dialog>
                     </div>
-                    <!-- 正在使用信息结束 -->
-
-                    <!-- <el-row style="margin-top:10px;float:right;">
-                        <el-switch
-                            v-model="chance"
-                            active-text="历史记录"
-                            inactive-text="正在使用">
-                        </el-switch>
-                    </el-row> -->
-                    
+                    <!-- 正在使用信息结束 -->                  
                 </el-tab-pane>
                 <el-tab-pane label="仪器设备预约记录">
-                    <div v-for="data in result" v-bind:key="data" v-if="data.applyUserId === 5">
+                    <div v-for="data in res" v-bind:key="data" v-if="data.applyUserId === form.id">
                         <div class="history">
                             <img :src="data.Img" >
                             <div class="hisCont">
@@ -172,7 +163,7 @@
                         </el-row> 
                         <el-form-item>
                             <el-button type="primary" @click="onSubmit">保存</el-button>
-                            <el-button>取消</el-button>
+                            <el-button @click="onSubmitCancel">取消</el-button>
                         </el-form-item>
                     </el-form>
                 </el-tab-pane>        
@@ -280,20 +271,15 @@
                     },
                 ],
                 tabPosition: '',
-                result: [
-                    {
-                        device: [],
-                        deviceType: [],
-                        apply: []
-                    }
+                res: [
+                    
                 ],
                 chance: false,
             }
         },  
         methods: {
             async onSubmit(){
-                //此处用到登录用户的id
-                let getUser = await this.$axios.$post('/api/user/userGetUserData',{id:'8'})
+                let getUser = await this.$axios.$post('/api/user/userGetUserData',{id:this.form.id})
                 let resData = await this.$axios.$post('/api/user/modifyUserById', {
                     userId: this.form.id,
                     account: this.form.account,
@@ -314,38 +300,38 @@
                     this.$message.error(resData.message);
                 }
             },  
-            open2() {
-                this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });          
-                });
-            },    
+            async onSubmitCancel(){
+                window.location.reload()
+            },
         },
-        async mounted(){     
-            let getDataById = await this.$axios.$post('/api/computeApply/getApplySearch',{apply_user:'5'});
+        
+        async mounted(){  
+            if(!this.$auth.state.loggedIn) 
+                window.location.href ='/login' 
+            let Data = await this.$axios.$get('/api/user/userGetAllData')
+            let userData = Data.usersDetail;
+            for(let index in userData){
+                if(userData[index].user.account === this.$auth.state.user.user){
+                    this.form = userData[index].user
+                }
+            }      
             let getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
-            //此处用到登录用户的id
-            let getUser = await this.$axios.$post('/api/user/userGetUserData',{id:'5'})
+            let getDataById = await this.$axios.$post('/api/computeApply/getApplySearchFront',{account:this.$store.state.auth.user});
             this.tableData1 = getDataById.result;
             this.tableData0 = getDataById.result;
-            this.result = getAllData.applys;
-            this.form = getUser.user;
-        },
+            this.res = getAllData.applys;
+            console.log(getAllData.applys)
+            },
         head(){
             return {
                 title: 'CDMP - 个人中心'
             }
+        },
+        async asyncData(context){
+            return{
+                
+            }
+            
         },
     }
 </script>

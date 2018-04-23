@@ -127,6 +127,38 @@ module.exports.getApplySearch = async (JSON) => {
     }
 }
 
+module.exports.getApplySearchFront = async (JSON) => {
+    try{
+        //以申请人搜索
+        let user = await User.findOne({
+            where: { account:{ [Op.like] : `%${JSON.account.user}%`}}
+        })
+        let searchResult = await ComputeApply.findAll({
+            where: { apply_user:{ [Op.like] : `%${user.id}%`}}
+        })
+        if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
+        let result = []
+        for(let i =0; i< searchResult.length; i++){
+            result.push({
+                apply: searchResult[i],
+                applyUser: searchResult[i].apply_user,
+            })
+        }
+        let res = {
+            result: result,
+            status: 1,
+            message: '申请搜索成功！'
+        }
+        return res;
+    }catch(err){
+        let res = {
+            status : 0,
+            message: `获取信息失败， 由于 ${err}`
+        }
+        return res;
+    }
+}
+
 module.exports.addApply = async (JSON) => {   
     try{
         if((!JSON.hours) || 

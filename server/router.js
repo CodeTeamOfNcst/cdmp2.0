@@ -79,6 +79,8 @@ module.exports = () => {
   router.post('/computeApply/getApplyById',computeApplyController.computeApplyGetById)
   router.get('/computeApply/getAllApplyData',computeApplyController.computeApplyGetAll)
   router.post('/computeApply/getApplySearch',computeApplyController.computeApplySearch)
+  router.post('/computeApply/getApplySearchFront',computeApplyController.computeApplySearchFront)
+
   router.post('/computeApply/addApply',computeApplyController.computeApplyPost)
   router.post('/computeApply/addApplyFront',computeApplyController.computeApplyPostFront) 
   router.delete('/computeApply/deleteApplyById', computeApplyController.computeApplyDelete)

@@ -159,12 +159,10 @@
             return{
             };
         },
-        methods() {
-            return{
-                handleLogOugt(){
-                    window.location.href = '/'
-                },
-            }
+        methods: {
+            async handleLogOugt(){
+                window.location.href = '/'
+            },
         }
     }
 </script>

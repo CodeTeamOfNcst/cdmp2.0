@@ -52,7 +52,7 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/api/auth/logIn', method: 'post', propertyName: 'token' },
+          login: { url: '/api/auth/logIn', method: 'post', propertyName: 'user' },
           logout: { url: '/api/auth/logOut', method: 'get' },
           user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
         },
@@ -66,7 +66,7 @@ module.exports = {
       options: {
         path: '/'
       }
-    },
+},
     fetchUserOnLogin: true,
     watchLoggedIn: false
   },

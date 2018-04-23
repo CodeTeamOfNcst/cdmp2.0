@@ -88,7 +88,18 @@ h2{
                         }
                     })
                     if(this.$store.state.auth.user){
-                        window.location.href = '/'
+                        let Data = await this.$axios.$get('/api/user/userGetAllData')
+                        let userData = Data.usersDetail; 
+                        for(let index in userData){
+                            if(userData[index].user.account === this.$auth.state.user.user){
+                                if(userData[index].user.id === 1){
+                                    window.location.href = '/admin'
+                                }
+                                else{
+                                    window.location.href = '/'
+                                }
+                            }
+                        }         
                     }else{
                         this.$message.error("用户名或密码错误")
                     }     

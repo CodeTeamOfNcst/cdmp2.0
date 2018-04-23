@@ -191,16 +191,16 @@
                             <el-input v-model="editForm.chargePerson" :disabled="true"/>
                         </el-col>
                     </el-form-item>
-                    <el-form-item label="所在院系">
+                    <el-form-item label="申请机时额度">
                         <el-col :span="15">
                             <el-input v-model="editForm.department" clearable />
                         </el-col>
                     </el-form-item>
-                    <el-form-item label="授权作业类型">
+                    <!-- <el-form-item label="授权作业类型">
                         <el-col :span="15">
                             <el-input v-model="editForm.authType" clearable />
                         </el-col>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item label="申请起止时间">
                         <el-date-picker
                             v-model="editForm.applytime"
@@ -217,66 +217,6 @@
                             inactive-text="审核未通过">
                         </el-switch>
                     </el-form-item>
-
-                    <!-- 未审核将不显示以下内容，故判断两字段是不相等 -->
-                    <template v-if="createdAt == updatedAt">
-                        <el-form-item label="剩余机时额度">
-                            <el-col :span="15">
-                                <el-input v-model="editForm.authType" :disabled="true"/>
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item label="存储使用">
-                            <el-col :span="15">
-                                <el-input v-model="editForm.authType" :disabled="true"/>
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item label="最大核数">
-                            <el-col :span="15">
-                                <el-input v-model="editForm.authType" :disabled="true"/>
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item label="使用占比">
-                            <el-col :span="15">
-                                <el-input v-model="editForm.authType" :disabled="true"/>
-                            </el-col>
-                        </el-form-item>
-                        <h3>截至到 2018-03-10 08:09:19 计算资源统计</h3>
-                        <el-table
-                            :data="tableData1"
-                            border
-                            show-summary
-                            style="width: 100%">
-                            <el-table-column
-                                prop="monthlyTotal"
-                                label="月度合计"
-                                width="90">
-                            </el-table-column>
-                            <el-table-column
-                                prop="homeworkNum"
-                                label="作业数"
-                                width="70">
-                            </el-table-column>
-                            <el-table-column
-                                prop="useTime"
-                                label="使用机时(核小时)">
-                            </el-table-column>
-                            <el-table-column
-                                prop="systemPercent"
-                                label="占系统百分比"
-                                width="120">
-                            </el-table-column>
-                            <el-table-column
-                                prop="averNum"
-                                label="作业平均核数"
-                                width="120">
-                            </el-table-column>
-                            <el-table-column
-                                prop="averWaitTime"
-                                label="平均等待时间(小时)"
-                                width="170">
-                            </el-table-column>
-                        </el-table>
-                    </template>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="handleEditSubmit" type="primary">提 交</el-button>
@@ -370,9 +310,6 @@
                 }
             },
             async handleAdd(){
-                // let checkUser = await this.$axios.$post('/api/user/userGetUserData', {
-                //     id: 5
-                // });
                 let resData = await this.$axios.$post('/api/computeApply/addApply', {
                     hours: this.addForm.hours,
                     apply_user:this.addForm.user,
@@ -399,13 +336,13 @@
             },
             async handleEdit(row){
                 try{
-                    let resData = await axios.post('/api/apply/getById',{
-                        id: row.apply.id
+                    let resData = await axios.post('/api/computeApply/getById',{
+                        id: row.id
                     });
-                    if(resData.data.status === 1){
-                        this.editForm.id = resData.data.apply.id;
-                        this.editForm.chargePerson = resData.data.applyUser.name;
-                        this.editForm.isUse= resData.data.apply.isUse;
+                    if(resData.status === 1){
+                        this.editForm.id = resData.apply.id;
+                        this.editForm.chargePerson = resData.applyUser.name;
+                        this.editForm.isUse= resData.apply.isUse;
                         
                         this.editFromVisible = true
                     }else {

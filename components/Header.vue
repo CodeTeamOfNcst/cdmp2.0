@@ -4,24 +4,31 @@
             <!--<img src="../assets/img/r_bg.jpg"/>-->
             <el-row  >
                 <el-col :span="3" :offset="1" ><div class="header-item grid-content bg-purple-light"><h1>CDMP</h1></div></el-col>
-                <el-col :span="4"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/clcresources">计算资源</nuxt-link></div></el-col>
-                <el-col :span="4"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/device">仪器列表</nuxt-link></div></el-col>
-                <el-col :span="4"><div class="header-item grid-content bg-purple"><nuxt-link class="button" to="/notice">通知公告</nuxt-link></div></el-col>
-                <el-col :span="4"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
+                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/clcresources">计算资源</nuxt-link></div></el-col>
+                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/device">仪器列表</nuxt-link></div></el-col>
+                <el-col :span="3"><div class="header-item grid-content bg-purple"><nuxt-link class="button" to="/notice">通知公告</nuxt-link></div></el-col>
+                <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
                  
-                <el-col class="right" :span="4">
+                <el-col class="right" :span="6">
                     <span class="little">
                         <i class="iconfont icon-home"></i>
                         <nuxt-link to="/">首页</nuxt-link>
                     </span>
-                    <span class="little">
+                    <div v-if="!status" class="little">
                         <i class="iconfont icon-user"></i>
                         <nuxt-link to="/login">登录</nuxt-link>
-                    </span>
-                    <span class="little">
                         <i class="iconfont icon-register"></i>
                         <nuxt-link to="/signin">注册</nuxt-link>
-                    </span>
+                    </div>
+                    <div v-else class="little" >
+                        <i class="iconfont icon-user"></i>
+                        <nuxt-link to="/personal">个人中心</nuxt-link>
+                        
+                        <i class="iconfont icon-register"></i>
+                        <nuxt-link to="/signin">注册</nuxt-link>
+                        <i class="iconfont icon-register"></i>
+                        <el-button  @click="logOut">退出</el-button>
+                    </div>
                 </el-col>
             </el-row> 
         </div>
@@ -49,13 +56,13 @@
     .nuxt-link-exact-active {
         // background: #6b8db4;
         color: #fff;
-    }
-     
+    } 
     .el-row{
         width: 90%; 
         height:100%;
+        margin-left: 5%;
         .right{
-            height:59px;;
+            height:59px;
             float:right;
             color:#fff;
             padding-left: 15px;
@@ -87,8 +94,18 @@
         data() {
             return {
                 isActive: true,
-                hasError: false
+                hasError: false,
+                status:'',
             };
-        }
+        },
+        methods:{
+            async logOut(){
+                let resData = await this.$auth.logout()
+                window.location.reload()
+            },
+        },
+        async mounted(){
+            this.status = this.$auth.state.loggedIn         
+        },
     }
 </script>

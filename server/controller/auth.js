@@ -7,8 +7,8 @@ const jsonwebtoken  = require('jsonwebtoken')
  * @param {*} next 
  */
 module.exports.authGetUser = async (ctx, next) => {
-  let getData =  ctx.cookies.get('token');
-  let result =  authService.user(getData)
+  let getData =  ctx.cookies.request.headers. authorization
+  let result = await authService.user(getData)
   ctx.body = {
     user:result.user,
   }
@@ -16,7 +16,7 @@ module.exports.authGetUser = async (ctx, next) => {
 
 module.exports.authCheckLogin = async (ctx, next) => {
     let getData = ctx.cookies.get('user');
-    let result =  authService.checkLogIn(getData)
+    let result = await authService.checkLogIn(getData)
     ctx.body = {
         user:result.user,
         user_is_admin:result.user_is_admin,
@@ -26,7 +26,7 @@ module.exports.authCheckLogin = async (ctx, next) => {
 }
 module.exports.authLogOut = async (ctx, next) => {
     let putData = ctx.cookies;
-    let result =  authService.logOut(putData)
+    let result = await authService.logOut(putData)
     ctx.body = {
       status:result.status,
     }

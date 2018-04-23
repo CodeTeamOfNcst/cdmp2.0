@@ -51,6 +51,15 @@ module.exports.computeApplyGetById = async (ctx, next) => {
     message:result.message
   }
 }
+module.exports.computeApplySearchFront = async (ctx, next) => {
+  let search = ctx.request.body
+  let result = await computeApplyService.getApplySearchFront(search)
+  ctx.body = {
+    result:result.result,
+    status:result.status,
+    message:result.message
+  }
+}
 module.exports.computeApplySearch = async (ctx, next) => {
   let search = ctx.request.body
   let result = await computeApplyService.getApplySearch(search)
