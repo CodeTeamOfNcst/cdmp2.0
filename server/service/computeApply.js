@@ -13,6 +13,7 @@ module.exports.getApplyById = async (JSON) => {
         let thisApply = await ComputeApply.findOne({
             where: { id: JSON.id }
         });
+        let applyUser = await thisApply.getComputeApplyer()
         let res = {
             startDate:thisApply.startDate,
             endDate:thisApply.endDate,
@@ -22,6 +23,7 @@ module.exports.getApplyById = async (JSON) => {
             isAgree:thisApply.isAgree,
             isUse:thisApply.isUse,
             apply_user:thisApply.apply_user,
+            applyUser:applyUser,
             check_user:thisApply.check_user,
         }
         let result = {
@@ -264,12 +266,16 @@ module.exports.modifyApplyById = async (JSON) => {
         let thisApply = await ComputeApply.findOne({
             where: {id: JSON.id}
         });
+        
+        let apply_user = await thisApply.getComputeApplyer()
+        let check_er = await thisApply.getComputeApplyChecker()  
         await thisApply.update({
             hours: JSON.hours,
-            isAgree: JSON.isAgree,
-            isUse: JSON.isUse,
-            startDate: JSON.date[0],
-            endDate: JSON.date[1]
+            isUse: JSON.isAgree,
+            startDate: JSON.startDate,
+            endDate: JSON.endDate,
+            apply_user:apply_user.id,
+            check_er:check_er.id,
         });
         await thisApply.save();
         let result = {
@@ -279,7 +285,7 @@ module.exports.modifyApplyById = async (JSON) => {
         return result;
     }catch (err){
         let result = {
-            status: 1,
+            status: 0,
             message: `修改异常，原因 ${err}`
         }
         return result;

@@ -11,6 +11,7 @@ const deviceApplyController = require('./controller/deviceApply')
 const computeApplyController = require('./controller/computeApply')
 const authController = require('./controller/auth')
 const uploadController = require('./controller/upload')
+const videoService = require('./service/video')
 
 const upload = multer({
   dest: './static/uploads'
@@ -80,11 +81,10 @@ module.exports = () => {
   router.get('/computeApply/getAllApplyData',computeApplyController.computeApplyGetAll)
   router.post('/computeApply/getApplySearch',computeApplyController.computeApplySearch)
   router.post('/computeApply/getApplySearchFront',computeApplyController.computeApplySearchFront)
-
   router.post('/computeApply/addApply',computeApplyController.computeApplyPost)
   router.post('/computeApply/addApplyFront',computeApplyController.computeApplyPostFront) 
-  router.delete('/computeApply/deleteApplyById', computeApplyController.computeApplyDelete)
-  router.put('/computeApply/modifyApplyById',computeApplyController.computeApplyPut)
+  router.post('/computeApply/deleteApplyById', computeApplyController.computeApplyDelete)
+  router.post('/computeApply/modifyApplyById',computeApplyController.computeApplyPut)
 
   //auth 相关 service
   router.get('/auth/user',authController.authGetUser)
@@ -99,5 +99,9 @@ module.exports = () => {
   router.post('/upload/deleteTempFile',uploadController.uploadDelete)
   router.post('/upload/copyTempFileToDir',uploadController.uploadCope)
   
+
+  // 处理视频流
+  router.get('/video/getStream', videoService.checkFile, videoService.getVedioStream)
+
   return router
 }

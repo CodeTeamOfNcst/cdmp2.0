@@ -149,13 +149,13 @@
                             prop="isAgree"
                             label="是否同意"
                             width="110">
-                            <template slot-scope="scope">{{scope.row.isAgree ? '是':'否'}}</template>
+                            <template slot-scope="scope">{{scope.row.isAgree ? '同意':'不同意'}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="isUse"
                             label="是否禁用"
                             width="110">
-                            <template slot-scope="scope">{{scope.row.isUse ? '是':'否'}}</template>
+                            <template slot-scope="scope">{{scope.row.isUse ? '未禁用':'禁用'}}</template>
                     </el-table-column>
                     <el-table-column
                             prop="isExamine"
@@ -193,17 +193,12 @@
                     </el-form-item>
                     <el-form-item label="申请机时额度">
                         <el-col :span="15">
-                            <el-input v-model="editForm.department" clearable />
+                            <el-input v-model="editForm.hours" clearable />
                         </el-col>
                     </el-form-item>
-                    <!-- <el-form-item label="授权作业类型">
-                        <el-col :span="15">
-                            <el-input v-model="editForm.authType" clearable />
-                        </el-col>
-                    </el-form-item> -->
                     <el-form-item label="申请起止时间">
                         <el-date-picker
-                            v-model="editForm.applytime"
+                            v-model="editForm.date"
                             type="datetimerange"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
@@ -336,17 +331,20 @@
             },
             async handleEdit(row){
                 try{
-                    let resData = await axios.post('/api/computeApply/getById',{
+                    let resData = await this.$axios.$post('/api/computeApply/getApplyById',{
                         id: row.id
                     });
                     if(resData.status === 1){
-                        this.editForm.id = resData.apply.id;
-                        this.editForm.chargePerson = resData.applyUser.name;
-                        this.editForm.isUse= resData.apply.isUse;
-                        
+                        this.editForm.id = row.id,
+                        this.editForm.status = resData.result.isAgree,
+                        this.editForm.chargePerson = resData.result.applyUser.name,
+                        this.editForm.isUse= resData.result.isUse,
+                        this.editForm.hours = resData.result.hours,
+                        this.editForm.date[0] = resData.result.startDate,
+                        this.editForm.date[1] = resData.result.endDate,
                         this.editFromVisible = true
                     }else {
-                        this.$message.error(resData.data.message);
+                        this.$message.error(resData.message);
                     }
                 }catch(err) {
                     this.$message.error(`异常 由于 ${err}`);
@@ -360,17 +358,17 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     });
-                    let resData = await axios.post('', {
+                    let deleteData = await this.$axios.$post('/api/computeApply/deleteApplyById', {
                         id: row.id
-                    });
-                    if(resData.data.status === 1){
+                    })
+                    if(deleteData.status === 1){
                         this.$message({
                             type: 'success',
                             message: '成功禁用'
                         });
                         window.location.reload()
                     }else {
-                        this.$message.error(resData.data.message);
+                        this.$message.error(deleteData.message);
                     }
                 }catch (err){
                     this.$message({
@@ -381,17 +379,20 @@
             },
             async handleEditSubmit(){
                 try{
-                    let resData = await axios.post('',{
-                        rule: this.editForm
-                    })
-                    if(resData.data.status === 1){
+                    let resData = await this.$axios.$post('/api/computeApply/modifyApplyById',{
+                        id: this.editForm.id,
+                        hours:this.editForm.hours,
+                        isAgree:this.editForm.status,
+                        startDate:this.editForm.date[0],
+                        endDate:this.editForm.date[1],
+                    });
+                    if(resData.status === 1){
                         this.$message({
-                            type: 'success',
-                            message: resData.data.message
+                            message: resData.message
                         });
                         window.location.reload()
                     }else {
-                        this.$message.error(resData.data.message);
+                        this.$message.error(resData.message);
                     }
                 }catch (err){
                     this.$message.error(`异常 由于 ${err}`);
@@ -458,12 +459,11 @@
                 }],
                 editForm: {
                     id:'',
-                    department: '',
-                    chargePerson: '',
-                    authType:'',
-                    applytime:'',
-                    status: false,
-                    isUse: '',
+                    chargePerson:'',
+                    date:[],
+                    hours:'',
+                    status:'false',
+                    isUse: 'false',
                 },
                 tableData1: [{
                     monthlyTotal: 'Jan 2018',
@@ -493,12 +493,8 @@
             };
         },
         async mounted(){
-            this.getDataById = await this.$axios.$post('/api/computeApply/getApplyById', {post: 'post'});
             let getAllData = await this.$axios.$get('/api/computeApply/getAllApplyData');
-            this.searchData = await this.$axios.$post('/api/computeApply/getApplySearch', {post: 'post'});
-            this.postDataFront = await this.$axios.$post('/api/computeApply/addApplyFront', {post: 'post'});
-            this.deleteData = await this.$axios.$delete('/api/computeApply/deleteApplyById', { data:{delete: 'delete'}}) 
-            this.putData = await this.$axios.$put('/api/computeApply/modifyApplyById', {put: 'put'});
+            this.deleteData = await this.$axios.$post('/api/computeApply/deleteApplyById', {delete: 'delete'}) 
             let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
 
             this.tableData = getAllData.applys;

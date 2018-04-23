@@ -24,11 +24,11 @@
             <el-col :span="24">
                 <div class="grid-content bg-purple-dark paging" >
                     <el-pagination
-                            :page-size="10"
-                            background
-                            layout="prev, pager, next"
-                            :total="ruleCount"
-                            @current-change="handlePageChange">
+                        :page-size="10"
+                        background
+                        layout="prev, pager, next"
+                        :total="ruleCount"
+                        @current-change="handlePageChange">
                     </el-pagination>
                 </div>
             </el-col>

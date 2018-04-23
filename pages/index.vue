@@ -6,8 +6,13 @@
           <div class="orderbefore"></div>
           <span class="order"><i class="el-icon-d-arrow-right"></i> 通知公告</span>
           <div class="indnotice">
-              <div v-for="info in infoDetail" v-bind:key="info">
-                  <el-col :span="24"><div class="grid-content bg-purple-dark"><a :href='"/notice/" + rule.id'>{{ info.title }} 发布时间：{{ info.releaseDate }} </a></div></el-col>
+              <div v-for="info in infoDetail" v-bind:key="info" >
+                  <el-col :span="24">
+                    <div class="infoContent">
+                      <a :href='"/notice/" + info.id'>{{ info.title.substr(0,24) }} --{{ info.releaseDate }} </a>
+                      <div class="classLine"></div>
+                    </div>
+                  </el-col>
               </div>
           </div>
         </div>
@@ -38,9 +43,9 @@
         <el-col :span="24"> <nuxt-link class="link" to="/usedirection">仪器预约 </nuxt-link></el-col>
         <el-col :span="24"> <nuxt-link class="link" to="/usedirection">资源情况 </nuxt-link></el-col>
         <el-col :span="24"> <nuxt-link class="link" to="/usedirection">仪器列表 </nuxt-link></el-col> -->
-        <el-col><nuxt-link to="/usedirection"><el-button type="primary" class="link">仪器列表</el-button></nuxt-link></el-col>
-        <el-col><nuxt-link to="/device/appoint"><el-button type="primary" class="link">仪器预约</el-button></nuxt-link></el-col>
+        <el-col><nuxt-link to="/device"><el-button type="primary" class="link">仪器列表</el-button></nuxt-link></el-col>
         <el-col><nuxt-link to="/clcresources"><el-button type="primary" class="link">资源情况</el-button></nuxt-link></el-col>
+        <el-col><nuxt-link to="/usedirection"><el-button type="primary" class="link">平台介绍</el-button></nuxt-link></el-col>
         <el-col><nuxt-link to="/personal"><el-button type="primary" class="link">个人中心</el-button></nuxt-link></el-col>
         </div>
       </el-col>
@@ -116,7 +121,8 @@ a{
 
 @border-radius:4px;
 .link{
-  margin-top:20px;
+  margin-top:15px;
+  width:90%;
 }
 .intro{
   width:80%;
@@ -133,9 +139,25 @@ a{
   height:50px;
 }
 .indnotice{
-      width:400px;
+      width:100%;
       height:300px;
+      .infoContent{
+        float: left;
+        font-size: 1.1em;
+      }
+      .infoContent a{
+        color: black;
+      }
+      .infoContent a:hover{
+        color:blue;
+      }
+      .classLine{
+        width: 100%;
+        height:5px;
+        background: burlywood;
+      }
   }
+  
 .orderbefore{
     width: 5px;
     height:30px;
@@ -237,22 +259,15 @@ export default {
     title: '',
     Myname: '',
     img:'',
-    }
-    
+    infoDetail: null,
+    }    
   },
-  async mounted(){
-    
+  async mounted(){   
     let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
     this.img = getAllData.Devices;
-    // this.getDataById = await this.$axios.$get('/api/auth/getUser');
-    // this.getDataById = await this.$axios.$get('/api/auth/checkLogIn');
-    // this.putData = await this.$axios.$get('/api/auth/logOut');
-    // this.resData = await this.$axios.$post('/api/auth/regist', {post: 'post'});
-    // this.putData = await this.$axios.$post('/api/auth/logIn', {post: 'post'});
-    
-    
+    let getAllInfoData = await this.$axios.$get('/api/info/getAllInfoData');
+    this.infoDetail = getAllInfoData.infoDetail 
   },
-
   async asyncData({ app }){
     let resData = await app.$axios.$get('/api/test/')
     return {

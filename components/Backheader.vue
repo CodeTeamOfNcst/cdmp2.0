@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="header_img">
-            <h1>CDMP-云计算资源及设备预约管理后台</h1>
+            <h1>CDMP-高校实验设备管理平台</h1>
             <div class="grid-content bg-purple-dark userLogout">
                 <div class="logout">
                     <el-button class="button_logout" @click="handleLogOugt">退出</el-button>
