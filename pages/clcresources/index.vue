@@ -15,14 +15,14 @@
               <el-col :span="6">
                 <div class="grid-content bg-purple">
                   <div class="node">
-                    各机柜实时资源使用状况
+                    各机柜资源使用状况
                   </div>
                 </div>
               </el-col>
               <el-col :span="6">
                 <div class="grid-content bg-purple">
                   <div class="node">
-                    当月计算资源使用情况
+                     总计算资源使用情况
                   </div>
                 </div>
               </el-col>
