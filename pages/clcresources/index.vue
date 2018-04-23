@@ -12,17 +12,19 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
+              <el-col :span="11" :offset="1">
                 <div class="grid-content bg-purple">
                   <div class="node">
-                    各机柜实时资源使用状况
+                    <h3>各个机柜资源使用状况</h3>
+                    <img src="../../assets/img/1.jpg">
                   </div>
                 </div>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="11" :offset="1">
                 <div class="grid-content bg-purple">
                   <div class="node">
-                    当月计算资源使用情况
+                    <h3>当月计算资源使用状况</h3>
+                    <img src="../../assets/img/2.jpg">
                   </div>
                 </div>
               </el-col>
@@ -164,11 +166,13 @@
   margin-bottom:5px;
 }
 .node{
-  background-color: paleturquoise;
-  width:300px;
-  height:200px;
+  width:100%;
+  height:400px;
   border-radius:8px;
-  // margin-left:100px; 
+  margin-top:50px; 
+  h3{
+    margin-left:200px;
+  }
 }
 .transition-box {
   margin-bottom: 10px;
