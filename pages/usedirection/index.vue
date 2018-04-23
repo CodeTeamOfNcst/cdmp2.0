@@ -28,7 +28,7 @@
          <div class="contentList">
             <el-row class="strip">
                 <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/one">实验室仪器使用守则 发布时间： 2018-01-01 </a></div></el-col>
-                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/two">云计算资源及仪器预约平台使用守则 发布时间： 2018-01-01 </a></div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/two">平台仪器预约流程规则 发布时间： 2018-01-01 </a></div></el-col>
                 <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/three">云计算资源及仪器预约平台使用守则 发布时间： 2018-01-01 </a></div></el-col>
             </el-row>
         </div>

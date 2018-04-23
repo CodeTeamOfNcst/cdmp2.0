@@ -16,19 +16,29 @@
    
   <el-row :gutter="20">
     <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
+    <el-col :span="8"><div class="grid-content bg-purple">
+        <el-carousel :interval="5000" arrow="hover" indicator-position="none">
+          <el-carousel-item v-for="item in img" :key="item">
+            <img :src="item.imgFilePath" alt="Nuxt.js Logo" class="Img" />
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+    </el-col>
     <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
   </el-row>
   <div class="middle"> 
-<el-carousel :interval="4000" type="card" height="400px">
-    <el-carousel-item v-for="item in img" :key="item">
-      <img :src="item.imgFilePath" alt="Nuxt.js Logo" class="Img" />
-    </el-carousel-item>
-  </el-carousel>
+    <el-carousel :interval="4000" type="card" height="300px">
+        <el-carousel-item v-for="item in img" :key="item">
+          <img :src="item.imgFilePath" alt="Nuxt.js Logo" class="Img" />
+        </el-carousel-item>
+    </el-carousel>
   </div>
   <el-row class="content" :gutter="20">
     <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="10"><div class="grid-content bg-purple"></div></el-col>
+    <el-col :span="10"><div class="grid-content bg-purple">
+       
+      </div>
+    </el-col>
     <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
   </el-row>
   <div class="device">
@@ -72,8 +82,8 @@
    width:100%;
    margin:auto;
   .middle{
-    height:400px;
-    background-color: aquamarine;
+    height:300px;
+    // background-color: #99a9bf;
     border-radius: @border-radius;
   }
   .device{
@@ -102,27 +112,7 @@
     height: 100%;
     background-size:100% 100%; 
   }
-// .title
-// {
-//   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-//   display: block;
-//   font-weight: 300;
-//   font-size: 100px;
-//   color: #35495e;
-//   letter-spacing: 1px;
-// }
-// .subtitle
-// {
-//   font-weight: 300;
-//   font-size: 42px;
-//   color: #526488;
-//   word-spacing: 5px;
-//   padding-bottom: 15px;
-// }
-// .links
-// {
-//   padding-top: 15px;
-// } 
+ 
 </style>
 
 

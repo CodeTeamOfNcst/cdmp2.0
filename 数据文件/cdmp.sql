@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2018-04-19 20:08:33
+Date: 2018-04-23 10:25:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,13 +37,13 @@ CREATE TABLE `compute_applies` (
   KEY `check_user` (`check_user`),
   CONSTRAINT `compute_applies_ibfk_1` FOREIGN KEY (`apply_user`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `compute_applies_ibfk_2` FOREIGN KEY (`check_user`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of compute_applies
 -- ----------------------------
 INSERT INTO `compute_applies` VALUES ('1', '2018-04-09 17:02:00', '2018-04-30 17:02:04', '500', '123456', '123456', '0', '1', '2018-04-09 17:02:46', '2018-04-16 17:02:46', '3', '2');
-INSERT INTO `compute_applies` VALUES ('2', '2018-04-10 21:47:41', '2018-04-10 21:47:41', '15000', '555888', '123456', '1', '1', '2018-04-10 21:47:41', '2018-04-10 21:47:41', '5', '6');
+INSERT INTO `compute_applies` VALUES ('3', '2018-04-22 21:48:12', '2018-04-27 21:48:12', '500', '123456', '123456', '0', '1', '2018-04-22 21:48:34', '2018-04-22 21:48:34', '5', '4');
 
 -- ----------------------------
 -- Table structure for devices
@@ -69,14 +69,20 @@ CREATE TABLE `devices` (
   KEY `device_manager` (`device_manager`),
   CONSTRAINT `devices_ibfk_1` FOREIGN KEY (`device_type`) REFERENCES `device_types` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `devices_ibfk_2` FOREIGN KEY (`device_manager`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of devices
 -- ----------------------------
-INSERT INTO `devices` VALUES ('1', '全自动智能倒置显微镜及金相分析系统', null, '核心区HK座分析测试中心204', 'DMI5000M是徕卡公司推出的最先进的大型研究级全自动倒置显微镜，光学设计上采用先进的HC无限远轴向、径向双重色差校正光学技术，彻底消除杂散光等干扰因素；在整个光学系统内，对涉及成像质量的所有组件进行最优化组合，实现图像分辨率和反差的最优化，得到锐利图像的同时追求最高分辨率。DMI5000M适用于钢铁、金属、化工材料行业科研、质检、质控。反射光可实现明场、暗场、偏光、微分干涉、荧光观察功能；透射光可实现明场、暗场、偏光、微分干涉观察功能。', '2012-12-27 00:00:00', '0', '1', '1', '2018-04-09 16:53:14', '2018-04-09 16:53:14', '1', '1');
-INSERT INTO `devices` VALUES ('2', '原子吸收光谱仪 ', null, ' 核心区HK座分析测试中心 301 ', '无', '1970-01-01 08:00:02', '0', '1', '0', '2018-04-09 16:58:07', '2018-04-09 19:51:57', '2', '3');
-INSERT INTO `devices` VALUES ('3', '红外吸收光谱仪', null, ' 核心区HK座分析测试中心 310 ', '无', '2018-04-17 21:08:02', '0', '1', '1', '2018-04-17 21:08:07', '2018-04-17 21:08:07', '2', '2');
+INSERT INTO `devices` VALUES ('1', '全自动智能倒置显微镜及金相分析系统', '/uploads/deviceImages/c872f7b0-452e-11e8-85d2-c7f812e3cc03.jpg', '核心区HK座分析测试中心204', 'DMI5000M是徕卡公司推出的最先进的大型研究级全自动倒置显微镜，光学设计上采用先进的HC无限远轴向、径向双重色差校正光学技术，彻底消除杂散光等干扰因素；在整个光学系统内，对涉及成像质量的所有组件进行最优化组合，实现图像分辨率和反差的最优化，得到锐利图像的同时追求最高分辨率。DMI5000M适用于钢铁、金属、化工材料行业科研、质检、质控。反射光可实现明场、暗场、偏光、微分干涉、荧光观察功能；透射光可实现明场、暗场、偏光、微分干涉观察功能。', '2012-12-27 00:00:00', '0', '0', '0', '2018-04-09 16:53:14', '2018-04-21 21:19:26', '1', '1');
+INSERT INTO `devices` VALUES ('2', '原子吸收光谱仪 ', '/uploads/deviceImages/4822ea20-452e-11e8-85d2-c7f812e3cc03.jpg', '核心区HK座分析测试中心 301 ', '1.火焰和石墨炉原子化器的切换不需要光轴校准和能量匹配，也无需机械移动；2.全波长（190~900nm）塞曼背景校正使原子化效率的利用率 100%-可直接进行原样分析3.空心阴极灯不用预热，开机就可测样。4.实现全程实时双光束监控系统，使复杂的分析变得简单和一目了然 ', '1970-01-01 08:00:02', '0', '1', '0', '2018-04-09 16:58:07', '2018-04-21 16:40:51', '2', '2');
+INSERT INTO `devices` VALUES ('3', '红外吸收光谱仪', '/uploads/deviceImages/4cb54380-452e-11e8-85d2-c7f812e3cc03.jpg', '核心区HK座分析测试中心 310 ', '无', '2018-04-17 21:08:02', '0', '1', '1', '2018-04-17 21:08:07', '2018-04-21 21:01:20', '2', '3');
+INSERT INTO `devices` VALUES ('4', '激光拉曼光谱仪', '/uploads/deviceImages/509e6490-452e-11e8-85d2-c7f812e3cc03.jpg', '核心区HK座分析测试中心309', '无', '2018-04-18 21:12:55', '1', '0', '1', '2018-04-20 21:13:03', '2018-04-21 21:01:28', '1', '2');
+INSERT INTO `devices` VALUES ('5', '电子探针显微分析仪', '/uploads/deviceImages/546557a0-452e-11e8-85d2-c7f812e3cc03.jpg', '核心区HK座分析测试中心108', '无', '2018-04-20 21:14:05', '0', '1', '0', '2018-04-20 21:14:09', '2018-04-21 14:36:32', '2', '6');
+INSERT INTO `devices` VALUES ('6', '压样机', '/uploads/deviceImages/58346100-452e-11e8-85d2-c7f812e3cc03.jpg', '核心教学区HE座101', null, '2018-04-21 12:32:35', '0', '1', '1', '2018-04-21 12:32:35', '2018-04-21 14:36:38', '1', '4');
+INSERT INTO `devices` VALUES ('7', '全自动熔样机', '/uploads/deviceImages/5c1ee1a0-452e-11e8-85d2-c7f812e3cc03.jpg', '核心教学区HK201', null, '2018-04-21 12:38:32', '0', '1', '1', '2018-04-21 12:38:32', '2018-04-21 14:36:45', '2', '7');
+INSERT INTO `devices` VALUES ('8', '激光粒度仪', '/uploads/deviceImages/b80ed020-4532-11e8-b382-c5a37ecb69e5.jpg', '核心教学区HK322', null, '2018-04-21 13:42:28', '0', '1', '1', '2018-04-21 13:42:28', '2018-04-21 15:07:57', '2', '8');
+INSERT INTO `devices` VALUES ('9', '洛氏硬度计', '/uploads/deviceImages/5575a770-4534-11e8-baa6-ef370d46071f.jpg', '核心教学区HE212', null, '2018-04-21 15:19:30', '0', '1', '1', '2018-04-21 15:19:30', '2018-04-21 15:19:30', '1', '6');
 
 -- ----------------------------
 -- Table structure for device_applies
@@ -101,14 +107,17 @@ CREATE TABLE `device_applies` (
   CONSTRAINT `device_applies_ibfk_1` FOREIGN KEY (`apply_device`) REFERENCES `devices` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `device_applies_ibfk_2` FOREIGN KEY (`apply_user`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `device_applies_ibfk_3` FOREIGN KEY (`check_user`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of device_applies
 -- ----------------------------
-INSERT INTO `device_applies` VALUES ('1', '2018-04-09 16:58:40', '2018-04-18 16:58:47', '0', '需要借用！', '1', '2018-04-09 16:59:04', '2018-04-16 16:59:04', '2', '3', '3');
+INSERT INTO `device_applies` VALUES ('1', '2018-04-09 08:00:00', '2018-04-18 08:00:00', '1', '需要借用！', '0', '2018-04-09 16:59:04', '2018-04-21 21:26:05', '2', '3', '3');
 INSERT INTO `device_applies` VALUES ('2', '2018-04-04 17:00:20', '2018-04-11 17:00:24', '0', '借来用', '1', '2018-04-09 17:00:36', '2018-04-09 17:00:36', '1', '8', '3');
 INSERT INTO `device_applies` VALUES ('3', '2018-04-10 21:20:33', '2018-04-26 21:20:35', '0', '测试', '0', '2018-04-10 21:21:01', '2018-04-10 21:21:28', '2', '5', '3');
+INSERT INTO `device_applies` VALUES ('4', '2018-04-17 00:00:00', '2018-05-23 00:00:00', '0', '让他当饭吃', '1', '2018-04-21 20:39:36', '2018-04-21 20:39:36', '3', '3', '5');
+INSERT INTO `device_applies` VALUES ('5', '2018-04-09 08:00:00', '2018-05-14 08:00:00', '1', '从v', '0', '2018-04-21 20:43:33', '2018-04-21 21:24:49', '3', '2', '4');
+INSERT INTO `device_applies` VALUES ('6', '2018-04-22 21:57:39', '2018-04-27 21:57:43', '0', '的沙特', '1', '2018-04-22 21:57:51', '2018-04-22 21:57:51', '5', '5', '4');
 
 -- ----------------------------
 -- Table structure for device_types
@@ -195,15 +204,16 @@ CREATE TABLE `notice_announces` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of notice_announces
 -- ----------------------------
-INSERT INTO `notice_announces` VALUES ('1', '2018-04-09 17:01:27', '我校新添大型分析设备构成完备的微结构分析体系', '无无无', '1', '2018-04-09 17:01:42', '2018-04-09 17:01:42');
-INSERT INTO `notice_announces` VALUES ('2', '2018-04-10 20:00:53', '电子探针JXA-8230工程师培训时间安排', '这是测试内容', '1', '2018-04-10 20:00:53', '2018-04-10 20:05:26');
-INSERT INTO `notice_announces` VALUES ('3', '2018-04-17 21:26:38', '大型仪器使用流程培训', '无', '1', '2018-04-17 21:26:46', '2018-04-17 21:26:46');
+INSERT INTO `notice_announces` VALUES ('1', '2018-04-09 17:01:27', '我校新添大型分析设备构成完备的微结构分析体系', ' 近日，我校新添大型分析设备——场发射透射电子显微镜（TEM，JEM 2800F）、电子探针（EPMA，JXA 8230）、场发射电子束/聚焦离子束双束系统（FIB，Scios）、三维计算机断层扫描设备（工业CT，X5000），已安装调试完成，同时现代技术教育中心展开了不同形式的业务学习，和其它现有设备一起构成了完备的微结构分析体系。\r\n\r\n这些设备可提供一系列显微结构分析：表面显微形貌-组织-结构原位观察分析；微区成分-晶体结构-晶体取向关系分析；全自动夹杂物分布分析，材料缺陷，损伤、失效分析、材料内部晶体结构-晶体缺陷分析，二相粒子分析、晶体结构高分辨分析。在三维结构分析方面能够对材料宏观组织-成分的进行三维重构、材料微纳米加工刻蚀、显微三维结构-成分分布分析等。\r\n\r\n目前学校搬迁提升过程中购置的重要分析设备已投入正常运行，能够为矿业、冶金、材料、机械、电子信息、医疗、生物等领域的教学和科研工作提供丰富的微结构分析体系数据。学校拥有先进大型仪器设备，始终坚持 “笃学 敬业 求实 创新”的方针，不断丰富测试手段，管理科学，资源共享，服务教学科研，热忱为学校和社会各界提供一流的服务。 ', '1', '2018-04-09 17:01:42', '2018-04-21 20:23:54');
+INSERT INTO `notice_announces` VALUES ('2', '2018-04-10 20:00:53', '电子探针JXA-8230工程师培训时间安排', ' 2017年11月21日\r\n\r\n上午 基本原理：二次电子，反射电子，X 射线（包括空间分辨率）\r\n\r\n产品概要：基本构成，分光器的结构\r\n\r\n基礎操作实习\r\n\r\n试样更换、图像观察（SEI,BEI）、X 射线检测、分光器的结构和 X 射线强度等\r\n\r\n下午 全元素定性分析实习\r\n\r\n分析条件的设定（分光器条件的设定，电子光学条件的设定等）\r\n\r\n定性分析的应用实习', '1', '2018-04-10 20:00:53', '2018-04-21 20:24:01');
+INSERT INTO `notice_announces` VALUES ('3', '2018-04-17 21:26:38', '大型仪器使用流程培训', '无', '0', '2018-04-17 21:26:46', '2018-04-21 20:23:12');
 INSERT INTO `notice_announces` VALUES ('4', '2018-04-17 21:26:58', '华北理工大学军训服务项目 竞争性磋商中标公告', '无', '1', '2018-04-17 21:27:18', '2018-04-17 21:27:18');
+INSERT INTO `notice_announces` VALUES ('5', '2018-04-02 00:00:00', '测试', '问问', '1', '2018-04-21 19:23:32', '2018-04-21 19:23:32');
 
 -- ----------------------------
 -- Table structure for users
@@ -224,19 +234,25 @@ CREATE TABLE `users` (
   UNIQUE KEY `account` (`account`),
   KEY `user_type` (`user_type`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '201514620000', '123456', '郝一擎', '', '', '1', '2018-04-09 15:14:52', '2018-04-09 15:14:52', '1');
+INSERT INTO `users` VALUES ('1', '201514620000', '123456', '郝一擎', '', '', '1', '2018-04-09 15:14:52', '2018-04-21 18:58:35', '1');
 INSERT INTO `users` VALUES ('2', '201514620110', '123456', '张凌雪', '15230529628', '1050080567@qq.com', '1', '2018-04-09 15:12:53', '2018-04-09 15:12:53', '3');
-INSERT INTO `users` VALUES ('3', '201514620125', '123456', '王洋洋', '', '', '1', '2018-04-09 15:13:52', '2018-04-09 15:13:52', '4');
-INSERT INTO `users` VALUES ('4', '201622222222', '123456', '赵丽颖', '', '', '1', '2018-04-09 15:16:05', '2018-04-09 15:16:05', '2');
-INSERT INTO `users` VALUES ('5', '201514620123', '123456', '盛明兰', '', '', '1', '2018-04-09 17:05:36', '2018-04-09 17:05:36', '3');
+INSERT INTO `users` VALUES ('3', '201514620125', '123456', '王洋洋', '', '', '1', '2018-04-09 15:13:52', '2018-04-22 20:54:48', '3');
+INSERT INTO `users` VALUES ('4', '201622222222', '123456', '赵丽颖', '', '', '1', '2018-04-09 15:16:05', '2018-04-22 21:20:42', '2');
+INSERT INTO `users` VALUES ('5', '201514620123', '123456', '盛明兰', '', '', '1', '2018-04-09 17:05:36', '2018-04-22 21:22:38', '4');
 INSERT INTO `users` VALUES ('6', '201514620166', '123456', '林更新', '', '', '1', '2018-04-09 17:06:37', '2018-04-09 17:06:37', '5');
-INSERT INTO `users` VALUES ('7', '201514620999', '123456', '魏大勋', '', '', '1', '2018-04-09 17:07:41', '2018-04-09 17:07:41', '6');
-INSERT INTO `users` VALUES ('8', '201514620333', '123456', '白敬亭', '', '', '1', '2018-04-09 17:08:31', '2018-04-09 17:08:31', '4');
+INSERT INTO `users` VALUES ('7', '201514620999', '123456', '魏大勋', '', '', '0', '2018-04-09 17:07:41', '2018-04-21 18:48:53', '6');
+INSERT INTO `users` VALUES ('8', '201514620333', '123456', '白敬亭', '', '', '1', '2018-04-09 17:08:31', '2018-04-22 21:42:06', '3');
+INSERT INTO `users` VALUES ('9', '201514620186', '123456', '慕甄', '15080113625', '1050080567@qq.com', '1', '2018-04-21 17:59:56', '2018-04-21 17:59:56', '2');
+INSERT INTO `users` VALUES ('10', '201514620101', '123456', '张凌雪', null, null, '1', '2018-04-21 18:31:22', '2018-04-21 18:31:22', '3');
+INSERT INTO `users` VALUES ('11', '201514', '123456', '各位提供', null, null, '1', '2018-04-21 18:59:47', '2018-04-21 18:59:47', '6');
+INSERT INTO `users` VALUES ('12', '1', '123456', null, null, null, '1', '2018-04-22 14:50:48', '2018-04-22 14:50:48', '6');
+INSERT INTO `users` VALUES ('16', '12', '123456', null, null, null, '1', '2018-04-22 19:25:34', '2018-04-22 19:25:34', '2');
+INSERT INTO `users` VALUES ('17', '201514620112', '123456', null, null, null, '1', '2018-04-22 22:17:26', '2018-04-22 22:17:26', '2');
 
 -- ----------------------------
 -- Table structure for user_types
