@@ -28,7 +28,8 @@
     "moment": "^2.21.0",
     "mysql2": "^1.5.3",
     "nuxt": "^1.0.0",
-    "sequelize": "^4.37.5"
+    "sequelize": "^4.37.5",
+    "vue-schart": "^0.1.4"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

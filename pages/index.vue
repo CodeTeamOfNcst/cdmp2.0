@@ -38,11 +38,7 @@
          <el-col :span="24"> 
           <div class="orderbefore"></div>
           <span class="order"><i class="el-icon-d-arrow-right"></i> 快速通道</span>
-         </el-col> 
-        <!-- <el-col class="linkcol" :span="24"> <nuxt-link class="link" to="/usedirection">平台介绍 </nuxt-link></el-col>
-        <el-col :span="24"> <nuxt-link class="link" to="/usedirection">仪器预约 </nuxt-link></el-col>
-        <el-col :span="24"> <nuxt-link class="link" to="/usedirection">资源情况 </nuxt-link></el-col>
-        <el-col :span="24"> <nuxt-link class="link" to="/usedirection">仪器列表 </nuxt-link></el-col> -->
+         </el-col>
         <el-col><nuxt-link to="/device"><el-button type="primary" class="link">仪器列表</el-button></nuxt-link></el-col>
         <el-col><nuxt-link to="/clcresources"><el-button type="primary" class="link">资源情况</el-button></nuxt-link></el-col>
         <el-col><nuxt-link to="/usedirection"><el-button type="primary" class="link">平台介绍</el-button></nuxt-link></el-col>
@@ -53,13 +49,21 @@
         <div class="grid-content bg-purple">
           <el-col :span="24"> 
           <div class="orderbefore"></div>
-          <span class="order"><i class="el-icon-d-arrow-right"></i> 平台介绍</span>
+          <span class="order"><i class="el-icon-d-arrow-right"></i> 平台预约频率</span>
           </el-col> 
           <el-col :span="24"> 
           <div class="intro">
+            <div id="app">
+              <schart :canvasId="canvasId"
+              :type="type"
+              :width="width"
+              :height="height"
+              :data="data"
+              :options="options"
+              ></schart>
+            </div>
           </div>
           </el-col> 
-        
         </div>
       </el-col>
       <el-col :span="8">
@@ -71,18 +75,16 @@
           <el-col :span="24"> 
           <div class="intro">
             <p>曙光星云高性能计算机是由中科曙光制造并拥有完全自主知识产权的全球技术领先的高性能计算机系统,采用我国自主设计的HPP体系结构、
-              曙 光最新的符合SSI标准的模块化刀片服务器TC3600计算节点和全线速QDR Infiniband互联网络曙光“星云”高性能计算平台每秒双精度浮点计算峰值达64万亿次(64TFlops)，
+              曙光最新的符合SSI标准的模块化刀片服务器TC3600计算节点和全线速QDR Infiniband互联网络曙光“星云”高性能计算平台每秒双精度浮点计算峰值达64万亿次(64TFlops)，
               Linpack实测值达每秒50.94万亿次(50.94TFlops)，其系统峰值和实测Linpack值双双位居当时中国高校投入运营计算机系统第一。 
               并且曙光星云是国产模块化刀片服务器的异构体系(x86处理器+GPU计算卡)。
               </p>
           </div>
           </el-col> 
-          
         </div>
       </el-col>
     </el-row>
     <el-row class="last" :gutter="20">
-      
       <el-col class="lastleft" :span="16">
         <div class="grid-content1 bg-purple">
         <el-col :span="24"> 
@@ -93,8 +95,6 @@
         <p><i class="el-icon-caret-right"></i><a href="http://www.most.gov.cn/">中华人民共和国科学技术部</a></p>
         </div>
       </el-col>
-     
-
       <el-col class="lastleft" :span="8">
         <div class="grid-content1 bg-purple">
           <el-col :span="24"> 
@@ -109,7 +109,6 @@
           </div>
         </el-col>
     </el-row>
-   
   </section>
 </template>
 
@@ -149,12 +148,12 @@ a{
         color: black;
       }
       .infoContent a:hover{
-        color:blue;
+        color:#0960BD;
       }
       .classLine{
         width: 100%;
-        height:5px;
-        background: burlywood;
+        height:2px;
+        background: #404B69;
       }
   }
   
@@ -208,7 +207,7 @@ a{
    width:100%;
    margin:auto;
    .last{
-    height:150px;
+    height:120px;
     border-radius: @border-radius;
     // background: #d3dce6;
     p{
@@ -218,7 +217,7 @@ a{
       }
     }
     .lastleft{
-      height:140px;
+      height:120px;
     }
   }
 }
@@ -248,18 +247,41 @@ a{
 
 
 <script>
+import Schart from 'vue-schart';
 import Logo from '~/components/Logo.vue'
 
 export default {
   components: {
-    Logo
+    Logo,
+    Schart
   },
   data(){
     return{
-    title: '',
-    Myname: '',
-    img:'',
-    infoDetail: null,
+      title: '',
+      Myname: '',
+      img:'',
+      infoDetail: null,
+      canvasId: 'myCanvas',
+      type: 'bar',
+      width: 500,
+      height: 250,
+      data: [
+        {name: '1月', value: 42},
+        {name: '2月', value: 23},
+        {name: '3月', value: 1654},
+        {name: '4月', value: 1795},
+        {name: '5月', value: 1531},
+        {name: '6月', value: 1700},
+        {name: '7月', value: 95},
+        {name: '8月', value: 35},
+        {name: '9月', value: 1295},
+        {name: '10月', value: 1095},
+        {name: '11月', value: 1395},
+        {name: '12月', value: 1595},
+      ],
+      options: {
+        title: '2017年平台预约情况统计'
+      }
     }    
   },
   async mounted(){   
