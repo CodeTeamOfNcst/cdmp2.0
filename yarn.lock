@@ -6054,6 +6054,10 @@ sax@~1.2.1:
   version "1.2.4"
   resolved "http://registry.npm.taobao.org/sax/download/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
+schart.js@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/schart.js/-/schart.js-1.0.2.tgz#b6297f0c350e443d9ab421740c9824f0344ac87c"
+
 schema-utils@^0.3.0:
   version "0.3.0"
   resolved "http://registry.npm.taobao.org/schema-utils/download/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
@@ -7034,6 +7038,12 @@ vue-meta@^1.4.3:
 vue-router@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/vue-router/download/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
+
+vue-schart@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vue-schart/-/vue-schart-0.1.4.tgz#95201e12dc684993179775833b6be3ac44446954"
+  dependencies:
+    schart.js "^1.0.2"
 
 vue-server-renderer@^2.5.13:
   version "2.5.16"
