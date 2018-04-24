@@ -92,14 +92,11 @@ h2{
                         let userData = Data.usersDetail; 
                         for(let index in userData){
                             if(userData[index].user.account === this.$auth.state.user.user){
-                                if(userData[index].user.user_type === 1){
+                                if(userData[index].user.user_type !== 1){
+                                    window.location.href ='/'
+                                }else{
                                     window.location.href ='/admin'
                                 }
-                                else{
-                                    window.location.href ='/'
-                                }
-                            }else{
-                                window.location.href ='/'
                             }
                         }              
                     }else{

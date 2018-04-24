@@ -161,7 +161,8 @@
         },
         methods: {
             async handleLogOugt(){
-                window.location.href = '/'
+                let resData = await this.$auth.logout()
+                window.location.reload()
             },
         },
         async mounted(){

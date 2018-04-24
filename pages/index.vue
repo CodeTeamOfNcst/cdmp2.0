@@ -2,7 +2,7 @@
   <section class="container"> 
     <el-row :gutter="20">
       <el-col :span="8">
-        <div class="grid-content bg-purple">
+        <div class="grid-content bg-purple broadcast" >
           <div class="orderbefore"></div>
           <span class="order"><i class="el-icon-d-arrow-right"></i> 通知公告</span>
           <div class="indnotice">
@@ -17,8 +17,8 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="16">
-        <div class="grid-content bg-purple ">
+      <el-col :span="16" >
+        <div class="grid-content bg-purple broadcast">
           <div class="di"><div class="orderbefore"></div>
                 <span class="order"> 
                   <i class="el-icon-d-arrow-right"></i> 仪器展示</span>
@@ -124,7 +124,7 @@ a{
   width:90%;
 }
 .intro{
-  width:80%;
+  width:95%;
   height:250px;
   // background-color: #475669;
   margin:auto;
@@ -194,6 +194,10 @@ a{
   border-radius: @border-radius;
   min-height: 36px;
   height:300px;
+}
+.broadcast{
+   min-height:300px;
+  height:auto;
 }
 .grid-content1 {
   border-radius: @border-radius;

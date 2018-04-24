@@ -26,7 +26,6 @@
                         
                         <i class="iconfont icon-register"></i>
                         <nuxt-link to="/signin">注册</nuxt-link>
-                        <i class="iconfont icon-register"></i>
                         <el-button  @click="logOut">退出</el-button>
                     </div>
                 </el-col>
