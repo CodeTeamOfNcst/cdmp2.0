@@ -66,7 +66,11 @@
                 </div>
                 <div class="select">
                     <el-select v-model="value" placeholder="筛选依据">
-                        <el-option>
+                        <el-option
+                            v-for="item in options1"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
                         </el-option>
                     </el-select>
                 </div>
@@ -294,13 +298,13 @@
                 if(! this.searchInput){
                     window.location.reload()
                 }else{
-                    let resData = await axios.post('',{
-                        search: this.searchInput
+                    let resData = await this.$axios.$post('/api/computeApply/getApplySearch',{
+                        apply_user: this.searchInput
                     })
-                    if(resData.data.status === 1){
-                        this.tableData = resData.data.result
+                    if(resData.status === 1){
+                        this.tableData = resData.result
                     }else{
-                        this.$message.error(resData.data.message)
+                        this.$message.error(resData.message)
                     }
                 }
             },
@@ -457,6 +461,12 @@
                     createdAt:'',
                     updatedAt:'',                  
                 }],
+                options1: [
+                    {
+                        value: '1',
+                        label: '课题负责人'
+                    }
+                ],
                 editForm: {
                     id:'',
                     chargePerson:'',
@@ -494,7 +504,6 @@
         },
         async mounted(){
             let getAllData = await this.$axios.$get('/api/computeApply/getAllApplyData');
-            this.deleteData = await this.$axios.$post('/api/computeApply/deleteApplyById', {delete: 'delete'}) 
             let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
 
             this.tableData = getAllData.applys;

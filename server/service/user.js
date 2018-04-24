@@ -171,17 +171,31 @@ module.exports.userApply = async (JSON) => {
 
 module.exports.userAddUser = async (JSON) => {
   try {
-    if(!JSON.name && !JSON.account && !JSON.user_type){throw("请务必填写前三项")}
+    if(JSON.name){
+      let allUser = await User.findAll()
+      for(let index in allUser){
+        if(allUser[index].name === JSON.name){
+          throw("用户名已有人使用")
+        }
+      }
+    }
+    if(!JSON.account && !JSON.user_type){throw("请务必填写账号或类型")}
+    if(JSON.phone){
+      var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
+      if(!reg.test(JSON.phone)){throw('手机号码格式不正确')}
+    }
+    if(JSON.email){
+      var regEmail= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      if(!regEmail.test(JSON.email)){throw('邮箱格式不正确')}
+    }
     let users = await User.findAll();
     for(let index in users) {
       if(JSON.account == users[index].account) {
-        let res = {
-          status: 0,
-          message: `账号创建重复`
-        } 
-        return res;
+        throw("账号创建重复")
       } 
     } 
+    if(!JSON.name)
+      JSON.name = JSON.account
     let newUser = await User.create({
       account: JSON.account,
       password: JSON.password,
@@ -238,6 +252,22 @@ module.exports.userDeleteById = async (JSON) => {
 
 module.exports.modifyUserById = async (JSON) => {
   try {
+    if(JSON.name){
+      let allUser = await User.findAll()
+      for(let index in allUser){
+        if(allUser[index].name === JSON.name){
+          throw("用户名已有人使用")
+        }
+      }
+    }
+    if(JSON.phone){
+      var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
+      if(!reg.test(JSON.phone)){throw('手机号码格式不正确')}
+    }
+    if(JSON.email){
+      var regEmail= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      if(!regEmail.test(JSON.email)){throw('邮箱格式不正确')}
+    }
     let thisUser = await User.findOne({
         where: {
           account:JSON.account, 

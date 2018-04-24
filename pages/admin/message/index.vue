@@ -10,12 +10,12 @@
             <el-form ref="addForm" :model="addForm" label-width="100px">
                 <el-form-item label="消息发布日期">
                     <el-col :span="14">
-                        <el-date-picker :rows="14" type="date" placeholder="选择日期" v-model="addForm.publishDate" style="width: 100%;"></el-date-picker>
+                        <el-date-picker :rows="14" type="date" placeholder="选择日期" v-model="addForm.releaseDate" style="width: 100%;"></el-date-picker>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="消息类别">
                     <el-col :span="11">
-                        <el-select v-model="addForm.type" placeholder="请选择消息类别">
+                        <el-select v-model="addForm.message_type" placeholder="请选择消息类别">
                             <el-option
                                     v-for="item in MessageTypes"
                                     :key="item.id"
@@ -50,12 +50,6 @@
                                    inactive-text="未读"
                         />
                     </el-col>
-                </el-form-item>
-                <el-form-item label="是否发布">
-                    <el-switch v-model="addForm.isPublished"
-                               active-text="发布"
-                               inactive-text="未发布"
-                    />
                 </el-form-item>
                 <el-form-item label="消息内容">
                     <el-input :rows="1" type="textarea" v-model="addForm.content" class="textarea" />
@@ -258,12 +252,11 @@
                 if(! this.searchInput){
                     window.location.reload()
                 }else{
-                    console.log(this.searchInput)
-                    let resData = await axios.post('/api/message/search',{
-                        search: this.searchInput
+                    let resData = await this.$axios.$post('/api/message/getMessageSearch',{
+                        message_user: this.searchInput
                     })
                     if(resData.status === 1){
-                        this.tableData = resData.result
+                        this.tableData = resData.Message
                     }else{
                         this.$message.error(resData.message)
                     }
@@ -276,8 +269,14 @@
             },
             async handleAdd(){
                 if( this.addForm.selected_user.length !== 0){
+                    console.log(this.addForm.message_type)
                     let resData = await this.$axios.$post('api/message/addMessage', {
-                        message: this.addForm
+                        selected_user: this.addForm.selected_user,
+                        releaseDate:this.addForm.releaseDate,
+                        isUse:this.addForm.isUse,
+                        isRead:this.addForm.isRead,
+                        content:this.addForm.content,
+                        message_type:this.addForm.message_type
                     });
                     if(resData.status === 1){
                         this.$message({
@@ -298,27 +297,30 @@
                 this.addFromVisible = false
             },
             async handleEdit(row) {
-                let resData = await axios.post('/api/message/getById', {
-                    id: row.message.id
+                let resData = await this.$axios.$post('/api/message/getMessageDataById', {
+                    id: row.id
                 });
                 if(resData.status === 1){
-                    this.editForm.id = row.message.id;
+                    this.editForm.id = row.id;
                     this.editForm.type = resData.thisMessage.message_type;
-                    this.editForm.user = resData.user;
-                    this.editForm.publishDate = resData.thisMessage.publishDate;
-                    this.editForm.isPublished = resData.thisMessage.isPublished;
+                    this.editForm.user = resData.thisMessageUser;
+                    this.editForm.publishDate = resData.thisMessage.releaseDate;
                     this.editForm.isRead = resData.thisMessage.isRead;
                     this.editForm.isUse = resData.thisMessage.isUse;
                     this.editForm.content = resData.thisMessage.content;
-                    console.log(this.editForm)
                 }else {
                     this.$message.error(resData.message)
                 }
                 this.editFromVisible = true
             },
             async handleEditSubmit(){
-                let resData = await axios.post('/api/message/modifyById',{
-                    message: this.editForm
+                let resData = await axios.post('/api/message/modifyMessageById',{
+                    id: this.editForm.id,
+                    message_type:this.editForm.message_type,
+                    releaseDate:this.editForm.releaseDate,
+                    content:this.editForm.content,
+                    isRead:this.editForm.isRead,
+                    isUse:this.editForm.isUse
                 });
                 if(resData.status === 1){
                     this.$message({
@@ -341,8 +343,8 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     });
-                    let resData = await axios.post('/api/message/deleteById',{
-                        id: row.message.id
+                    let resData = await this.$axios.$post('/api/message/deleteMessageById',{
+                        id: row.id
                     });
                     if(resData.status === 1){
                         this.$message({
@@ -375,12 +377,11 @@
                 currentPage: 4,
                 itemCounts: null,
                 addForm: {
-                    publishDate: '',
-                    type: '',
+                    releaseDate: '',
+                    message_type: '',
                     selected_user: [],
                     isUse: false,
                     isRead: false,
-                    isPublished: false,
                     content: '',
                 },
                 editForm: {
@@ -391,7 +392,7 @@
                     content: '',
                     isPublished: '',
                     isRead: '',
-                    isUse: false,
+                    isUse: '',
                 },
                 userKlasses: [
                     {
