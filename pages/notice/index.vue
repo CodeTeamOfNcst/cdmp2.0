@@ -8,17 +8,17 @@
         <ul class="rule-list">
             <li class="rule-item" v-for="info in infoDetail" v-bind:key="info">
                 <a :href='"/notice/" + info.id'>
-                    <span class="rule-item-title">{{ info.title }}</span>
-                    <span class="rule-item-date">{{ info.releaseDate }} </span>
+                    <span class="rule-item-title">{{ info.title }}({{info.releaseDate}})</span>
+                    <!-- <span class="rule-item-date">{{ info.releaseDate }} </span> -->
                 </a>
             </li>
-            <el-row class="strip">
+            <!-- <el-row class="strip">
                 <div >
                     <el-col :span="24">
                         <div class="grid-content bg-purple-dark"></div>
                     </el-col>
                 </div>
-            </el-row>
+            </el-row> -->
         </ul>
         <el-row>
             <el-col :span="24">
@@ -37,19 +37,19 @@
 </template>
 
 <style lang="less" scoped>
-    a {
-        text-decoration: none;
-        color:black;
-    }
+    // a {
+    //     text-decoration: none;
+    //     color:black;
+    // }
     .grid-content{
         float:left;
         line-height: 35px;
-        .grid-content>a{
-        color:#3675a8;
-        }
-        .grid-content>a:hover{
-            color:black;
-        }
+        // .grid-content a{
+        //     color:#3675a8;
+        // }
+        // .grid-content a:hover{
+        //     color:black;
+        // }
     }
     .paging {
         width: 40%;
@@ -59,16 +59,19 @@
         padding: 5px 30px;
         min-height: 600px;
         .rule-item {
-        overflow: hidden;
-        color: #3675a8;
-        .rule-item-title {
-        float: left;
-        margin-bottom: 10px;
-       }
-        .rule-item-date {
-            float: right;
+            overflow: hidden;
+            color: #3675a8;    
+            .rule-item-title {
+                float: left;
+                margin-bottom: 10px;
+            }
+            // .rule-item-date {
+            //     float: right;
+            // } 
         }
-     }
+        .rule-item a:hover{
+                color:black;
+            }
     }
 </style>
 

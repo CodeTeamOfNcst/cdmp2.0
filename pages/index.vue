@@ -10,9 +10,9 @@
                   <el-col :span="24">
                     <div class="infoContent">
                       <a :href='"/notice/" + info.id'>{{ info.title.substr(0,24) }} --{{ info.releaseDate }} </a>
-                      <div class="classLine"></div>
                     </div>
-                  </el-col>
+                    <div class="classLine"></div>
+                  </el-col>        
               </div>
           </div>
         </div>
@@ -152,8 +152,10 @@ a{
       }
       .classLine{
         width: 100%;
-        height:2px;
-        background: #404B69;
+        float: left;
+        height:3px;
+        margin-top: 5px;
+        background: #8EA6B4;
       }
   }
   
