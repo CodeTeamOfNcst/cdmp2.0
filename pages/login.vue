@@ -121,16 +121,10 @@ input::-webkit-input-placeholder{
                         }
                     })
                     if(this.$auth.state.user){
-                        let Data = await this.$axios.$get('/api/user/userGetAllData')
-                        let userData = Data.usersDetail; 
-                        for(let index in userData){
-                            if(!this.$auth.hasScope('admin')){
-                                if(userData[index].user.user_type !== 1){
-                                    window.location.href ='/'
-                                }else{
-                                    window.location.href ='/admin'
-                                }
-                            }
+                        if(!this.$auth.hasScope('admin')){   
+                            window.location.href ='/'
+                        }else{
+                            window.location.href ='/admin'
                         }              
                     }else{
                         this.$message.error("用户名或密码错误")

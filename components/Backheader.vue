@@ -168,13 +168,13 @@
         async mounted(){
             if(!this.$auth.state.loggedIn) {
                 window.location.href ='/login'
-            }else{
-                
-                if(!this.$auth.hasScope('admin')){
-                    if(userData[index].user.user_type !== 1){
-                        window.location.href ='/'
-                    }
+            }else{        
+                if(!this.$auth.hasScope('admin')){           
+                    window.location.href ='/'
                 } 
+                else{
+                    console.log(this.$auth.hasScope('admin'))
+                }
             }     
         },
     }
