@@ -22,10 +22,12 @@
                                 <el-input class="input1" v-model="user_account" placeholder="账号" type="text"/>
                             </el-form-item>
                             <el-form-item>
-                                <el-input class="input1" v-model="user_password" placeholder="密码" type="password"/>
+                                <!-- <el-input class="input1" v-model="user_password" placeholder="密码" type="password"/> -->
+                                <input type="password" class="input2"  v-model="user_password" placeholder="密码" />
                             </el-form-item>
                             <el-form-item>
-                                <el-input class="input1" v-model="repeat_password" placeholder="确认密码" type="password"/>
+                                <!-- <el-input class="input1" v-model="repeat_password" placeholder="确认密码" type="password"/> -->
+                                <input type="password" class="input2"  v-model="repeat_password" placeholder="确认密码" />
                             </el-form-item>
                         </el-form>
                     </div>
@@ -35,6 +37,69 @@
         </div>
     </div>
 </template>
+
+
+
+<style scoped>
+.loginbutton{
+    margin-left:130px;
+}
+.input1{
+    width: 320px;
+}
+.all{
+    width:700px;
+    height:500px;
+    margin:auto auto;
+    /*background-color: #3498DB;*/
+}
+.input2{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+input::-webkit-input-placeholder{
+            color:#BBBBBB;
+        }
+        input::-moz-placeholder{   
+            color:#BBBBBB;
+        }
+        input:-moz-placeholder{    
+            color:#BBBBBB;
+        }
+        input:-ms-input-placeholder{  
+            color:#BBBBBB;
+        }
+.AnotherLogin{
+    display: inline-block;
+    width:70%;
+    height:70%;
+    margin:10% 15%;
+    background-color: #fff;
+ }
+ 
+.loginbutton{
+    margin-left: 200px;
+}
+h2{
+    display: block;
+    margin-left:170px;
+}
+</style>
 
 <script>
     import axios from 'axios'
@@ -82,33 +147,3 @@
         }
     }
 </script>
-
-<style scoped>
-.loginbutton{
-    margin-left:130px;
-}
-.input1{
-    width: 320px;
-}
-.all{
-    width:700px;
-    height:500px;
-    margin:auto auto;
-    /*background-color: #3498DB;*/
-}
-.AnotherLogin{
-    display: inline-block;
-    width:70%;
-    height:70%;
-    margin:10% 15%;
-    background-color: #fff;
- }
- 
-.loginbutton{
-    margin-left: 200px;
-}
-h2{
-    display: block;
-    margin-left:170px;
-}
-</style>

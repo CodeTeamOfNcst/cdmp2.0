@@ -28,7 +28,8 @@
                 <el-col :span="16" :offset="4"><div class="grid-content bg-purple">
                     <el-form>
                         <el-form-item>
-                            <el-input class="input1" v-model="password" placeholder="密码" type="password"/>
+                            <!-- <el-input class="input1" v-model="password" placeholder="密码" type="password"/> -->
+                            <input type="password" class="input2"  v-model="password" placeholder="密码" />
                         </el-form-item>
                     </el-form>
                 </div></el-col>
@@ -60,10 +61,42 @@ h2{
     display: block;
     margin-left:170px;
 }
+.input2{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+input::-webkit-input-placeholder{
+            color:#BBBBBB;
+        }
+        input::-moz-placeholder{   
+            color:#BBBBBB;
+        }
+        input:-moz-placeholder{    
+            color:#BBBBBB;
+        }
+        input:-ms-input-placeholder{  
+            color:#BBBBBB;
+        }
 </style>
 
 <script>
     import axios from 'axios'
+    import { Input } from 'element-ui'
     export default {
         middleware: 'auth',
         data(){
