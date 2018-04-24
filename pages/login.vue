@@ -87,19 +87,21 @@ h2{
                             password: this.password
                         }
                     })
-                    if(this.$store.state.auth.user){
+                    if(this.$auth.state.user){
                         let Data = await this.$axios.$get('/api/user/userGetAllData')
                         let userData = Data.usersDetail; 
                         for(let index in userData){
                             if(userData[index].user.account === this.$auth.state.user.user){
-                                if(userData[index].user.id === 1){
-                                    window.location.href = '/admin'
+                                if(userData[index].user.user_type === 1){
+                                    window.location.href ='/admin'
                                 }
                                 else{
-                                    window.location.href = '/'
+                                    window.location.href ='/'
                                 }
+                            }else{
+                                window.location.href ='/'
                             }
-                        }         
+                        }              
                     }else{
                         this.$message.error("用户名或密码错误")
                     }     

@@ -353,7 +353,6 @@
         },
         async mounted(){
             let getAllData = await this.$axios.$get('/api/info/getAllInfoData');
-
             this.tableData = getAllData.infoDetail;
             this.itemCounts = getAllData.counts;
         

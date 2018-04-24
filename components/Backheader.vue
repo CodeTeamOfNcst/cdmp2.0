@@ -163,6 +163,21 @@
             async handleLogOugt(){
                 window.location.href = '/'
             },
-        }
+        },
+        async mounted(){
+            if(!this.$auth.state.loggedIn) {
+                window.location.href ='/login'
+            }else{
+                let Data = await this.$axios.$get('/api/user/userGetAllData')
+                let userData = Data.usersDetail;
+                for(let index in userData){
+                    if(userData[index].user.account === this.$auth.state.user.user){
+                        if(userData[index].user.user_type !== 1){
+                            window.location.href ='/'
+                        }
+                    }
+                }  
+            }     
+        },
     }
 </script>

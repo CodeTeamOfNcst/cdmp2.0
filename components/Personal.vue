@@ -280,6 +280,14 @@
         methods: {
             async onSubmit(){
                 let getUser = await this.$axios.$post('/api/user/userGetUserData',{id:this.form.id})
+                // if(this.form.name){
+                //     let allUser = await User.findAll()
+                //     for(let index in allUser){
+                //         if(allUser[index].name === JSON.name){
+                //         throw("用户名已有人使用")
+                //         }
+                //     }
+                // }
                 let resData = await this.$axios.$post('/api/user/modifyUserById', {
                     userId: this.form.id,
                     account: this.form.account,
