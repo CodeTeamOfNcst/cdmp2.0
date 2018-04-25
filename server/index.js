@@ -36,7 +36,8 @@ async function start() {
   app.use(logger())
   app.use(bodyParser());
   app.use(Cors({
-    'credentials': true
+    'credentials': true,
+    'Access-Control-Allow-Origin':'*'
   }))
   app.use(router.routes()).use(router.allowedMethods())
   
