@@ -34,6 +34,7 @@
         components: {
             MyBackheader,
             MyFooter
-        }
+        },
+        
     }
 </script>

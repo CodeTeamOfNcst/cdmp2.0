@@ -166,16 +166,23 @@
             },
         },
         async mounted(){
-            if(!this.$auth.state.loggedIn) {
-                window.location.href ='/login'
+            // if(!this.$auth.$state.loggedIn) {
+            //     window.location.href ='/login'
+            // }else{        
+            //     if(!this.$auth.hasScope('admin')){           
+            //         window.location.href ='/'
+            //     } 
+            //     else{
+            //         console.log(this.$auth.hasScope('admin'))
+            //     }
+            // }  
+            if(this.$auth.$state.user) {
+                if(this.$auth.hasScope('admin')){           
+                    // window.location.href = "/"
+                }             
             }else{        
-                if(!this.$auth.hasScope('admin')){           
-                    window.location.href ='/'
-                } 
-                else{
-                    console.log(this.$auth.hasScope('admin'))
-                }
-            }     
+                window.location.href ='/login'
+            }   
         },
     }
 </script>

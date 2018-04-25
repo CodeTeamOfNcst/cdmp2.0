@@ -296,27 +296,26 @@ export default {
 
     this.img = getAllData.Devices;
     this.infoDetail = getAllInfoData.infoDetail ;
-    if(this.$store.state.auth.user || this.$auth.state.loggedIn){
-      
+    if(this.$auth.$state.user || this.$auth.$state.loggedIn){
+     
       let Data = await this.$axios.$get('/api/user/userGetAllData');
       let userData = Data.usersDetail;
-      let user;
+      let user;      
       for(let index in userData){
-        if(userData[index].user.account === this.$auth.state.user.user){
+        if(userData[index].user.account === this.$auth.$state.user.user){
           user = userData[index].user.id;
-        }
-      }  
-      
-      let UserMessages = await this.$axios.$post('/api/message/getMessageSearch',{
+        }      
+      }      
+      let UserMessages = await this.$axios.$post('/api/message/getMessageSearchFront',{
         message_user:user,
       });
       let userMessages = UserMessages.Message
       for(let i in userMessages){
-        if(!userMessages[i].isRead || userMessages[i],isUse){
+        if(!userMessages[i].isRead || userMessages[i].isUse){
           const h = this.$createElement;
           this.$notify({
-            title: userMessages[i].messageTypeName,
-            message: h('i', { style: 'color: teal'}, userMessages[i].message),
+            title: userMessages[i].title,
+            message: h('i', { style: 'color: teal'}, userMessages[i].content),
             duration: 0
           });
           await this.$axios.$put('/api/message/modifyMessageByIdFront',{

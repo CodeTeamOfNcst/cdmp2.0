@@ -55,6 +55,7 @@ module.exports = () => {
   router.post('/message/getMessageDataById',messageController.messageGetById)
   router.get('/message/getAllMessageData',messageController.messageGetAll)
   router.post('/message/getMessageSearch',messageController.messageSearch)
+  router.post('/message/getMessageSearchFront',messageController.messageSearchFront)
   router.post('/message/addMessage',messageController.messagePost) 
   router.post('/message/deleteMessageById', messageController.messageDelete)
   router.post('/message/modifyMessageById',messageController.messagePut)
