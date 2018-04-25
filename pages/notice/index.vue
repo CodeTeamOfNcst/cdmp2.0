@@ -7,10 +7,10 @@
         <el-row class="headerline"></el-row>
         <ul class="rule-list">
             <li class="rule-item" v-for="info in infoDetail" v-bind:key="info">
-                <a :href='"/notice/" + info.id'>
+                <nuxt-link :to="'/notice/' + info.id">
                     <span class="rule-item-title">{{ info.title }}({{info.releaseDate}})</span>
                     <!-- <span class="rule-item-date">{{ info.releaseDate }} </span> -->
-                </a>
+                </nuxt-link>
             </li>
             <!-- <el-row class="strip">
                 <div >

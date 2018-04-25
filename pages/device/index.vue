@@ -44,9 +44,9 @@
                         <el-row :gutter="20" class="leftImg">
                             <el-col :span="8" class="leftspan">
                                 <div class="grid-content bg-purple bullImg">
-                                    <a :href="`device/details/${device.id}`">
+                                    <nuxt-link :to="'device/details/' + device.id">
                                         <img :src="device.imgFilePath" alt="Nuxt.js Logo"  />
-                                    </a>
+                                    </nuxt-link>
                                 </div>
                             </el-col>
                             <el-col :span="16">
@@ -57,16 +57,16 @@
                                                 <el-row>
                                                     <el-col :span="17">
                                                         <div class="grid-content bg-purple nameFrame">
-                                                            <a :href='`device/details/${device.id}`'>
+                                                            <nuxt-link :to="'device/details/' + device.id">
                                                                 <p class="bullName">{{device.name}}</p>
-                                                            </a>
+                                                            </nuxt-link>
                                                         </div>
                                                     </el-col>
                                                     <el-col :span="3">
                                                         <div class="grid-content bg-purple-light button_center" >
-                                                            <a :href="`device/appoint/${device.id}`">
+                                                            <nuxt-link :to="'device/appoint/' + device.id">
                                                                 <el-button type="primary" class="appoint">预约</el-button>
-                                                            </a>
+                                                            </nuxt-link>
                                                         </div>
                                                     </el-col>
                                                 </el-row>
