@@ -177,8 +177,8 @@
             //     }
             // }  
             if(this.$auth.$state.user) {
-                if(this.$auth.hasScope('admin')){           
-                    // window.location.href = "/"
+                if(!this.$auth.hasScope('admin')){           
+                    window.location.href = "/"
                 }             
             }else{        
                 window.location.href ='/login'
