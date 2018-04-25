@@ -9,7 +9,7 @@
               <div v-for="info in infoDetail" v-bind:key="info" >
                   <el-col :span="24">
                     <div class="infoContent">
-                      <a :href='"/notice/" + info.id'>{{ info.title.substr(0,24) }} --{{ info.releaseDate }} </a>
+                      <nuxt-link :to="'/notice/' + info.id">{{ info.title.substr(0,24) }} --{{ info.releaseDate }}</nuxt-link>
                     </div>
                     <div class="classLine"></div>
                   </el-col>        

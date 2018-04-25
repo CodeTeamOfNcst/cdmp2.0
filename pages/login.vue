@@ -121,12 +121,7 @@ input::-webkit-input-placeholder{
                         }
                     })
                     if(this.$auth.$state.user){
-                        if(this.$auth.hasScope('admin')){   
-                            window.location.href ='/admin'
-                        }
-                        else{
-                            window.location.href ='/'
-                        }              
+                        window.location.href ='/'                   
                     }else{
                         this.$message.error("用户名或密码错误")
                     }     
