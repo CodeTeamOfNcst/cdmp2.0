@@ -296,8 +296,8 @@ export default {
 
     this.img = getAllData.Devices;
     this.infoDetail = getAllInfoData.infoDetail ;
+
     if(this.$auth.$state.user || this.$auth.$state.loggedIn){
-     
       let Data = await this.$axios.$get('/api/user/userGetAllData');
       let userData = Data.usersDetail;
       let user;      
@@ -326,11 +326,11 @@ export default {
     }
     
   },
-  async asyncData({ app }){
-    let resData = await app.$axios.$get('/api/test/')
-    return {
-      title: resData
-    }
-  }
+  // async asyncData({ app }){
+  //   let resData = await app.$axios.$get('/api/test/')
+  //   return {
+  //     title: resData
+  //   }
+  // }
 }
 </script>

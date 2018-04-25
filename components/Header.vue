@@ -22,8 +22,7 @@
                     </div>
                     <div v-else class="little" >
                         <i class="iconfont icon-user"></i>
-                        <nuxt-link to="/personal">个人中心</nuxt-link>
-                        
+                        <nuxt-link to="/personal">个人中心</nuxt-link>    
                         <i class="iconfont icon-register"></i>
                         <nuxt-link to="/signin">注册</nuxt-link>
                         <el-button  @click="logOut">退出</el-button>
@@ -102,9 +101,25 @@
                 let resData = await this.$auth.logout()
                 window.location.reload()
             },
-        },
+            myBrowser() {
+                let userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+                let isOpera = userAgent.indexOf("Opera") > -1;
+                if (userAgent.indexOf("Chrome") > -1){
+                    return true;
+                } 
+                else{
+                    return false;
+                }
+            },
+        },    
         async mounted(){
-            this.status = this.$auth.state.loggedIn         
+            this.status = this.$auth.$state.loggedIn         
         },
+        created() {
+            if (!this.myBrowser()) {
+                alert("请使用谷歌浏览器打开！");
+                window.location.reload(true)
+            }
+        }
     }
 </script>
