@@ -208,6 +208,16 @@
                             :default-time="['12:00:00']">
                         </el-date-picker>
                     </el-form-item>
+                    <el-form-item label="登录账号">
+                        <el-col :span="15">
+                            <el-input v-model="editForm.account" clearable />
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-col :span="15">
+                            <el-input v-model="editForm.password" clearable />
+                        </el-col>
+                    </el-form-item>
                     <el-form-item label="申请状态">
                         <el-switch
                             v-model="editForm.status"
@@ -287,6 +297,78 @@
         layout(){
             return  'admina'
         },
+        data() {
+            return {
+                currentPage: 1,
+                itemCounts:1,
+                addForm: {
+                    user: '',
+                    hours: '',
+                    date:'',
+                    isAgree:'false',
+                    isUse: 'false',
+                },
+                users: [
+                    {
+                        key: '1',
+                        label: '1-用户名'
+                    },
+                ],
+                tableData: [{
+                    id: '1',
+                    chargePerson: '魏宝仁',
+                    checkUser:'',
+                    startTime: '2017-09-11',
+                    endTime:'2018-01-01',
+                    timeLimit:'20000.00',
+                    isAgree:'否',
+                    isUse:'可用', 
+                    createdAt:'',
+                    updatedAt:'',                  
+                }],
+                options1: [
+                    {
+                        value: '1',
+                        label: '课题负责人'
+                    }
+                ],
+                editForm: {
+                    id:'',
+                    chargePerson:'',
+                    date:[],
+                    hours:'',
+                    account:'',
+                    password:'',
+                    status:'false',
+                    isUse: 'false',
+                },
+                tableData1: [{
+                    monthlyTotal: 'Jan 2018',
+                    homeworkNum: '97',
+                    useTime: '996591.67',
+                    systemPercent:'21.48 %',
+                    averNum:'55.00',
+                    averWaitTime:'9.52'
+                    }, {
+                    monthlyTotal: 'Feb 2018',
+                    homeworkNum: '92',
+                    useTime: '210116.11',
+                    systemPercent:'13.53 %',
+                    averNum:'46.18',
+                    averWaitTime:'2.11'
+                    }, {
+                    monthlyTotal: 'Mar 2018',
+                    homeworkNum: '8',
+                    useTime: '923.58',
+                    systemPercent:'0.14 %',
+                    averNum:'30.25',
+                    averWaitTime:'1.55'
+                    },
+                ],             
+                addFormVisible:false,            
+                editFormVisible: false,
+            };
+        },
         methods: {
             async handleSearch(){
                 if(! this.searchInput){
@@ -309,8 +391,8 @@
                     startDate:this.addForm.date[0],
                     endDate:this.addForm.date[1], 
                     isUse:this.addForm.isUse,
-                    account:'687432',
-                    password:'123456',
+                    // account:'687432',
+                    // password:'123456',
                     isAgree:this.addForm.isAgree,
                     check_user:5,   
                 });
@@ -319,7 +401,7 @@
                         message: resData.message,
                         type: 'success'
                     });
-                    // window.location.reload()
+                    window.location.reload()
                 }else {
                     this.$message.error(resData.message)
                 }
@@ -335,6 +417,8 @@
                     if(resData.status === 1){
                         this.editForm.id = row.id,
                         this.editForm.status = resData.result.isAgree,
+                        this.editForm.account = resData.result.account,
+                        this.editForm.password = resData.result.password,
                         this.editForm.chargePerson = resData.result.applyUser.name,
                         this.editForm.isUse= resData.result.isUse,
                         this.editForm.hours = resData.result.hours,
@@ -380,6 +464,8 @@
                     let resData = await this.$axios.$post('/api/computeApply/modifyApplyById',{
                         id: this.editForm.id,
                         hours:this.editForm.hours,
+                        account:this.editForm.account,
+                        password:this.editForm.password,
                         isAgree:this.editForm.status,
                         startDate:this.editForm.date[0],
                         endDate:this.editForm.date[1],
@@ -433,76 +519,6 @@
                 });
                 return sums;
             }            
-        },
-        data() {
-            return {
-                currentPage: 1,
-                itemCounts:1,
-                addForm: {
-                    user: '',
-                    hours: '',
-                    date:'',
-                    isAgree:'false',
-                    isUse: 'false',
-                },
-                users: [
-                    {
-                        key: '1',
-                        label: '1-用户名'
-                    },
-                ],
-                tableData: [{
-                    id: '1',
-                    chargePerson: '魏宝仁',
-                    checkUser:'',
-                    startTime: '2017-09-11',
-                    endTime:'2018-01-01',
-                    timeLimit:'20000.00',
-                    isAgree:'否',
-                    isUse:'可用', 
-                    createdAt:'',
-                    updatedAt:'',                  
-                }],
-                options1: [
-                    {
-                        value: '1',
-                        label: '课题负责人'
-                    }
-                ],
-                editForm: {
-                    id:'',
-                    chargePerson:'',
-                    date:[],
-                    hours:'',
-                    status:'false',
-                    isUse: 'false',
-                },
-                tableData1: [{
-                    monthlyTotal: 'Jan 2018',
-                    homeworkNum: '97',
-                    useTime: '996591.67',
-                    systemPercent:'21.48 %',
-                    averNum:'55.00',
-                    averWaitTime:'9.52'
-                    }, {
-                    monthlyTotal: 'Feb 2018',
-                    homeworkNum: '92',
-                    useTime: '210116.11',
-                    systemPercent:'13.53 %',
-                    averNum:'46.18',
-                    averWaitTime:'2.11'
-                    }, {
-                    monthlyTotal: 'Mar 2018',
-                    homeworkNum: '8',
-                    useTime: '923.58',
-                    systemPercent:'0.14 %',
-                    averNum:'30.25',
-                    averWaitTime:'1.55'
-                    },
-                ],             
-                addFormVisible:false,            
-                editFormVisible: false,
-            };
         },
         async mounted(){
             let getAllData = await this.$axios.$get('/api/computeApply/getAllApplyData');

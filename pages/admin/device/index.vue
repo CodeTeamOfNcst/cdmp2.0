@@ -350,7 +350,7 @@ export default{
                         message: result.message,
                         type: 'success'
                     });
-                    // window.location.reload()
+                    window.location.reload()
                 }else {
                     this.$message.error(result.message);
                 }

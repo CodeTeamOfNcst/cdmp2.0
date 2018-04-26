@@ -141,6 +141,7 @@
     import  NuxtLink  from '../.nuxt/components/nuxt-link'
 
     export default {
+        // auth: true,
         components() { 
             return NuxtLink
         },
@@ -154,17 +155,7 @@
                 window.location.reload()
             },
         },
-        async mounted(){
-            // if(!this.$auth.$state.loggedIn) {
-            //     window.location.href ='/login'
-            // }else{        
-            //     if(!this.$auth.hasScope('admin')){           
-            //         window.location.href ='/'
-            //     } 
-            //     else{
-            //         console.log(this.$auth.hasScope('admin'))
-            //     }
-            // }  
+        async mounted(){  
             if(this.$auth.$state.user) {
                 if(!this.$auth.hasScope('admin')){           
                     window.location.href = "/"

@@ -27,9 +27,9 @@
         <el-row class="headerline"></el-row>  
          <div class="contentList">
             <el-row class="strip">
-                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/one">实验室仪器使用守则  </a></div></el-col>
-                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/two">平台仪器预约流程规则  </a></div></el-col>
-                <el-col :span="24"><div class="grid-content bg-purple-dark"> <a href="/usedirection/userules/three">云计算资源及仪器预约平台使用守则 </a></div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark"><nuxt-link to="/usedirection/userules/one"><a>实验室仪器使用守则  </a></nuxt-link></div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark"><nuxt-link to="/usedirection/userules/two"><a>平台仪器预约流程规则  </a></nuxt-link></div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark"><nuxt-link to="/usedirection/userules/three"><a>云计算资源及仪器预约平台使用守则 </a></nuxt-link></div></el-col>
             </el-row>
         </div>
     </el-tab-pane>
