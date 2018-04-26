@@ -29,6 +29,7 @@ async function start() {
     ** Sync DB
     */
     await database.sequelize.sync({
+      // force:true
     })
     console.log("Database Sync successfully")
   }

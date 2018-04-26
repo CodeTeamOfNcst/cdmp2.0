@@ -41,10 +41,10 @@ module.exports.getApplyById = async (JSON) => {
     }
 }
 
-module.exports.getAllApplyData = async () => {
+module.exports.getAllApplyData = async (JSON) => {
     try{
         let applys = await ComputeApply.findAll({ 
-            // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage, 
+            offset: (parseInt(JSON || 1) - 1) * ItemPerPage,
             limit: ItemPerPage 
         });
         let Applys = [];
@@ -159,10 +159,12 @@ module.exports.getApplySearchFront = async (JSON) => {
         if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
         let result = []
         for(let i =0; i< searchResult.length; i++){
-            result.push({
-                apply: searchResult[i],
-                applyUser: searchResult[i].apply_user,
-            })
+            if(searchResult[i].account){
+                result.push({
+                    apply: searchResult[i],
+                    applyUser: searchResult[i].apply_user,
+                })
+            } 
         }
         let res = {
             result: result,
@@ -290,6 +292,8 @@ module.exports.modifyApplyById = async (JSON) => {
         await thisApply.update({
             hours: JSON.hours,
             isUse: JSON.isAgree,
+            account:JSON.account,
+            password:JSON.password,
             startDate: JSON.startDate,
             endDate: JSON.endDate,
             apply_user:apply_user.id,

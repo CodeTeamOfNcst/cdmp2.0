@@ -108,9 +108,9 @@
                         border
                         style="width: 70%;">
                     <el-table-column
-                            label="申请id"
-                            width="80">
-                        <template slot-scope="scope">{{ scope.row.id }}</template>
+                        label="申请id"
+                        type="index"
+                        width="80">
                     </el-table-column>
                     <el-table-column
                             label="申请用户"

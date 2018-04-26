@@ -256,7 +256,7 @@
                         startDate:'2018-01-05',
                         endDate:'2018-03-31',
                         hours:'20000.00',
-                        account:'16548',
+                        account:'',
                         password:'',
                         operation:''
                     }
@@ -303,13 +303,16 @@
                         type: 'success',
                         message: resData.message
                     })
-                    window.location.reload()
+                    // window.location.reload()
                 }else {
                     this.$message.error(resData.message);
                 }
             },  
             async onSubmitCancel(){
-                window.location.reload()
+                this.$message({
+                    type: 'success',
+                    message: "已取消"
+                })
             },
         },
         
@@ -328,7 +331,6 @@
             this.tableData1 = getDataById.result;
             this.tableData0 = getDataById.result;
             this.res = getAllData.applys;
-            console.log(getAllData.applys)
             },
         head(){
             return {

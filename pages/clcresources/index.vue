@@ -104,12 +104,12 @@
                       <div class="grid-content bg-purple-dark instruName">
                           <p>申请额度:</p>
                           <div class="fillOutName">
-                              <el-input v-model="timeLimt" placeholder="请输入内容" ></el-input>
+                              <el-input v-model="hours" placeholder="请输入内容" ></el-input>
                           </div>
                       </div>
                   </el-col>
               </el-row>
-              <el-row>
+              <!-- <el-row>
                   <el-col :span="24">
                       <div class="grid-content bg-purple-dark instruName">
                           <p>预约理由:</p>
@@ -118,22 +118,20 @@
                           </div>
                       </div>
                   </el-col>
-              </el-row>
+              </el-row> -->
               <el-row>
                   <el-col :span="24">
                       <div class="grid-content bg-purple-dark instruName">
                           <p>预约时间:</p>
                           <div class="fillOutTime">
-                              <el-date-picker
-                                      v-model="date"
-                                      type="daterange"
-                                      align="right"
-                                      unlink-panels
-                                      range-separator="至"
-                                      start-placeholder="开始日期"
-                                      end-placeholder="结束日期"
-                                      class="timePicker">
-                              </el-date-picker>
+                            <el-date-picker
+                              v-model="date"
+                              type="daterange"
+                              range-separator="至"
+                              start-placeholder="开始使用日期"
+                              end-placeholder="结束使用日期"
+                              class="timePicker">
+                            </el-date-picker>
                           </div>
                       </div>
                   </el-col>
@@ -262,11 +260,36 @@ Vue.component(CollapseTransition.name, CollapseTransition)
         date: [],
         vioReason: '',
         user: null,
+        userId:null,
         device: {
             name:''
         }
          
       };
+    },
+    methods:{
+      async handleSubmit(){
+        let resData = await this.$axios.$post('/api/computeApply/addApply', {
+          hours: this.hours,
+          apply_user:this.userId,
+          startDate:this.date[0],
+          endDate:this.date[1], 
+          isUse:1,
+          account:null,
+          password:null,
+          isAgree:0,
+          check_user:5,   
+        });
+        if( resData.status === 1){
+            this.$message({
+                message: resData.message,
+                type: 'success'
+            });
+            // window.location.reload()
+        }else {
+            this.$message.error(resData.message)
+        }
+      }
     },
     async mounted(){
         if(!this.$auth.state.loggedIn) 
@@ -275,7 +298,8 @@ Vue.component(CollapseTransition.name, CollapseTransition)
         let userData = Data.usersDetail;
         for(let index in userData){
           if(userData[index].user.account === this.$auth.state.user.user){
-            this.user = userData[index].user.name
+            this.user = userData[index].user.name,
+            this.userId = userData[index].user.id
           }
         }     
     },

@@ -144,7 +144,7 @@
                         message: resData.message,
                         type: 'success'
                     });
-                    window.location.href = '/device'
+                    // window.location.href = '/device'
                 }else{
                     this.$message.error(resData.message)
                 }

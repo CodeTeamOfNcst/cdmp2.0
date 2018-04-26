@@ -37,10 +37,10 @@ module.exports.getMessageDataById = async (JSON) => {
     }
 }
 
-module.exports.getAllMessageData = async () => {
+module.exports.getAllMessageData = async (JSON) => {
     try{
         let messages = await Message.findAll({
-            // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage,
+            offset: (parseInt(JSON || 1) - 1) * ItemPerPage,
             limit: ItemPerPage
         });
         let messageTypes = await MessageType.findAll()

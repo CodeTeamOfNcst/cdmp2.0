@@ -60,15 +60,18 @@ module.exports = {
         tokenType: 'bearer',
       }
     },
-     
+    rewriteRedirects:false,
     cookie: {
       name: 'token',
       options: {
         path: '/'
       }
-},
+    },
+    redirect: {
+      login: '/login',
+      home: '/'
+    },
     fetchUserOnLogin: true,
-    watchLoggedIn: false
   },
   /*
   ** Axios module configuration

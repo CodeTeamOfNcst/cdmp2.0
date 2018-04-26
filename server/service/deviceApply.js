@@ -40,10 +40,10 @@ module.exports.getApplyById = async (JSON) => {
     }
 }
 
-module.exports.getAllApplyData = async () => {
+module.exports.getAllApplyData = async (JSON) => {
     try{
         let applys = await DeviceApply.findAll({ 
-            // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage, 
+            offset: (parseInt(JSON || 1) - 1) * ItemPerPage, 
             limit: ItemPerPage 
         }); 
         let Applys = [];
