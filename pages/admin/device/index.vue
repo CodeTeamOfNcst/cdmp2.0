@@ -113,9 +113,9 @@
                         border
                         style="width: 70%;">
                     <el-table-column
-                            prop="id"
-                            label="设备id"
-                            width="100">
+                        label="设备id"
+                        type="index"
+                        width="100">
                     </el-table-column>
                     <el-table-column
                             prop="date"
@@ -350,7 +350,7 @@ export default{
                         message: result.message,
                         type: 'success'
                     });
-                    window.location.reload()
+                    // window.location.reload()
                 }else {
                     this.$message.error(result.message);
                 }

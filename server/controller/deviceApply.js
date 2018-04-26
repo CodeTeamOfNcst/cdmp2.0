@@ -8,7 +8,8 @@ const deviceApplyService = require('../service/deviceApply')
  */
 
 module.exports.deviceApplyGetAll = async (ctx, next) => {
-  let result = await deviceApplyService.getAllApplyData()
+  let page = ctx.params.page
+  let result = await deviceApplyService.getAllApplyData(page)
   ctx.body = {
     counts:result.counts,
     applys:result.applys,

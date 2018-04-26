@@ -31,18 +31,7 @@
                     <div class="grid-content bg-purple-dark"><i class="el-icon-message icon"></i>消息管理</div>
                 </nuxt-link>
             </el-row>
-            <!-- <el-row class="nav_content">
-                <nuxt-link to="/admin/order">
-                    <div class="grid-content bg-purple-dark"><i class="el-icon-edit icon"></i>设备预约管理</div>
-                </nuxt-link>
-            </el-row>
-            <el-row class="nav_content">
-                <nuxt-link to="/admin/resources">
-                    <div class="grid-content bg-purple-dark"><i class="el-icon-service icon"></i>云计算资源管理</div>
-                </nuxt-link>
-            </el-row> -->
-
-
+            
             <!-- 暂定折叠面板(css设置在main.css 18-32行) -->
             <el-row class="nav_content">
                 <el-collapse accordion>

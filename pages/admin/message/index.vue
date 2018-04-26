@@ -95,9 +95,9 @@
                         border
                         style="width: 70%;">
                     <el-table-column
-                            prop="id"
-                            label="消息id"
-                            width="100">
+                        label="消息id"
+                        type="index"
+                        width="100">
                     </el-table-column>
                     <el-table-column
                             prop="releaseDate"

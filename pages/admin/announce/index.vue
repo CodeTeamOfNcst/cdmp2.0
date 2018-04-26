@@ -64,9 +64,9 @@
                         border
                         style="width: 70%;">
                     <el-table-column
-                            prop="id"
-                            label="公告 id"
-                            width="110">
+                        label="公告 id"
+                        type="index"
+                        width="110">
                     </el-table-column>
                     <el-table-column
                             prop="releaseDate"

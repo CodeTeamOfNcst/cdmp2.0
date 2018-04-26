@@ -8,8 +8,8 @@ const deviceService = require('../service/device')
  */
 
 module.exports.deviceGetAllData = async (ctx, next) => {
-  let result = await deviceService.getAllDeviceData()
-  console.log(result)
+  let page = ctx.params.page
+  let result = await deviceService.getAllDeviceData(page)
   ctx.body = {
     counts:result.counts,
     Devices:result.Devices,

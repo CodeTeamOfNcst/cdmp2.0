@@ -32,10 +32,10 @@ module.exports.getInfoDataById = async (JSON) => {
     }
 }
 
-module.exports.getAllInfoData = async () => {
+module.exports.getAllInfoData = async (JSON) => {
     try{
         let infos = await Info.findAll({ 
-            // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage, 
+            offset: (parseInt(JSON || 1) - 1) * ItemPerPage,
             limit: ItemPerPage 
         });
         let infoDetail = []

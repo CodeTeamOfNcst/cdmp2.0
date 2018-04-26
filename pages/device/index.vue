@@ -277,11 +277,11 @@
                 }
             },
             async handlePageChange(page){
-                let resData = await axios.get(`/api/device/getAll/${page}`);
-                if(resData.data.status === 1){
-                    this.devices = resData.data.Devices;
+                let resData = await this.$axios.$get(`/api/device/getAllDeviceData/${page}`);
+                if(resData.status === 1){
+                    this.devices = resData.Devices;
                 }else {
-                    this.$message.error(resData.data.message)
+                    this.$message.error(resData.message)
                 }
             },
             async search_click(){

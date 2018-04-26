@@ -9,7 +9,8 @@ const messageService = require('../service/message')
 
 
 module.exports.messageGetAll = async (ctx, next) => {
-    let result = await messageService.getAllMessageData()
+  let page = ctx.params.page
+    let result = await messageService.getAllMessageData(page)
     ctx.body = {
         counts:result.counts,
         MessageTypes:result.MessageTypes,

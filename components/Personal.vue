@@ -303,13 +303,16 @@
                         type: 'success',
                         message: resData.message
                     })
-                    window.location.reload()
+                    // window.location.reload()
                 }else {
                     this.$message.error(resData.message);
                 }
             },  
             async onSubmitCancel(){
-                window.location.reload()
+                this.$message({
+                    type: 'success',
+                    message: "已取消"
+                })
             },
         },
         

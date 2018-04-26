@@ -22,7 +22,7 @@
                     </div>
                     <div v-else-if="this.$auth.hasScope('admin')" class="little" >
                         <i class="iconfont icon-user"></i>
-                        <nuxt-link to="/admin">后台</nuxt-link>    
+                        <nuxt-link to="/admin/device">后台</nuxt-link>    
                         <i class="iconfont icon-register"></i>
                         <nuxt-link to="/signin">注册</nuxt-link>
                         <el-button  @click="logOut">退出</el-button>

@@ -120,9 +120,9 @@
                         border
                         style="width: 70%;">
                     <el-table-column
-                            prop="id"
-                            label="申请id"
-                            width="100">
+                        label="申请id"
+                        type="index"
+                        width="100">
                     </el-table-column>
                     <el-table-column
                             prop="chargePerson"
@@ -180,12 +180,11 @@
             </div>
             <div class="page">
                 <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page.sync="currentPage1"
-                    :page-size="100"
-                    layout="total, prev, pager, next"
-                    :total="1000">
+                        @current-change="handleCurrentChange"
+                        :current-page.sync="currentPage"
+                        :page-size="10"
+                        layout="total, prev, pager, next"
+                        :total="itemCounts">
                 </el-pagination>
             </div>
             <el-dialog title="用户云计算资源" :visible.sync="editFormVisible">
@@ -275,6 +274,7 @@
         min-height: 200px;
         float: right;
     }
+    
 </style>
 
 <script>
@@ -288,12 +288,6 @@
             return  'admina'
         },
         methods: {
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
-            },
-            handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
-            },
             async handleSearch(){
                 if(! this.searchInput){
                     window.location.reload()
@@ -325,7 +319,7 @@
                         message: resData.message,
                         type: 'success'
                     });
-                    window.location.reload()
+                    // window.location.reload()
                 }else {
                     this.$message.error(resData.message)
                 }
@@ -406,6 +400,14 @@
             handleEditCanacel(){
                 this.editFormVisible = false
             },  
+            async handleCurrentChange(val) {
+                let resData = await this.$axios.$get(`/api/computeApply/getAllApplyData/${val}`)
+                if(resData.status === 1){
+                    this.tableData = resData.Messages;
+                }else {
+                    this.$message.error(resData.message)
+                }
+            },
             getSummaries(param) {
                 const { columns, data } = param;
                 const sums = [];
@@ -434,7 +436,7 @@
         },
         data() {
             return {
-                currentPage1: 1,
+                currentPage: 1,
                 itemCounts:1,
                 addForm: {
                     user: '',

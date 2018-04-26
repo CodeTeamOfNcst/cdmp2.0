@@ -31,7 +31,7 @@ module.exports = () => {
 
   // user 相关 service 
   
-  router.get('/user/userGetAllData',userController.userGetAll)
+  router.get('/user/userGetAllData/:page?',userController.userGetAll)
   router.get('/user/onlyGetAllUser',userController.userGetName)
   router.post('/user/userGetUserData',userController.userGet)
   router.post('/user/userApply',userController.getApplys)
@@ -44,7 +44,7 @@ module.exports = () => {
   // device 相关 service
   router.post('/device/getDeviceDataById',deviceController.deviceGetById)
   router.post('/device/getDeviceDataByName',deviceController.deviceGetByName)
-  router.get('/device/getAllDeviceData',deviceController.deviceGetAllData)
+  router.get('/device/getAllDeviceData/:page?',deviceController.deviceGetAllData)
   router.get('/device/getDeviceOnlyData',deviceController.deviceGetOnlyData)
   router.post('/device/getDeviceSearch',deviceController.deviceSearch)
   router.post('/device/AddDevice',deviceController.devicePost) 
@@ -53,7 +53,7 @@ module.exports = () => {
 
   // message 相关 service
   router.post('/message/getMessageDataById',messageController.messageGetById)
-  router.get('/message/getAllMessageData',messageController.messageGetAll)
+  router.get('/message/getAllMessageData/:page?',messageController.messageGetAll)
   router.post('/message/getMessageSearch',messageController.messageSearch)
   router.post('/message/getMessageSearchFront',messageController.messageSearchFront)
   router.post('/message/addMessage',messageController.messagePost) 
@@ -64,7 +64,7 @@ module.exports = () => {
 
   // notice 相关 service
   router.post('/info/getInfoDataById',infoController.infoGetById)
-  router.get('/info/getAllInfoData',infoController.infoGetAll)
+  router.get('/info/getAllInfoData/:page?',infoController.infoGetAll)
   router.post('/info/getInfoSearch',infoController.infoSearch)
   router.post('/info/addInfo',infoController.infoPost) 
   router.post('/info/deleteInfoById', infoController.infoDelete)
@@ -72,7 +72,7 @@ module.exports = () => {
 
   // deviceApply 相关 service
   router.post('/deviceApply/getApplyById',deviceApplyController.deviceApplyGetById)
-  router.get('/deviceApply/getAllApplyData',deviceApplyController.deviceApplyGetAll)
+  router.get('/deviceApply/getAllApplyData/:page?',deviceApplyController.deviceApplyGetAll)
   router.post('/deviceApply/getApplySearch',deviceApplyController.deviceApplySearch)
   router.post('/deviceApply/addApply',deviceApplyController.deviceApplyPost)
   router.post('/deviceApply/addApplyFront',deviceApplyController.deviceApplyPostFront) 
@@ -81,7 +81,7 @@ module.exports = () => {
 
   //computeApply 相关 service
   router.post('/computeApply/getApplyById',computeApplyController.computeApplyGetById)
-  router.get('/computeApply/getAllApplyData',computeApplyController.computeApplyGetAll)
+  router.get('/computeApply/getAllApplyData/:page?',computeApplyController.computeApplyGetAll)
   router.post('/computeApply/getApplySearch',computeApplyController.computeApplySearch)
   router.post('/computeApply/getApplySearchFront',computeApplyController.computeApplySearchFront)
   router.post('/computeApply/addApply',computeApplyController.computeApplyPost)

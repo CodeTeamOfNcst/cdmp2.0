@@ -7,7 +7,8 @@ const userService = require('../service/user')
  * @param {*} next 
  */
 module.exports.userGetAll = async (ctx, next) => {
-  let result = await userService.userGetAllData()
+  let page = ctx.params.page
+  let result = await userService.userGetAllData(page)
   ctx.body = {
     counts:result.counts,
     status:result.status,
