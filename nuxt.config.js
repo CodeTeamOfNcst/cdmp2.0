@@ -77,7 +77,7 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
     proxyHeaders:true,
     credentials: true, 
-   // baseURL: '39.105.65.110'
+    baseURL: 'http://39.105.65.110'
    // baseURL: process.env.host || '127.0.0.1:3000'
   },
 
