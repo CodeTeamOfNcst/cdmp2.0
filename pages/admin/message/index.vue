@@ -262,14 +262,10 @@
                     }
                 }
             },
-        //     userFilterMethod(query, item){
-        //         return item.key.indexOf(query) > -1;
-        //     },
             handleAddOpen() {
             },
             async handleAdd(){
                 if( this.addForm.selected_user.length !== 0){
-                    console.log(this.addForm.message_type)
                     let resData = await this.$axios.$post('api/message/addMessage', {
                         selected_user: this.addForm.selected_user,
                         releaseDate:this.addForm.releaseDate,
@@ -293,7 +289,6 @@
                 }
             },
             handleAddCancel(){
-                console.log(this.addForm.selected_user);
                 this.addFromVisible = false
             },
             async handleEdit(row) {

@@ -384,6 +384,7 @@
                     }
                 }
             },
+            //审核人员！！（后期加上管理员分类）
             async handleAdd(){
                 let resData = await this.$axios.$post('/api/computeApply/addApply', {
                     hours: this.addForm.hours,
@@ -391,10 +392,8 @@
                     startDate:this.addForm.date[0],
                     endDate:this.addForm.date[1], 
                     isUse:this.addForm.isUse,
-                    // account:'687432',
-                    // password:'123456',
                     isAgree:this.addForm.isAgree,
-                    check_user:5,   
+                    check_user:1,   
                 });
                 if( resData.status === 1){
                     this.$message({
@@ -493,32 +492,7 @@
                 }else {
                     this.$message.error(resData.message)
                 }
-            },
-            getSummaries(param) {
-                const { columns, data } = param;
-                const sums = [];
-                columns.forEach((column, index) => {
-                    if (index === 0) {
-                        sums[index] = '';
-                        return;
-                    }
-                    const values = data.map(item => Number(item[column.property]));
-                    if (!values.every(value => isNaN(value))) {
-                        sums[index] = values.reduce((prev, curr) => {
-                            const value = Number(curr);
-                            if (!isNaN(value)) {
-                                return prev + curr;
-                            } else {
-                                return prev;
-                            }
-                        }, 0);
-                        sums[index] += '';
-                    } else {
-                        sums[index] = '';
-                    }
-                });
-                return sums;
-            }            
+            },      
         },
         async mounted(){
             let getAllData = await this.$axios.$get('/api/computeApply/getAllApplyData');

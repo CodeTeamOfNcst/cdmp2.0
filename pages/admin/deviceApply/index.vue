@@ -470,7 +470,7 @@
         async mounted(){
             let getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
             let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
-            this.postDataFront = await this.$axios.$post('/api/deviceApply/addApplyFront', {post: 'post'});
+            // this.postDataFront = await this.$axios.$post('/api/deviceApply/addApplyFront', {post: 'post'});
             let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
             this.tableData = getAllData.applys;
             this.users = getOnlyUsersData.users;

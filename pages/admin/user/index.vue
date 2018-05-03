@@ -31,14 +31,12 @@
                 </el-form-item>
                 <el-form-item label="用户密码">
                     <el-col :span="18">
-                        <!-- <el-input v-model="addForm.password" clearable type="password"/> -->
                         <input type="password" class="input2"  v-model="addForm.password" />
                     </el-col>
                 </el-form-item>
                 <el-form-item label="重复密码">
                     <el-col :span="18">
                         <input type="password" class="input2"  v-model="addForm.repeat" />
-                        <!-- <el-input v-model="addForm.repeat" clearable type="password"/> -->
                     </el-col>
                 </el-form-item>
                 <el-form-item label="用户手机号">
