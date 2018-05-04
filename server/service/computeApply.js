@@ -62,6 +62,7 @@ module.exports.getAllApplyData = async (JSON) => {
                 createdAt:applys[i].createdAt,
                 updatedAt:applys[i].updatedAt,
                 chargePerson: apply_user.name,
+                userAccount:apply_user.account,
                 checkUser: check_user.name,
             });
             if(applys[i].isAgree){
@@ -77,10 +78,10 @@ module.exports.getAllApplyData = async (JSON) => {
                     createdAt:applys[i].createdAt,
                     updatedAt:applys[i].updatedAt,
                     chargePerson: apply_user.name,
+                    userAccount:apply_user.account,
                     checkUser: check_user.name,
                 })
             }
-
         }
         let count =  await ComputeApply.count();
         let result = {
@@ -291,7 +292,8 @@ module.exports.modifyApplyById = async (JSON) => {
         let check_er = await thisApply.getComputeApplyChecker()  
         await thisApply.update({
             hours: JSON.hours,
-            isUse: JSON.isAgree,
+            isAgree: JSON.isAgree,
+            isUse:JSON.isUse,
             account:JSON.account,
             password:JSON.password,
             startDate: JSON.startDate,

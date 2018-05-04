@@ -10,10 +10,10 @@
                 <el-col :span="3"><div class="header-item grid-content bg-purple-light"><nuxt-link class="button" to="/usedirection">平台介绍 </nuxt-link></div></el-col>   
                  
                 <el-col class="right" :span="6">
-                    <span class="little">
+                    <div class="little">
                         <i class="iconfont icon-home"></i>
                         <nuxt-link to="/">首页</nuxt-link>
-                    </span>
+                    </div>
                     <div v-if="!status" class="little">
                         <i class="iconfont icon-user"></i>
                         <nuxt-link to="/login">登录</nuxt-link>
@@ -23,16 +23,14 @@
                     <div v-else-if="this.$auth.hasScope('admin')" class="little" >
                         <i class="iconfont icon-user"></i>
                         <nuxt-link to="/admin/device">后台</nuxt-link>    
-                        <i class="iconfont icon-register"></i>
-                        <nuxt-link to="/signin">注册</nuxt-link>
-                        <el-button  @click="logOut">退出</el-button>
+                        <i class="iconfont el-icon-delete"></i>
+                        <el-button type="text" @click="logOut">退出</el-button>
                     </div>
                     <div v-else class="little" >
                         <i class="iconfont icon-user"></i>
                         <nuxt-link to="/personal">个人中心</nuxt-link>    
-                        <i class="iconfont icon-register"></i>
-                        <nuxt-link to="/signin">注册</nuxt-link>
-                        <el-button  @click="logOut">退出</el-button>
+                        <i class="iconfont el-icon-delete"></i>
+                        <el-button type="text" @click="logOut">退出</el-button>
                     </div>
                 </el-col>
             </el-row> 
@@ -43,6 +41,9 @@
 <style lang="less" scoped>
     a{
         color:#fff;
+    }
+    .el-button--text{
+        color:white;
     }
     .header-logo {
         width: 80%;
@@ -59,12 +60,12 @@
         /* background: url("~assets/img/bg2.png") no-repeat left 100%; */
     }
     .nuxt-link-exact-active {
-        // background: #6b8db4;
         color: #fff;
     } 
     .el-row{
         width: 90%; 
         height:100%;
+        line-height:80px;
         margin-left: 5%;
         .right{
             height:59px;
@@ -75,9 +76,10 @@
                 display: inline-block;
                 height: 60px;
                 line-height: 60px;
-                margin: 11px 5px;
+                margin: 11px 0px;
                 .iconfont {
-                    margin-right: 3px;
+                    // margin-right: 0px;
+                    margin-left:10px;
                 }
             }
         }
@@ -85,7 +87,7 @@
     .header-item{
         text-align: center;
         height:100%;
-        margin-top:11px;
+        // margin-top:11px;
         .button {
         font-family: SimHei;
         text-align: center;

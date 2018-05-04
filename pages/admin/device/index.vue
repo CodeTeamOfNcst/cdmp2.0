@@ -111,7 +111,7 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        style="width: 80%;">
                     <el-table-column
                         label="设备id"
                         type="index"
@@ -124,7 +124,8 @@
                     </el-table-column>
                     <el-table-column
                             prop="name"
-                            label="设备名称">
+                            label="设备名称"
+                            width="">
                     </el-table-column>                    
                     <el-table-column
                             prop="type"
@@ -137,7 +138,6 @@
                             width="130">
                     </el-table-column>
                     <el-table-column
-                            
                             label="是否可预约"
                             width="130">
                             <template slot-scope="scope">{{ scope.row.canReserve ? '可预约':'不可预约'}}</template>
@@ -322,6 +322,72 @@ export default{
     layout() {
         return 'admina'
     },
+    data() {
+        return {
+            currentPage:1,
+            itemCounts: null,
+            editFormLabelWidth:'100px',
+            searchInput:'',
+            deviceTypes: [
+                {
+                    id: '选项1',
+                    name: '黄金糕'
+                }
+            ],
+            deviceManagers:[
+                {
+                    key:'1',
+                    label:'xxx'
+                }
+            ],
+            value:'',
+            options1: [
+                {
+                    value: '1',
+                    label: '仪器名称'
+                }
+            ],
+            addForm: {
+                name: '',
+                deviceType: '',
+                deviceManager:'',
+                location:'',
+                addDate: '',
+                describe: '',
+                needRepair: false,
+                canApply: true,
+                isUse: true,
+                deviceImageUrl:null,
+            },
+            editForm: {
+                id: '',
+                name: '',
+                deviceType: '',
+                addDate: '',
+                deviceManager:'',
+                location:'',
+                describe: '',
+                needRepair: false,
+                canApply: true,
+                isUse: true,
+                deviceImageUrl: null,
+            },
+            tableData: [
+                {
+                    id: '',
+                    date: '',
+                    name: '',
+                    isUse: '',
+                    needRepair:'',
+                    canReserve:'',
+                    type: '',
+                    operation:'',
+                }
+            ],
+            editFormVisibel: false,
+            addFormVisible: false,
+        };
+    },
     methods: {
         async handleAdd() {
             let deviceName = this.addForm.name;
@@ -377,9 +443,7 @@ export default{
             let resData = await this.$axios.$post('/api/upload/deleteTempFile', {
                 path: this.editForm.deviceImageUrl
             });
-            if(resData.status == 1){
-                console.log(resData.message)
-            }else {
+            if(resData.status !== 1){
                 this.$message.error('取消编辑')
             }
         },
@@ -407,7 +471,7 @@ export default{
             if(resData.status === 1){
                 this.editForm.name = resData.device.name;
                 this.editForm.deviceType = resData.device.device_type_id;
-                this.editForm.addDate = resData.purchaseDate;
+                this.editForm.addDate = resData.device.purchaseDate;
                 this.editForm.deviceManager = resData.device.device_manager;
                 this.editForm.describe = resData.device.description;
                 this.editForm.location = resData.device.location;
@@ -488,72 +552,6 @@ export default{
             }
         },       
     },
-    data() {
-        return {
-            currentPage:1,
-            itemCounts: null,
-            editFormLabelWidth:'100px',
-            searchInput:'',
-            deviceTypes: [
-                {
-                    id: '选项1',
-                    name: '黄金糕'
-                }
-            ],
-            deviceManagers:[
-                {
-                    key:'1',
-                    label:'xxx'
-                }
-            ],
-            value:'',
-            options1: [
-                {
-                    value: '1',
-                    label: '仪器名称'
-                }
-            ],
-            addForm: {
-                name: '',
-                deviceType: '',
-                deviceManager:'',
-                location:'',
-                addDate: '',
-                describe: '',
-                needRepair: false,
-                canApply: true,
-                isUse: true,
-                deviceImageUrl:null,
-            },
-            editForm: {
-                id: '',
-                name: '',
-                deviceType: '',
-                addDate: '',
-                deviceManager:'',
-                location:'',
-                describe: '',
-                needRepair: false,
-                canApply: true,
-                isUse: true,
-                deviceImageUrl: null,
-            },
-            tableData: [
-                {
-                    id: '',
-                    date: '',
-                    name: '',
-                    isUse: '',
-                    needRepair:'',
-                    canReserve:'',
-                    type: '',
-                    operation:'',
-                }
-            ],
-            editFormVisibel: false,
-            addFormVisible: false,
-        };
-    },
     head() {
         return {
             title: 'CDMP - 设备管理'
@@ -563,7 +561,6 @@ export default{
         // 挂载数据        
         let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
         let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
-
         this.tableData = getAllData.Devices;
         this.deviceTypes = getAllData.DeviceTypes;
         this.itemCounts = getAllData.counts;

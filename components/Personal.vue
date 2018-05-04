@@ -3,65 +3,26 @@
         <div v-if="res">
             <el-tabs :tab-position="tabPosition">
                 <el-tab-pane label="云计算资源预约记录">
-                    <!-- 历史记录版块开始 -->
-                    <!-- <div v-if="chance">
-                        <el-table
-                                :data="tableData1"
-                                stripe
-                                style="width: 100%">
-                            <el-table-column
-                                    prop="apply.startDate"
-                                    label="开始时间"
-                                    width="180"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="apply.endDate"
-                                    label="结束时间"
-                                    width="180"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="apply.hours"
-                                    label="申请机时"
-                                    width="200"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    label="预约状态"
-                                    width="350"
-                                    align="left">
-                                    <template slot-scope="scope">{{scope.row.apply.isAgree ?'成功':'失败'}}</template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="operation1"
-                                    label="操作"
-                                    width="" 
-                                    align="left">
-                                <template slot-scope="scope">
-                                    <el-button type="text" @click="open2">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div> -->
-                    <!-- 历史记录版块结束 -->
-
                     <!-- 正在使用信息开始 -->
                     <div>
                         <el-table
                                 :data="tableData0"
-                                stripe
+                                 border
                                 style="width: 100%">
+                            <el-table-column
+                                type="index"
+                                width="50">
+                            </el-table-column>
                             <el-table-column
                                     prop="apply.startDate"
                                     label="开始时间"
-                                    width="180"
+                                    width=""
                                     align="left">
                             </el-table-column>
                             <el-table-column
                                     prop="apply.endDate"
                                     label="结束时间"
-                                    width="180"
+                                    width=""
                                     align="left">
                             </el-table-column>
                             <el-table-column
@@ -92,10 +53,6 @@
                                     <el-input v-model="form2.email" clearable></el-input>
                                 </el-form-item>
                             </el-form>
-                            <!-- <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                            </div> -->
                         </el-dialog>
                     </div>
                     <!-- 正在使用信息结束 -->                  
@@ -109,7 +66,8 @@
                                 <div class="startTime">开始时间:{{data.startDate}}</div>
                                 <div class="startTime">结束时间:{{data.endDate}}</div>
                                 <div class="startTime">设备类型:{{data.deviceType}}</div>
-                                <div class="startTime">是否批准使用:{{data.isAgree ? '是':'否'}}</div>
+                                <div class="startTime">是否审核:{{data.createdAt == data.updatedAt ? '待审核': '已审核'}}</div>
+                                <div class="startTime">是否批准使用:{{data.isAgree ? '是':'否'}}</div>           
                             </div>
                         </div>
                     </div>
@@ -129,8 +87,8 @@
                             <el-col :span="15">
                                 <div class="grid-content bg-purple-dark format">
                                     <el-form-item label="密码">
-                            <el-input v-model="form.password"></el-input>
-                        </el-form-item>
+                                        <el-input v-model="form.password"></el-input>
+                                    </el-form-item>
                                 </div>
                             </el-col>
                         </el-row>
@@ -138,8 +96,8 @@
                             <el-col :span="15">
                                 <div class="grid-content bg-purple-dark format">
                                     <el-form-item label="用户名称">
-                            <el-input v-model="form.name"></el-input>
-                        </el-form-item>
+                                        <el-input v-model="form.name"></el-input>
+                                    </el-form-item>
                                 </div>
                             </el-col>
                         </el-row>
@@ -147,8 +105,8 @@
                             <el-col :span="15">
                                 <div class="grid-content bg-purple-dark format">
                                     <el-form-item label="用户邮箱">
-                            <el-input v-model="form.email"></el-input>
-                        </el-form-item>
+                                        <el-input v-model="form.email"></el-input>
+                                    </el-form-item>
                                 </div>
                             </el-col>
                         </el-row>
@@ -156,12 +114,12 @@
                             <el-col :span="15">
                                 <div class="grid-content bg-purple-dark format">
                                     <el-form-item label="用户手机号">
-                            <el-input v-model="form.phone"></el-input>
-                        </el-form-item>
+                                        <el-input v-model="form.phone"></el-input>
+                                    </el-form-item>
                                 </div>
                             </el-col>
                         </el-row> 
-                        <el-form-item>
+                        <el-form-item class="keepUp">
                             <el-button type="primary" @click="onSubmit">保存</el-button>
                             <el-button @click="onSubmitCancel">取消</el-button>
                         </el-form-item>
@@ -190,17 +148,16 @@
         float: left;
     }
     .el-tabs__content{
-            overflow: visible!important;
+        overflow: visible!important;
     }
     .format{
         margin-left:50%;
     }
     .history{
-        width: 30%;
+        width: 25%;
         height:161px;
         min-width: 287px;
         margin-bottom: 10px;
-        margin-left: 2.5%;
         float: left;
         display: block;
     }
@@ -211,11 +168,10 @@
         background-size: 100% 100%;
     }
     .hisCont{
-        width: 60%;
-
+        width: 58%;
         float: right;
-        height: 80%;
-        margin-top: 8%;
+        height: 90%;
+        margin-top: 3%;
     }
     .hisCont p{
         width: 100%;
@@ -228,6 +184,10 @@
         width: 100%;
         height: 20px;
         margin-top: 5px;
+    }
+    .keepUp{
+        text-align: center;
+        margin-top:20px;
     }
 </style>
 
@@ -271,9 +231,7 @@
                     },
                 ],
                 tabPosition: '',
-                res: [
-                    
-                ],
+                res: [],
                 chance: false,
             }
         },  
@@ -330,7 +288,7 @@
             let getDataById = await this.$axios.$post('/api/computeApply/getApplySearchFront',{account:this.$store.state.auth.user});
             this.tableData1 = getDataById.result;
             this.tableData0 = getDataById.result;
-            this.res = getAllData.applys;
+            this.res = getAllData.applysFront;
             },
         head(){
             return {

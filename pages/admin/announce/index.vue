@@ -62,11 +62,11 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        style="width: 80%;">
                     <el-table-column
                         label="公告 id"
                         type="index"
-                        width="110">
+                        width="100">
                     </el-table-column>
                     <el-table-column
                             prop="releaseDate"
@@ -110,7 +110,7 @@
                     </el-form-item>
                     <el-form-item label="发布时间">
                         <el-col :span="11">
-                            <el-date-picker type="date" placeholder="选择日期" v-model="editForm.publishDate" style="width: 100%;"></el-date-picker>
+                            <el-date-picker type="date" placeholder="选择日期" v-model="editForm.releaseDate" style="width: 100%;"></el-date-picker>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="可用标识">
@@ -184,6 +184,46 @@
         layout(){
             return 'admina'
         },
+        data() {
+            return {
+                isShow: false,
+                currentPage: 1,
+                itemCounts: null,
+                centerDialogVisible: false,
+                addForm: {
+                    publishDate: '',
+                    title: '',
+                    content:'',
+                    isUse: 'false',
+                },
+                editForm: {
+                    id:'',
+                    releaseDate: '',
+                    title: '',
+                    content:'',
+                    isUse: '',
+                },
+                options: [
+                    {
+                        value: '选项1',
+                        label: '公告标题'
+                    }
+                ],
+                value: '',
+                tableData: [{
+                    id: '1',
+                    releaseDate: '2018-01-02',
+                    title: '我校新添大型分析设备构成完备的微结构分析体系',
+                    content:'',
+                    isUse: '禁用',
+                    operation:'',
+                }],
+                editFormVisible: false,
+                addFormVisible: false,
+                formLabelWidth: '120px',
+                searchInput: ''
+            };
+        },
         methods: {
             async handleSearch(){
                 if(! this.searchInput){
@@ -245,13 +285,12 @@
             },
             async handleEditSubmit(){
                 try{
-                    console.log(this.editForm.id)
                     let resData = await this.$axios.$post('/api/info/modifyInfoById',{
                         id: this.editForm.id,
                         title:this.editForm.title,
                         content:this.editForm.content,
                         isUse:this.editForm.isUse,
-                        releaseDate:this.editForm.publishDate
+                        releaseDate:this.editForm.releaseDate
                     })
                     if(resData.status === 1){
                         this.$message({
@@ -297,55 +336,14 @@
                 }
             },
             async handleCurrentChange(val) {
-                let resData = await this.$axios.$get(`/api/info/getAll/${val}`)
-                if(resData.data.status === 1){
+                let resData = await this.$axios.$get(`/api/info/getAllInfoData/${val}`)
+                if(resData.status === 1){
                     this.tableData = resData.infoDetail;
                 }else {
                     this.$message.error(resData.message)
                 }
             },
-        },
-        data() {
-            return {
-                isShow: false,
-                currentPage: 1,
-                itemCounts: null,
-                centerDialogVisible: false,
-                addForm: {
-                    publishDate: '',
-                    title: '',
-                    content:'',
-                    isUse: 'false',
-                },
-                editForm: {
-                    id:'',
-                    publishDate: '',
-                    title: '',
-                    content:'',
-                    isUse: '',
-                },
-                options: [
-                    {
-                    value: '选项1',
-                    label: '公告标题'
-                    }
-                ],
-                value: '',
-                tableData: [{
-                    id: '1',
-                    releaseDate: '2018-01-02',
-                    title: '我校新添大型分析设备构成完备的微结构分析体系',
-                    content:'',
-                    isUse: '禁用',
-                    operation:'',
-                }
-                ],
-                editFormVisible: false,
-                addFormVisible: false,
-                formLabelWidth: '120px',
-                searchInput: ''
-            };
-        },
+        },       
         head() {
             return {
                 title: 'CDMP - 公告管理'
@@ -354,8 +352,7 @@
         async mounted(){
             let getAllData = await this.$axios.$get('/api/info/getAllInfoData');
             this.tableData = getAllData.infoDetail;
-            this.itemCounts = getAllData.counts;
-        
+            this.itemCounts = getAllData.counts;        
         }
     }
 </script>

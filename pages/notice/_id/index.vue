@@ -1,7 +1,6 @@
 <template>
-    <section class="">
+    <section class="container">
         <div class="headerName">
-            <!-- <div class="leftSty"></div> -->
             <span class="bullCont">
                 <p>通知公告--</p>
                 <p class="bulletinName">{{title}}</p>

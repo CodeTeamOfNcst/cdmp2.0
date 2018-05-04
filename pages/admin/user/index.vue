@@ -92,7 +92,7 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        style="width: 80%;">
                     <el-table-column
                         label="用户id"
                         type="index"
@@ -100,7 +100,8 @@
                     </el-table-column>
                     <el-table-column
                             prop="user.name"
-                            label="用户名称">
+                            label="用户名称"
+                            width="120">
                     </el-table-column>
                     <el-table-column
                             prop="user.account"

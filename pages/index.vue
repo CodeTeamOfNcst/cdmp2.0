@@ -9,7 +9,7 @@
               <div v-for="info in infoDetail" v-bind:key="info" >
                   <el-col :span="24">
                     <div class="infoContent">
-                      <nuxt-link :to="'/notice/' + info.id">{{ info.title.substr(0,24) }} --{{ info.releaseDate }}</nuxt-link>
+                      <nuxt-link :to="'/notice/' + info.id">{{ info.title.substr(0,24) }}</nuxt-link>
                     </div>
                     <div class="classLine"></div>
                   </el-col>        
@@ -39,10 +39,10 @@
           <div class="orderbefore"></div>
           <span class="order"><i class="el-icon-d-arrow-right"></i> 快速通道</span>
          </el-col>
-        <el-col><nuxt-link to="/device"><el-button type="primary" class="link">仪器列表</el-button></nuxt-link></el-col>
-        <el-col><nuxt-link to="/clcresources"><el-button type="primary" class="link">资源情况</el-button></nuxt-link></el-col>
-        <el-col><nuxt-link to="/usedirection"><el-button type="primary" class="link">平台介绍</el-button></nuxt-link></el-col>
-        <el-col><nuxt-link to="/personal"><el-button type="primary" class="link">个人中心</el-button></nuxt-link></el-col>
+        <el-col class="alignCen"><nuxt-link to="/device"><el-button type="primary" class="link">仪器列表</el-button></nuxt-link></el-col>
+        <el-col class="alignCen"><nuxt-link to="/clcresources"><el-button type="primary" class="link">资源情况</el-button></nuxt-link></el-col>
+        <el-col class="alignCen"><nuxt-link to="/usedirection"><el-button type="primary" class="link">平台介绍</el-button></nuxt-link></el-col>
+        <el-col class="alignCen"><nuxt-link to="/personal"><el-button type="primary" class="link">个人中心</el-button></nuxt-link></el-col>
         </div>
       </el-col>
       <el-col :span="10">
@@ -52,7 +52,7 @@
             <span class="order"><i class="el-icon-d-arrow-right"></i> 平台预约频率</span>
           </el-col> 
           <el-col :span="24"> 
-            <div class="intro">
+            <div class="intro alignCen">
               <div id="app">
                 <schart :canvasId="canvasId"
                 :type="type"
@@ -117,6 +117,9 @@
 a{
   color:#fff;
 }
+.alignCen{
+  text-align: center;
+}
 
 @border-radius:4px;
 .link{
@@ -157,7 +160,6 @@ a{
     background: #8EA6B4;
   }
 }
-  
 .orderbefore{
   width: 5px;
   height:30px;
@@ -293,7 +295,7 @@ export default {
     let getAllInfoData = await this.$axios.$get('/api/info/getAllInfoData');
 
     this.img = getAllData.Devices;
-    this.infoDetail = getAllInfoData.infoDetail ;
+    this.infoDetail = getAllInfoData.indexInfo ;
 
     if(this.$auth.$state.user || this.$auth.$state.loggedIn){
       let Data = await this.$axios.$get('/api/user/userGetAllData');

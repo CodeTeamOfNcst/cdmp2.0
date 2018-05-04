@@ -39,7 +39,17 @@ module.exports.getAllInfoData = async (JSON) => {
             limit: ItemPerPage 
         });
         let infoDetail = []
+        let indexInfo = []
         for(let i = 0; i < infos.length; i++){
+            if(infos.length < 6){
+                indexInfo.push({
+                    id: infos[i].id,
+                    title: infos[i].title,
+                    content: infos[i].content,
+                    isUse: infos[i].isUse ? '可用': '禁用',
+                    releaseDate: infos[i].releaseDate,
+                })
+            }
             infoDetail.push({
                 id: infos[i].id,
                 title: infos[i].title,
@@ -52,6 +62,7 @@ module.exports.getAllInfoData = async (JSON) => {
         let result = {
             counts: count,
             infoDetail: infoDetail,
+            indexInfo:indexInfo,
             status: 1,
             message: '从服务端获取所有数据成功'
         }

@@ -13,6 +13,7 @@ module.exports.infoGetAll = async (ctx, next) => {
   ctx.body = {
     counts:result.counts,
     infoDetail:result.infoDetail,
+    indexInfo:result.indexInfo,
     status:result.status,
     message:result.message
   }
