@@ -93,7 +93,7 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        style="width: 80%;">
                     <el-table-column
                         label="消息id"
                         type="index"
@@ -152,10 +152,10 @@
                         <el-col :span="11">
                             <el-select v-model="editForm.type" placeholder="请选择消息类别">
                                 <el-option
-                                        v-for="item in userKlasses"
-                                        :key="item.id"
-                                        :label="item.name"
-                                        :value="item.id">
+                                    v-for="item in MessageTypes"
+                                    :key="item.id"
+                                    :label="item.label"
+                                    :value="item.id">
                                 </el-option>
                             </el-select>
                         </el-col>
@@ -247,6 +247,89 @@
         layout(){
             return  'admina'
         },
+        data() {
+            return {
+                isShow:false,
+                currentPage: 1,
+                itemCounts: null,
+                addForm: {
+                    releaseDate: '',
+                    message_type: '',
+                    selected_user: [],
+                    isUse: false,
+                    isRead: false,
+                    content: '',
+                },
+                editForm: {
+                    id: '',
+                    type: '',
+                    user: '',
+                    publishDate: '',
+                    content: '',
+                    isPublished: '',
+                    isRead: '',
+                    isUse: '',
+                },
+                userKlasses: [
+                    {
+                        id: '',
+                        name: ''
+                    },
+                ],
+                tableData: [
+                    {
+                        id: '1',
+                        releaseDate:'2017-08-26',
+                        content: '这是一条系统消息',
+                        isRead:'未读',
+                        isUse:'可用',
+                        message_type:'',
+                        title:'',
+                        name:'',
+                    }
+                ],
+                userTransferData:[
+                    {
+                        key: '',
+                        label: ''
+                    }
+                ],
+                editFromVisible: false,
+                formLabelWidth: '120px',
+                addFromVisible: false,
+                searchInput: '',
+                searchType: '',
+                searchOption: [
+                    {
+                        value: '1',
+                        label: '消息用户'
+                    },
+                ],
+                // 从数据库加载的数据， 这里只是数据的格式
+                Messages: [
+                    {
+                        message: {
+                            content:"这是一条成功的消息",
+                            createdAt:"2018-01-25",
+                            id:1,
+                            releaseDate:false,
+                            isRead: false,
+                            isUse:true,
+                            message_type:1,
+                            message_user:1,
+                            publishDate:"2018-01-25T12:04:23.000Z",
+                            updatedAt:"2018-01-25T12:04:23.000Z",
+                        },
+                    },
+                ],
+                MessageTypes: [
+                    {
+                        id:'1',
+                        label:'普通1-预约到期'
+                    }
+                ]
+            };
+        },
         methods: {
             async handleSearch(){
                 if(! this.searchInput){
@@ -262,14 +345,10 @@
                     }
                 }
             },
-        //     userFilterMethod(query, item){
-        //         return item.key.indexOf(query) > -1;
-        //     },
             handleAddOpen() {
             },
             async handleAdd(){
                 if( this.addForm.selected_user.length !== 0){
-                    console.log(this.addForm.message_type)
                     let resData = await this.$axios.$post('api/message/addMessage', {
                         selected_user: this.addForm.selected_user,
                         releaseDate:this.addForm.releaseDate,
@@ -293,7 +372,6 @@
                 }
             },
             handleAddCancel(){
-                console.log(this.addForm.selected_user);
                 this.addFromVisible = false
             },
             async handleEdit(row) {
@@ -371,89 +449,7 @@
                 }
             }, 
         },
-        data() {
-            return {
-                isShow:false,
-                currentPage: 4,
-                itemCounts: null,
-                addForm: {
-                    releaseDate: '',
-                    message_type: '',
-                    selected_user: [],
-                    isUse: false,
-                    isRead: false,
-                    content: '',
-                },
-                editForm: {
-                    id: '',
-                    type: '',
-                    user: '',
-                    publishDate: '',
-                    content: '',
-                    isPublished: '',
-                    isRead: '',
-                    isUse: '',
-                },
-                userKlasses: [
-                    {
-                        id: '选项1',
-                        name: '按时间由近及远排序'
-                    },
-                ],
-                tableData: [
-                    {
-                        id: '1',
-                        releaseDate:'2017-08-26',
-                        content: '这是一条系统消息',
-                        isRead:'未读',
-                        isUse:'可用',
-                        message_type:'',
-                        title:'',
-                        name:'',
-                    }
-                ],
-                userTransferData:[
-                    {
-                        key: '',
-                        label: ''
-                    }
-                ],
-                editFromVisible: false,
-                formLabelWidth: '120px',
-                addFromVisible: false,
-                searchInput: '',
-                searchType: '',
-                searchOption: [
-                    {
-                        value: '1',
-                        label: '消息用户'
-                    },
-                ],
-                // 从数据库加载的数据， 这里只是数据的格式
-                Messages: [
-                    {
-                        message: {
-                            content:"这是一条成功的消息",
-                            createdAt:"2018-01-25",
-                            id:1,
-                            releaseDate:false,
-                            isRead: false,
-                            isUse:true,
-                            message_type:1,
-                            message_user:1,
-                            publishDate:"2018-01-25T12:04:23.000Z",
-                            updatedAt:"2018-01-25T12:04:23.000Z",
-                        },
-                    },
-                ],
-                MessageTypes: [
-                    {
-                        id:'1',
-                        label:'普通1-预约到期'
-                    }
-                ]
-            };
-        },
+        
         async mounted() {
             // 将信息挂载
             let getAllData = await this.$axios.$get('/api/message/getAllMessageData');

@@ -31,14 +31,12 @@
                 </el-form-item>
                 <el-form-item label="用户密码">
                     <el-col :span="18">
-                        <!-- <el-input v-model="addForm.password" clearable type="password"/> -->
                         <input type="password" class="input2"  v-model="addForm.password" />
                     </el-col>
                 </el-form-item>
                 <el-form-item label="重复密码">
                     <el-col :span="18">
                         <input type="password" class="input2"  v-model="addForm.repeat" />
-                        <!-- <el-input v-model="addForm.repeat" clearable type="password"/> -->
                     </el-col>
                 </el-form-item>
                 <el-form-item label="用户手机号">
@@ -94,7 +92,7 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        style="width: 80%;">
                     <el-table-column
                         label="用户id"
                         type="index"
@@ -102,7 +100,8 @@
                     </el-table-column>
                     <el-table-column
                             prop="user.name"
-                            label="用户名称">
+                            label="用户名称"
+                            width="120">
                     </el-table-column>
                     <el-table-column
                             prop="user.account"

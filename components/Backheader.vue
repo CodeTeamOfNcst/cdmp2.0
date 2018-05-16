@@ -53,7 +53,6 @@
                 </el-collapse>
             </el-row>
             <!--end-->
-            
         </div>
     </div>
 </template>
@@ -141,7 +140,6 @@
     import  NuxtLink  from '../.nuxt/components/nuxt-link'
 
     export default {
-        // auth: true,
         components() { 
             return NuxtLink
         },

@@ -46,7 +46,8 @@ module.exports.getAllApplyData = async (JSON) => {
             offset: (parseInt(JSON || 1) - 1) * ItemPerPage, 
             limit: ItemPerPage 
         }); 
-        let Applys = [];
+        let Applys = []
+        let ApplyFront = []
         for(let i=0; i<applys.length; i++){
             let apply_user = await applys[i].getDeviceApplyer()
             let check_user = await applys[i].getDeviceApplyChecker()
@@ -63,16 +64,34 @@ module.exports.getAllApplyData = async (JSON) => {
                 updatedAt:applys[i].updatedAt,
                 applyUserId:applys[i].apply_user,
                 applyUser: apply_user.name,
+                userAccount:apply_user.account,
                 checkUser: check_user.name,
                 device: apply_device.name,
                 Img:apply_device.imgFilePath,
                 deviceType:Type.name,
             })
+            //个人中心设备预约显示已审核且未禁用的信息
+            if(applys[i].isUse){
+                ApplyFront.push({
+                    id: applys[i].id,
+                    startDate:applys[i].startDate,
+                    endDate:applys[i].endDate,
+                    isAgree:applys[i].isAgree,
+                    applyUserId:applys[i].apply_user,
+                    applyUser: apply_user.name,
+                    device: apply_device.name,
+                    Img:apply_device.imgFilePath,
+                    deviceType:Type.name,
+                    createdAt:applys[i].createdAt,
+                    updatedAt:applys[i].updatedAt,
+                })
+            }
         }
         let count =  await DeviceApply.count();
         let result = {
             counts: count,
             applys: Applys,
+            applysFront:ApplyFront,
             status: 1,
             message: '成功获取信息'
         }
@@ -195,7 +214,7 @@ module.exports.addApplyFront = async (JSON) => {
                 thisApply.save();
                 let result = {
                     status: 1,
-                    message: '成功'
+                    message: '预约已提交'
                 }
                 return result;
             }else{

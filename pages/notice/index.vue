@@ -9,18 +9,10 @@
             <li class="rule-item" v-for="info in infoDetail" v-bind:key="info">
                 <nuxt-link :to="'/notice/' + info.id">
                     <span class="rule-item-title">{{ info.title }}({{info.releaseDate}})</span>
-                    <!-- <span class="rule-item-date">{{ info.releaseDate }} </span> -->
                 </nuxt-link>
             </li>
-            <!-- <el-row class="strip">
-                <div >
-                    <el-col :span="24">
-                        <div class="grid-content bg-purple-dark"></div>
-                    </el-col>
-                </div>
-            </el-row> -->
         </ul>
-        <el-row>
+        <el-row class="submit_appoint">
             <el-col :span="24">
                 <div class="grid-content bg-purple-dark paging" >
                     <el-pagination
@@ -37,42 +29,34 @@
 </template>
 
 <style lang="less" scoped>
-    // a {
-    //     text-decoration: none;
-    //     color:black;
-    // }
-    .grid-content{
-        float:left;
-        line-height: 35px;
-        // .grid-content a{
-        //     color:#3675a8;
-        // }
-        // .grid-content a:hover{
-        //     color:black;
-        // }
+.grid-content{
+    float:left;
+    line-height: 35px;
+}
+.paging {
+    width: 40%;
+    margin-left: 30%;
+}
+.rule-list {
+    padding: 5px 30px;
+    min-height: 600px;
+    .rule-item {
+        overflow: hidden;
+        color: #3675a8;    
+        .rule-item-title {
+            float: left;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        } 
     }
-    .paging {
-        width: 40%;
-        margin-left: 30%;
+    .rule-item a:hover{
+        color:black;
     }
-    .rule-list {
-        padding: 5px 30px;
-        min-height: 600px;
-        .rule-item {
-            overflow: hidden;
-            color: #3675a8;    
-            .rule-item-title {
-                float: left;
-                margin-bottom: 10px;
-            }
-            // .rule-item-date {
-            //     float: right;
-            // } 
-        }
-        .rule-item a:hover{
-                color:black;
-            }
-    }
+}
+.submit_appoint{
+    margin-top: 20px;
+    text-align: center;
+}
 </style>
 
 <script>
@@ -80,21 +64,21 @@ import axios from 'axios'
 export default {
     data(){
         return{
-            data:'学校关于放假期间仪器归还问题（2018.01.15）',
+            data:'学校关于放假期间仪器归还问题（2018-01-15）',
             ruleCount: null,
             infoDetail: null,
         }
     },
     methods:{
-            async handlePageChange(currentPage){
-                let resData = await axios.get(`api/rule/getAll/${currentPage}`)
-                if(resData.data.status === 1){
-                    this.rulesDetail = resData.data.rulesDetail
-                }else{
-                    this.$message.error(resData.data.message);
-                    
-                }
+        async handlePageChange(currentPage){
+            let resData = await this.$axios.$get(`api/info/getAllInfoData/${currentPage}`)
+            if(resData.status === 1){
+                this.rulesDetail = resData.infoDetail
+            }else{
+                this.$message.error(resData.message);
+                
             }
+        }
     },
     async mounted(){
         let getAllData = await this.$axios.$get('/api/info/getAllInfoData');

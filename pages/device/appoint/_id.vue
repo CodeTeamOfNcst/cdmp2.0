@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="headerName">
-            <div class="leftSty"></div>
+            <!-- <div class="leftSty"></div> -->
             <span class="bullCont">仪器预约</span>
         </div>
         <el-row class="headerline"></el-row>
@@ -80,7 +80,7 @@
         </div>
         <el-row class="submit_appoint">
             <el-col :span="24">
-                <div class="grid-content bg-purple-dark">
+                <div class="grid-content bg-purple-dark submit">
                     <el-button :plain="true" @click="handleSubmit" type="primary">提交</el-button>
                 </div>
             </el-col>
@@ -120,6 +120,7 @@
     }
     .submit_appoint{
         margin-top: 20px;
+        text-align: center;
     }
 </style>
 

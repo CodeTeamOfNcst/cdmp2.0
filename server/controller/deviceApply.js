@@ -13,6 +13,7 @@ module.exports.deviceApplyGetAll = async (ctx, next) => {
   ctx.body = {
     counts:result.counts,
     applys:result.applys,
+    applysFront:result.applysFront,
     status:result.status,
     message:result.message
   }

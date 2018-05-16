@@ -34,9 +34,8 @@
   .container {
     margin: 0;
     width: 100%;
-    text-align: center;
+    // text-align: center;
     overflow: hidden;
-    /* min-height: 800px; */
     height: auto;
   }
   .button, .button:visited
@@ -45,11 +44,9 @@
     display: inline-block;
     color: #fff;
     letter-spacing: 1px;
-    /*background-color: #fff;*/
-    /*border: 2px solid #063961;*/
     text-decoration: none;
     text-transform: uppercase;
-    padding: 20px 2%;
+    // padding: 20px 2%;
   }
   .button:hover, .button:focus
   {

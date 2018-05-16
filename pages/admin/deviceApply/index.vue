@@ -106,21 +106,27 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        style="width: 80%;">
                     <el-table-column
                         label="申请id"
                         type="index"
-                        width="80">
+                        width="70">
                     </el-table-column>
                     <el-table-column
                             label="申请用户"
-                            width="100">
+                            width="90">
                         <template slot-scope="scope">{{ scope.row.applyUser }}</template>
                     </el-table-column>
                     <el-table-column
+                            label="用户账号"
+                            width="140">
+                        <template slot-scope="scope">{{ scope.row.userAccount }}</template>
+                    </el-table-column>
+                    
+                    <el-table-column
                             label="申请设备"
                             width="180">
-                        <template slot-scope="scope">{{ scope.row.device.substr(0,10) }}</template>
+                        <template slot-scope="scope">{{ scope.row.device.substr(0,7) }}</template>
                     </el-table-column>
                     <el-table-column
                             label="开始使用时间"
@@ -155,7 +161,7 @@
                     <el-table-column
                             prop="operation"
                             label="操作"
-                            width="100">
+                            width="90">
                         <template slot-scope="scope">
                             <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
                             <el-button type="text" @click="handleDelete(scope.row)" style="margin-left: 5px;">禁用</el-button>
@@ -450,6 +456,7 @@
                         applyUser: '张扬果儿',
                         checkUser:'名字',
                         device: '第一台设备',
+                        userAccount:'',
                         startDate: '',
                         endDate:'',
                         vioReason:'',
@@ -470,7 +477,6 @@
         async mounted(){
             let getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
             let getOnlyUsersData = await this.$axios.$get('/api/user/onlyGetAllUser');
-            this.postDataFront = await this.$axios.$post('/api/deviceApply/addApplyFront', {post: 'post'});
             let getOnlyData = await this.$axios.$get('/api/device/getDeviceOnlyData');
             this.tableData = getAllData.applys;
             this.users = getOnlyUsersData.users;

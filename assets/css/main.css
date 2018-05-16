@@ -69,6 +69,7 @@ a, a:hover {
   text-align: center;
   padding: 0px;
 }
+
 /* --表格样式调整-- */
 table{
   max-width: 1500px;
@@ -90,12 +91,8 @@ td,th{
 .el-table th{
   padding: 6px 0!important;
 }
-/* --结束-- */
+/* --end-- */
 
-/* .logo {
-  width: 243px;
-  height: 418px;
-} */
 .footer {
   padding-top: 15px;
   padding-bottom:15px ;
@@ -115,7 +112,7 @@ td,th{
   width: 100%;
   height:50px;
 }
-/* --分页样式结束-- */
+/* --end-- */
 
 
 /* --后台页面标头-- */
@@ -139,7 +136,7 @@ td,th{
   margin-top: 10px;
   margin-bottom: 10px;
   line-height: 30px;
-  text-align: left;
+  /* text-align: left; */
 }
 .headerline{
   width: 100%;

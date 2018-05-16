@@ -2,7 +2,6 @@
     <div>
         <section class="container">
             <div class="headerName">
-                <!-- <div class="leftSty"></div> -->
                 <el-row :gutter="20">
                     <el-col :span="15" class="padding">
                         <div class="grid-content bg-purple">
@@ -42,7 +41,7 @@
                 <div v-for="device in devices" v-bind:key="device" v-if="device.canReserve">          
                     <div class="oneDevice">
                         <el-row :gutter="20" class="leftImg">
-                            <el-col :span="8" class="leftspan">
+                            <el-col :span="8">
                                 <div class="grid-content bg-purple bullImg">
                                     <nuxt-link :to="'device/details/' + device.id">
                                         <img :src="device.imgFilePath" alt="Nuxt.js Logo"  />
@@ -121,6 +120,7 @@
     }
     .pagination{
         padding: 20px;
+        
     }
     .el-select{
         width: 130px;
@@ -131,6 +131,13 @@
     .keyword{
         width: 240px;
         float: left;
+        .chanceKey{
+            width: 80%;
+            margin-left: 10%;
+            height: auto;
+            margin-top: 25px;
+            background: #ECECEC;
+        }
     }
     .key-content{
         width: 80%;
@@ -145,14 +152,7 @@
         width: 85%;
         float: right;
         margin-right: 10px;
-    }
-    .chanceKey{
-        width: 80%;
-        margin-left: 10%;
-        height: auto;
-        margin-top: 25px;
-        background: #ECECEC;
-    }
+    }    
     .keyContent{
         width: 80%;
         height: 28%;
@@ -174,54 +174,53 @@
     .leftImg{
         width: 100%;
         height: 100%;
-    }
-    .bullImg{
-        width: 110px;
-        height: 110px;
-        float: right;
-        margin-top: 22px;
-        .bullImg img{
-        width: 100%;
-        height: 100%;
-        background-size: 100% 100%;
+        .bullImg{
+            width: 110px;
+            height: 110px;
+            float: right;
+            margin-top: 22px;
+            .bullImg img{
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            }
         }
-    }
-    .topOneCol{
-        margin-top: 12px;
-        .bullName{
-        width: 100%;
-        height: 100%;
-        text-align: left;
-        line-height: 25px;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
+        .topOneCol{
+            margin-top: 12px;
+            .nameFrame{
+                height: 25px;
+                .bullName{
+                    width: 100%;
+                    height: 100%;
+                    text-align: left;
+                    line-height: 25px;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
+                }
+            }
+            .button_center{
+                text-align: center;
+                .appoint{
+                    width: 100%;
+                    padding: 0;
+                    height: 25px;
+                }
+            }
         }
-    }
-    .appoint{
-        width: 100%;
-        padding: 0;
-        height: 25px;
-    }
-    .maketop{
-        margin-top: 20px;
-        .contactUser{
-        width: 100%;
-        height: 30px;
-        line-height: 30px;
-        text-align: left;
+        .maketop{
+            margin-top: 20px;
+            .contactUser{
+                width: 100%;
+                height: 30px;
+                line-height: 30px;
+                text-align: left;
+            }
+            .mainInfor{
+                background: #eef2f5;;
+            }
         }
-        .mainInfor{
-        background: #eef2f5;;
-        }
-    }
-    .button_center{
-        text-align: center;
-    }
-    .nameFrame{
-        height: 25px;
-    }
-    
+    }  
     .grid-content{
         overflow:hidden;
         text-overflow:ellipsis;

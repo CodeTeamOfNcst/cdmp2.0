@@ -83,7 +83,7 @@ module.exports.onlyGetAllUser = async () => {
   for (let index in users) {
     thisUsers.push({
         key: users[index].id,
-        label: users[index].name,
+        label: users[index].name + '--'+'(' + users[index].account +')',
     })
   }
   let result = {
