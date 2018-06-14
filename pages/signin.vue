@@ -21,14 +21,6 @@
                             <el-form-item>
                                 <el-input class="input1" v-model="user_account" placeholder="账号" type="text"/>
                             </el-form-item>
-                            <!-- <el-form-item> -->
-                                <!-- <el-input class="input1" v-model="user_password" placeholder="密码" type="password"/> -->
-                                <!-- <input type="password" class="input2"  v-model="user_password" placeholder="密码" /> -->
-                            <!-- </el-form-item>
-                            <el-form-item> -->
-                                <!-- <el-input class="input1" v-model="repeat_password" placeholder="确认密码" type="password"/> -->
-                                <!-- <input type="password" class="input2"  v-model="repeat_password" placeholder="确认密码" /> -->
-                            <!-- </el-form-item> -->
                         </el-form>
                     </div>
                 </el-col>
@@ -55,9 +47,6 @@
 
 
 <style scoped>
-.loginbutton{
-    margin-left:130px;
-}
 .input1{
     width: 320px;
 }
