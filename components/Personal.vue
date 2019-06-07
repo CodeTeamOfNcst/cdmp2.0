@@ -34,8 +34,8 @@
                             <el-col :span="15">
                                 <div class="grid-content bg-purple-dark format">
                                     <el-form-item label="密码">
-                            <el-input v-model="form.password"></el-input>
-                        </el-form-item>
+                                        <el-input v-model="form.password"></el-input>
+                                    </el-form-item>
                                 </div>
                             </el-col>
                         </el-row>
@@ -43,8 +43,8 @@
                             <el-col :span="15">
                                 <div class="grid-content bg-purple-dark format">
                                     <el-form-item label="用户名称">
-                            <el-input v-model="form.name"></el-input>
-                        </el-form-item>
+                                        <el-input v-model="form.name"></el-input>
+                                    </el-form-item>
                                 </div>
                             </el-col>
                         </el-row>
@@ -52,8 +52,8 @@
                             <el-col :span="15">
                                 <div class="grid-content bg-purple-dark format">
                                     <el-form-item label="用户邮箱">
-                            <el-input v-model="form.email"></el-input>
-                        </el-form-item>
+                                        <el-input v-model="form.email"></el-input>
+                                    </el-form-item>
                                 </div>
                             </el-col>
                         </el-row>
@@ -61,12 +61,12 @@
                             <el-col :span="15">
                                 <div class="grid-content bg-purple-dark format">
                                     <el-form-item label="用户手机号">
-                            <el-input v-model="form.phone"></el-input>
-                        </el-form-item>
+                                        <el-input v-model="form.phone"></el-input>
+                                    </el-form-item>
                                 </div>
                             </el-col>
                         </el-row> 
-                        <el-form-item>
+                        <el-form-item class="keepUp">
                             <el-button type="primary" @click="onSubmit">保存</el-button>
                             <el-button @click="onSubmitCancel">取消</el-button>
                         </el-form-item>
@@ -95,17 +95,16 @@
         float: left;
     }
     .el-tabs__content{
-            overflow: visible!important;
+        overflow: visible!important;
     }
     .format{
         margin-left:50%;
     }
     .history{
-        width: 30%;
+        width: 25%;
         height:161px;
         min-width: 287px;
         margin-bottom: 10px;
-        margin-left: 2.5%;
         float: left;
         display: block;
     }
@@ -116,11 +115,10 @@
         background-size: 100% 100%;
     }
     .hisCont{
-        width: 60%;
-
+        width: 58%;
         float: right;
-        height: 80%;
-        margin-top: 8%;
+        height: 90%;
+        margin-top: 3%;
     }
     .hisCont p{
         width: 100%;
@@ -133,6 +131,10 @@
         width: 100%;
         height: 20px;
         margin-top: 5px;
+    }
+    .keepUp{
+        text-align: center;
+        margin-top:20px;
     }
 </style>
 
@@ -161,7 +163,7 @@
                         startDate:'2018-01-05',
                         endDate:'2018-03-31',
                         hours:'20000.00',
-                        account:'16548',
+                        account:'',
                         password:'',
                         operation:''
                     }
@@ -198,13 +200,16 @@
                         type: 'success',
                         message: resData.message
                     })
-                    window.location.reload()
+                    // window.location.reload()
                 }else {
                     this.$message.error(resData.message);
                 }
             },  
             async onSubmitCancel(){
-                window.location.reload()
+                this.$message({
+                    type: 'success',
+                    message: "已取消"
+                })
             },
             async onCloceExamine(data) {
               let resData = await this.$axios.$post('/api/deviceApply/deleteApplyById', {

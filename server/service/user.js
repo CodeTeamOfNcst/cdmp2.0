@@ -45,7 +45,7 @@ module.exports.userGetUserData = async (JSON) => {
   }
 }
 const ItemPerPage = 10;
-module.exports.userGetAllData = async () => {
+module.exports.userGetAllData = async (JSON) => {
   try{
     let Users = await User.findAll({
       limit: ItemPerPage
@@ -82,7 +82,7 @@ module.exports.onlyGetAllUser = async () => {
   for (let index in users) {
     thisUsers.push({
         key: users[index].id,
-        label: users[index].name,
+        label: users[index].name + '--'+'(' + users[index].account +')',
     })
   }
   let result = {

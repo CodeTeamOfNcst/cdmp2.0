@@ -24,7 +24,7 @@ export default {
   },
   async asyncData() {
 
-  }
+  },
 }
 </script>
 

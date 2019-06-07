@@ -8,13 +8,15 @@ const infoService = require('../service/info')
  */
 
 module.exports.infoGetAll = async (ctx, next) => {
-    let result = await infoService.getAllInfoData()
-    ctx.body = {
-        counts:result.counts,
-        infoDetail:result.infoDetail,
-        status:result.status,
-        message:result.message
-    }
+  let page = ctx.params.page
+  let result = await infoService.getAllInfoData(page)
+  ctx.body = {
+    counts:result.counts,
+    infoDetail:result.infoDetail,
+    indexInfo:result.indexInfo,
+    status:result.status,
+    message:result.message
+  }
 }
 
 /**

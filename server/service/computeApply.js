@@ -41,10 +41,10 @@ module.exports.getApplyById = async (JSON) => {
     }
 }
 
-module.exports.getAllApplyData = async () => {
+module.exports.getAllApplyData = async (JSON) => {
     try{
         let applys = await ComputeApply.findAll({ 
-            // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage, 
+            offset: (parseInt(JSON || 1) - 1) * ItemPerPage,
             limit: ItemPerPage 
         });
         let Applys = [];
@@ -62,6 +62,7 @@ module.exports.getAllApplyData = async () => {
                 createdAt:applys[i].createdAt,
                 updatedAt:applys[i].updatedAt,
                 chargePerson: apply_user.name,
+                userAccount:apply_user.account,
                 checkUser: check_user.name,
             });
             if(applys[i].isAgree){
@@ -77,10 +78,10 @@ module.exports.getAllApplyData = async () => {
                     createdAt:applys[i].createdAt,
                     updatedAt:applys[i].updatedAt,
                     chargePerson: apply_user.name,
+                    userAccount:apply_user.account,
                     checkUser: check_user.name,
                 })
             }
-
         }
         let count =  await ComputeApply.count();
         let result = {
@@ -159,10 +160,12 @@ module.exports.getApplySearchFront = async (JSON) => {
         if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
         let result = []
         for(let i =0; i< searchResult.length; i++){
-            result.push({
-                apply: searchResult[i],
-                applyUser: searchResult[i].apply_user,
-            })
+            if(searchResult[i].account){
+                result.push({
+                    apply: searchResult[i],
+                    applyUser: searchResult[i].apply_user,
+                })
+            } 
         }
         let res = {
             result: result,
@@ -289,7 +292,10 @@ module.exports.modifyApplyById = async (JSON) => {
         let check_er = await thisApply.getComputeApplyChecker()  
         await thisApply.update({
             hours: JSON.hours,
-            isUse: JSON.isAgree,
+            isAgree: JSON.isAgree,
+            isUse:JSON.isUse,
+            account:JSON.account,
+            password:JSON.password,
             startDate: JSON.startDate,
             endDate: JSON.endDate,
             apply_user:apply_user.id,

@@ -120,7 +120,7 @@ module.exports.getDeviceDataByName = async (JSON) => {
   }
 }
 
-module.exports.getAllDeviceData = async () => {
+module.exports.getAllDeviceData = async (JSON) => {
   try {
     let devices = await Device.findAll({
       limit: ItemPerPage
@@ -237,7 +237,7 @@ module.exports.AddDevice = async (JSON) => {
       {
         name: JSON.name,
         device_manager:JSON.device_manager,
-        description: JSON.describe,
+        description: JSON.description,
         location: JSON.location,
         purchaseDate: JSON.addDate,
         needRepair: JSON.needRepair,

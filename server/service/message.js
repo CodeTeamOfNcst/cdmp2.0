@@ -37,10 +37,10 @@ module.exports.getMessageDataById = async (JSON) => {
     }
 }
 
-module.exports.getAllMessageData = async () => {
+module.exports.getAllMessageData = async (JSON) => {
     try{
         let messages = await Message.findAll({
-            // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage,
+            offset: (parseInt(JSON || 1) - 1) * ItemPerPage,
             limit: ItemPerPage
         });
         let messageTypes = await MessageType.findAll()
@@ -115,6 +115,46 @@ module.exports.getMessageSearch = async (JSON) => {
                 id:searchResult[i].id,
                 releaseDate:searchResult[i].releaseDate,
                 message_type: (await searchResult[i].getMessageType()).id,
+                name: (await searchResult[i].getMessageUser()).name
+            })
+        }
+        let res = {
+            Message:result,
+            status: 1,
+            message: '匹配消息成功'
+        }
+        return res;
+    }catch(err){
+        let res = {
+            status: 0,
+            message: `搜索消息失败，由于 ${err}`
+        }
+        return res;
+    }
+}
+
+
+module.exports.getMessageSearchFront = async (JSON) => {
+    try{
+        let user = await User.findOne({
+            where:{
+                id:JSON.message_user
+            }
+        })
+        let searchResult = await Message.findAll({
+            where: {message_user:{ [Op.like] : `%${user.id}%`}}
+        })
+        if(! searchResult || searchResult.length === 0) throw("未匹配到结果")
+        let result = []
+        for(let i=0;i<searchResult.length; i++){
+            result.push({
+                content: searchResult[i].content,
+                isRead:searchResult[i].isRead,
+                title:(await searchResult[i].getMessageType()).title,
+                isUse:searchResult[i].isUse,
+                id:searchResult[i].id,
+                releaseDate:searchResult[i].releaseDate,
+                message_type: (await searchResult[i].getMessageType()).firstType,
                 name: (await searchResult[i].getMessageUser()).name
             })
         }

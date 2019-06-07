@@ -31,12 +31,12 @@
                 </el-form-item>
                 <el-form-item label="用户密码">
                     <el-col :span="18">
-                        <el-input v-model="addForm.password" clearable type="password"/>
+                        <input type="password" class="input2"  v-model="addForm.password" />
                     </el-col>
                 </el-form-item>
                 <el-form-item label="重复密码">
                     <el-col :span="18">
-                        <el-input v-model="addForm.repeat" clearable type="password"/>
+                        <input type="password" class="input2"  v-model="addForm.repeat" />
                     </el-col>
                 </el-form-item>
                 <el-form-item label="用户手机号">
@@ -92,15 +92,16 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        style="width: 80%;">
                     <el-table-column
-                            prop="user.id"
-                            label="用户id"
-                            width="110">
+                        label="用户id"
+                        type="index"
+                        width="110">
                     </el-table-column>
                     <el-table-column
                             prop="user.name"
-                            label="用户名称">
+                            label="用户名称"
+                            width="120">
                     </el-table-column>
                     <el-table-column
                             prop="user.account"
@@ -152,7 +153,7 @@
                     </el-form-item>
                     <el-form-item label="用户密码">
                         <el-col :span="18">
-                            <el-input v-model="editForm.password" clearable />
+                            <el-input v-model="editForm.password" clearable type="password"/>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="用户类别">
@@ -226,6 +227,37 @@
             .commonGround;
         }
     }
+    .input2{
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+input::-webkit-input-placeholder{
+            color:#BBBBBB;
+        }
+        input::-moz-placeholder{   
+            color:#BBBBBB;
+        }
+        input:-moz-placeholder{    
+            color:#BBBBBB;
+        }
+        input:-ms-input-placeholder{  
+            color:#BBBBBB;
+        }
 </style>
 
 <script>
@@ -272,7 +304,7 @@
                                 type: 'success',
                                 message: resData.message
                             });
-                            window.location.reload()
+                            window.location.path = '/admin/user'
                         }else {
                             this.$message.error(resData.message);
                         }
@@ -345,7 +377,7 @@
                 }catch (err){
                     this.$message({
                         type: 'info',
-                        message: '已取消删除'
+                        message: '已取消禁用'
                     });
                 }
             },

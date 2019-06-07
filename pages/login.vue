@@ -25,16 +25,12 @@
                 </div></el-col>
             </el-row>
             <el-row :gutter="20">
-                <el-col :span="16" :offset="4"><div class="grid-content bg-purple">
-                    <el-form>
-                        <el-form-item>
-                            <!-- <el-input class="input1" v-model="password" placeholder="密码" type="password"/> -->
-                            <input type="password" class="input2"  v-model="password" placeholder="密码" />
-                        </el-form-item>
-                    </el-form>
+                <el-col :span="16" :offset="4">
+                    <div class="grid-content bg-purple">
+                        <input type="password" class="input2"  v-model="password" placeholder="密码" @keyup.enter="handleLogIn"/>
                 </div></el-col>
             </el-row>
-            <el-button class="loginbutton" type="primary" @click="handleLogIn">登录</el-button>
+            <el-button class="loginbutton" type="primary" @click="handleLogIn" >登录</el-button>
         </div>
     </div>
 </template>

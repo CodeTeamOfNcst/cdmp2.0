@@ -20,6 +20,12 @@
                         <i class="iconfont icon-register"></i>
                         <nuxt-link to="/signin">注册</nuxt-link>
                     </div>
+                    <div v-else-if="this.$auth.hasScope('admin')" class="little" >
+                        <i class="iconfont icon-user"></i>
+                        <nuxt-link to="/admin/device">后台</nuxt-link>    
+                        <i class="iconfont el-icon-delete"></i>
+                        <el-button type="text" @click="logOut">退出</el-button>
+                    </div>
                     <div v-else class="little" >
                         <i class="iconfont icon-user"></i>
                         <nuxt-link to="/personal">个人中心</nuxt-link>
@@ -37,6 +43,9 @@
 <style lang="less" scoped>
     a{
         color:#fff;
+    }
+    .el-button--text{
+        color:white;
     }
     .header-logo {
         width: 80%;
@@ -57,6 +66,7 @@
     .el-row{
         width: 90%; 
         height:100%;
+        line-height:80px;
         margin-left: 5%;
         .right{
             height:59px;
@@ -66,9 +76,10 @@
                 display: inline-block;
                 height: 60px;
                 line-height: 60px;
-                margin: 11px 5px;
+                margin: 11px 0px;
                 .iconfont {
-                    margin-right: 3px;
+                    // margin-right: 0px;
+                    margin-left:10px;
                 }
                 .icon-register{
                   margin-left: 5px;
@@ -82,7 +93,7 @@
     .header-item{
         text-align: center;
         height:100%;
-        margin-top:11px;
+        // margin-top:11px;
         .button {
         font-family: SimHei;
         text-align: center;
@@ -106,9 +117,25 @@
                 window.location.href = '/login'
                 // window.location.reload()
             },
-        },
+            // myBrowser() {
+            //     let userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            //     let isOpera = userAgent.indexOf("Opera") > -1;
+            //     if (userAgent.indexOf("Chrome") > -1){
+            //         return true;
+            //     } 
+            //     else{
+            //         return false;
+            //     }
+            // },
+        },    
         async mounted(){
-            this.status = this.$auth.state.loggedIn         
+            this.status = this.$auth.$state.loggedIn         
         },
+        // created() {
+        //     if (!this.myBrowser()) {
+        //         alert("请使用谷歌浏览器打开！");
+        //         window.location.reload(true)
+        //     }
+        // }
     }
 </script>

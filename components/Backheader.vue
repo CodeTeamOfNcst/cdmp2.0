@@ -64,7 +64,6 @@
                 </el-collapse>
             </el-row> -->
             <!--end-->
-            
         </div>
     </div>
 </template>

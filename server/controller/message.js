@@ -9,7 +9,8 @@ const messageService = require('../service/message')
 
 
 module.exports.messageGetAll = async (ctx, next) => {
-    let result = await messageService.getAllMessageData()
+  let page = ctx.params.page
+    let result = await messageService.getAllMessageData(page)
     ctx.body = {
         counts:result.counts,
         MessageTypes:result.MessageTypes,
@@ -54,7 +55,15 @@ module.exports.messageSearch = async (ctx, next) => {
     message:result.message
   }
 }
-
+module.exports.messageSearchFront = async (ctx, next) => {
+  let search = ctx.request.body
+  let result = await messageService.getMessageSearchFront(search)
+  ctx.body = {
+    Message:result.Message,
+    status:result.status,
+    message:result.message
+  }
+}
 
 /**
  * 测试 delete 方法

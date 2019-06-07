@@ -9,7 +9,8 @@ const computeApplyService = require('../service/computeApply')
 
 
 module.exports.computeApplyGetAll = async (ctx, next) => {
-  let result = await computeApplyService.getAllApplyData()
+  let page = ctx.params.page
+  let result = await computeApplyService.getAllApplyData(page)
   ctx.body = {
     counts:result.counts,
     applys:result.applys,

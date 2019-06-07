@@ -21,15 +21,21 @@
                             <el-form-item>
                                 <el-input class="input1" v-model="user_account" placeholder="账号" type="text"/>
                             </el-form-item>
-                            <el-form-item>
-                                <!-- <el-input class="input1" v-model="user_password" placeholder="密码" type="password"/> -->
-                                <input type="password" class="input2"  v-model="user_password" placeholder="密码" />
-                            </el-form-item>
-                            <el-form-item>
-                                <!-- <el-input class="input1" v-model="repeat_password" placeholder="确认密码" type="password"/> -->
-                                <input type="password" class="input2"  v-model="repeat_password" placeholder="确认密码" />
-                            </el-form-item>
                         </el-form>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="16" :offset="4">
+                    <div class="grid-content bg-purple">
+                        <input type="password" class="input2"  v-model="user_password" placeholder="密码" />
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="16" :offset="4">
+                    <div class="grid-content bg-purple repeatPass">
+                        <input type="password" class="input2"  v-model="repeat_password" placeholder="确认密码" @keyup.enter="handleUserRegist" />
                     </div>
                 </el-col>
             </el-row>
@@ -41,9 +47,6 @@
 
 
 <style scoped>
-.loginbutton{
-    margin-left:130px;
-}
 .input1{
     width: 320px;
 }
@@ -51,7 +54,6 @@
     width:700px;
     height:500px;
     margin:auto auto;
-    /*background-color: #3498DB;*/
 }
 .input2{
     -webkit-appearance: none;
@@ -91,7 +93,9 @@ input::-webkit-input-placeholder{
     margin:10% 15%;
     background-color: #fff;
  }
- 
+.repeatPass{
+    margin-top: 5px;
+}
 .loginbutton{
     margin-left: 200px;
 }
