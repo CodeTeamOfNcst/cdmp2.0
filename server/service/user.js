@@ -48,7 +48,6 @@ const ItemPerPage = 10;
 module.exports.userGetAllData = async () => {
   try{
     let Users = await User.findAll({
-      // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage,
       limit: ItemPerPage
     });
     let UserTypes = await UserType.findAll();

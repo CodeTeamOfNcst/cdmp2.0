@@ -302,22 +302,31 @@ export default {
       let userData = Data.usersDetail;
       let user;
       for(let index in userData){
-        if(userData[index].user.account === this.$auth.state.user.user){
+        if(userData[index].user.account == parseInt(this.$auth.state.user.user)){
           user = userData[index].user.id;
         }
-      }  
-      
+      }
       let UserMessages = await this.$axios.$post('/api/message/getMessageSearch',{
         message_user:user,
       });
       let userMessages = UserMessages.Message
       for(let i in userMessages){
-        if(!userMessages[i].isRead || userMessages[i],isUse){
+        if(!userMessages[i].isRead && userMessages[i].isUse){
           const h = this.$createElement;
           this.$notify({
-            title: userMessages[i].messageTypeName,
-            message: h('i', { style: 'color: teal'}, userMessages[i].message),
-            duration: 0
+            title: userMessages[i].title,
+            message: h('i', { style: 'color: teal'}, userMessages[i].content),
+            duration: 0,
+            onClose: () => {
+              let resData = this.axios.post('/api/message/modifyMessageById',{
+                  id: userMessages[i].id,
+                  message_type: userMessages[i].message_type,
+                  releaseDate: userMessages[i].releaseDate,
+                  content: userMessages[i].content,
+                  isRead: true,
+                  isUse: userMessages[i].isUse,
+              });
+            },
           });
           await this.$axios.$put('/api/message/modifyMessageByIdFront',{
             id: userMessages[i].id,
@@ -325,7 +334,6 @@ export default {
         }  
       }
     }
-    
   },
   async asyncData({ app }){
     let resData = await app.$axios.$get('/api/test/')

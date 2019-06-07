@@ -57,12 +57,12 @@
                         <el-input v-model="addForm.vioReason" clearable type="textarea"/>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="是否同意">
+                <el-form-item label="同意">
                     <el-col :span="18">
                         <el-switch v-model="addForm.isAgree"/>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="是否禁用">
+                <el-form-item label="不禁用">
                     <el-col :span="18">
                         <el-switch v-model="addForm.isUse"/>
                     </el-col>
@@ -80,23 +80,23 @@
         <el-row class="headerline"/>
         <div class="announceCont">
             <div class="oneline">
-                <div class="demo-input-suffix search">
-                    <el-input
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="searchInput">
-                            <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
-                    </el-input>
-                </div>
                 <div class="select">
-                    <el-select v-model="searchType" placeholder="请选择">
+                    <el-select v-model="searchType" placeholder="请选择搜索类型">
                         <el-option
-                                v-for="item in searchOption"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                            v-for="item in searchOption"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
                         </el-option>
                     </el-select>
+                </div>
+                <div class="demo-input-suffix search">
+                    <el-input
+                        placeholder="请输入内容"
+                        prefix-icon="el-icon-search"
+                        v-model="searchInput">
+                        <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
+                    </el-input>
                 </div>
                 <div class="add">
                     <el-button v-popover:popover4 @click="handleAddOpen" class="addContent">新增</el-button>
@@ -106,11 +106,12 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        type=index
+                        style="">
                     <el-table-column
                             label="申请id"
+                            type=index
                             width="80">
-                        <template slot-scope="scope">{{ scope.row.id }}</template>
                     </el-table-column>
                     <el-table-column
                             label="申请用户"
@@ -121,6 +122,11 @@
                             label="申请设备"
                             width="180">
                         <template slot-scope="scope">{{ scope.row.device.substr(0,10) }}</template>
+                    </el-table-column>
+                    <el-table-column
+                            label="设备类型"
+                            width="180">
+                        <template slot-scope="scope">{{ scope.row.deviceType }}</template>
                     </el-table-column>
                     <el-table-column
                             label="开始使用时间"
@@ -193,10 +199,10 @@
                         <el-col :span="18">
                            <el-select v-model="editForm.device" filterable placeholder="请选择对应的设备">
                                 <el-option
-                                        v-for="item in devices"
-                                        :key="item.key"
-                                        :label="item.label"
-                                        :value="item.key">
+                                    v-for="item in devices"
+                                    :key="item.key"
+                                    :label="item.label"
+                                    :value="item.key">
                                 </el-option>
                         </el-select>
                         </el-col>
@@ -290,21 +296,44 @@
         },
         methods: {
             async handleSearch(){
-                if(! this.searchInput){
-                    window.location.reload()
+                if(!this.searchInput){
+                  this.$message.error('请输入内容')
+                    // window.location.reload()
+                }else if(!this.searchType){
+                  this.$message.error('请选择搜索类型')
                 }else{
+                  if (this.searchType === '1') {
                     let resData = await this.$axios.$post('/api/deviceApply/getApplySearch',{
                         device: this.searchInput
                     })
                     if(resData.status == 1){
                         this.tableData = resData.result
+                        this.itemCounts = resData.result.length;
                     }else{
                         this.$message.error(resData.message)
                     }
+                  } else {
+                    let getAllData = await this.$axios.$get('/api/deviceApply/getAllApplyData');
+                    let array = [];
+                    for (let item in getAllData.applys){
+                      if(this.searchInput == '待审核') {
+                        if (getAllData.applys[item].createdAt == getAllData.applys[item].updatedAt) {
+                          array.push(getAllData.applys[item]);
+                        }
+                      } else if(this.searchInput == '已审核') {
+                        if (getAllData.applys[item].createdAt !== getAllData.applys[item].updatedAt) {
+                          array.push(getAllData.applys[item]);
+                        }
+                      }
+                    }
+                    this.tableData = array;
+                    this.itemCounts = array.length;
+                  }
                 }
             },
             async handleAdd(){
                 // 之后要加上手动验证逻辑
+                this.addForm.isUse = true;
                 let resData = await this.$axios.$post('api/deviceApply/addApply', {
                     device: this.addForm
                 });
@@ -341,7 +370,6 @@
             },
             async handleEditSubmit(){
                 try{
-                    console.log(this.editForm)
                     let resData = await this.$axios.$post('/api/deviceApply/modifyApplyById', {
                         id: this.editForm.id,
                         apply_user:this.editForm.user,
@@ -418,8 +446,7 @@
                     check_user:'',
                     vioReason: '',
                     isAgree: false,
-                    isUse: false,
-
+                    isUse: true,
                 },
                 editForm: {
                     id:"",
@@ -446,10 +473,10 @@
                 value: '',
                 tableData: [
                     {
-                        id: '1',
-                        applyUser: '张扬果儿',
-                        checkUser:'名字',
-                        device: '第一台设备',
+                        // id: '1',
+                        applyUser: '',
+                        checkUser:'',
+                        device: '',
                         startDate: '',
                         endDate:'',
                         vioReason:'',
@@ -457,12 +484,17 @@
                         isUse:'',
                         createdAt:'',
                         updatedAt:'',
+                        deviceType: '',
                     }
                 ],
                 searchOption: [
                     {
                         value: '1',
-                        label: '申请设备'
+                        label: '设备名称'
+                    },
+                    {
+                        value: '2',
+                        label: '审核状态'
                     }
                 ],
             };
@@ -475,7 +507,7 @@
             this.tableData = getAllData.applys;
             this.users = getOnlyUsersData.users;
             this.devices = getOnlyData.devices;
-            this.itemCounts = getAllData.counts;
+            this.itemCounts = this.tableData.length;
         },
         head() {
             return {

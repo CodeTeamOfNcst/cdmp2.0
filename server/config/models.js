@@ -27,7 +27,7 @@ Message.belongsTo(User, {
     foreignKey: 'message_user',
     foreignKeyContraints: false
 })
-User.hasOne(Message, {
+User.hasMany(Message, {
     as: "UserMessage",
     foreignKey: 'message_user',
     foreignKeyContraints: false
@@ -57,7 +57,7 @@ DeviceApply.belongsTo(Device, {
     foreignKey: "apply_device",
     foreignKeyContraints: false
 })
-Device.hasOne(DeviceApply, {  
+Device.hasMany(DeviceApply, {  
     as: "DeviceApply",
     foreignKey: "apply_device",
     foreignKeyContraints: false

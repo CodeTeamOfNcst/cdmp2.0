@@ -54,6 +54,7 @@ module.exports.getAllApplyData = async () => {
             let Type = await apply_device.getDeviceType()
             Applys.push({
                 id: applys[i].id,
+                account: apply_user.account,
                 startDate:applys[i].startDate,
                 endDate:applys[i].endDate,
                 vioReason:applys[i].vioReason,
@@ -171,11 +172,11 @@ module.exports.addApply = async (JSON) => {
 }
 
 module.exports.addApplyFront = async (JSON) => {   
-    if(JSON.userAccount){
+  if(JSON.userAccount){
         try{
             let thisUserAccount = JSON.userAccount;
             let thisUser = await User.findOne({
-                where: { account:thisUserAccount }
+                where: { account: thisUserAccount }
             });
             let checker = await User.findOne({
                 where:{id:3}

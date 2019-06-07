@@ -67,13 +67,13 @@
             <div class="oneline">
                 <div class="demo-input-suffix search">
                     <el-input
-                            placeholder="请输入内容"
+                            placeholder="请输入用户名称"
                             prefix-icon="el-icon-search"
                             v-model="searchInput">
                             <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
                     </el-input>
                 </div>
-                <div class="select">
+                <!-- <div class="select">
                     <el-select v-model="searchType" placeholder="请选择筛选方式">
                         <el-option
                                 v-for="item in searchOption"
@@ -83,7 +83,7 @@
                                 
                         </el-option>
                     </el-select>
-                </div>
+                </div> -->
                 <div class="add">
                     <el-button v-popover:popover4 class="addContent">新增</el-button>
                 </div>
@@ -241,7 +241,8 @@
         methods: {
             async handleSearch(){
                 if(! this.searchInput){
-                    window.location.reload()
+                    this.$message.error('请输入内容');
+                    // window.location.reload()
                 }else{
                     console.log(this.searchInput)
                     let resData = await this.$axios.$post('/api/user/userSearchData',{
@@ -276,7 +277,6 @@
                             this.$message.error(resData.message);
                         }
                     }catch (err){
-                        console.log(err)
                         this.$message.error(`服务器异常，由于 ${err}`);
                     }
                 }else {
@@ -294,7 +294,6 @@
                 });
                 if(resData.status === 1){
                     this.editForm = resData.user
-                    console.log(this.editForm)
                 }else {
                     this.$message.error(resData.message);
                 }
@@ -394,12 +393,12 @@
                 tableData: [
                     {
                         user: {
-                            account:"haoyiqing",
+                            account:123,
                             createdAt:"2018-01-25T04:04:23.000Z",
                             email:"1337074512@qq.com",
                             id:1,
                             isUse:false,
-                            name:"郝一擎",
+                            name:"",
                             password:"123456",
                             phone:null,
                             updatedAt:"2018-01-25T06:05:46.000Z",

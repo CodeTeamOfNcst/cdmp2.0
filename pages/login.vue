@@ -113,22 +113,31 @@ input::-webkit-input-placeholder{
             async handleLogIn(){
                 if(!this.account || !this.password){
                     this.$message.error("请输入用户名和密码");
-                }else{
-                    let res = await this.$auth.loginWith('local',{
-                        data:{
-                            account: this.account,
-                            password: this.password
-                        }
-                    })
-                    if(this.$auth.state.user){
-                        if(!this.$auth.hasScope('admin')){   
-                            window.location.href ='/'
-                        }else{
-                            window.location.href ='/admin'
-                        }              
-                    }else{
-                        this.$message.error("用户名或密码错误")
-                    }     
+                } else {
+                  let Data = await this.$axios.$get('/api/user/userGetAllData')
+                  let userData = Data.usersDetail;
+                  for(let index in userData){
+                      if(userData[index].user.account === this.account){
+                          if(userData[index].user.isUse) {
+                              let res = await this.$auth.loginWith('local',{
+                                  data:{
+                                      account: this.account,
+                                      password: this.password
+                                  }
+                              })
+                              if(this.$auth.state.user){
+                                  if(!this.$auth.hasScope('admin')){   
+                                      window.location.href ='/'
+                                  }else{
+                                      window.location.href ='/admin'
+                                  }                          
+                              } else {
+                                  this.$message.error("用户名或密码错误")
+                              }   
+                          } else this.$message.error("用户账号被禁用!")
+                      }
+                  }                    
+                    
                 }   
             },
         }

@@ -2,114 +2,19 @@
   <section class="container">
         <div v-if="res">
             <el-tabs :tab-position="tabPosition">
-                <el-tab-pane label="云计算资源预约记录">
-                    <!-- 历史记录版块开始 -->
-                    <!-- <div v-if="chance">
-                        <el-table
-                                :data="tableData1"
-                                stripe
-                                style="width: 100%">
-                            <el-table-column
-                                    prop="apply.startDate"
-                                    label="开始时间"
-                                    width="180"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="apply.endDate"
-                                    label="结束时间"
-                                    width="180"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="apply.hours"
-                                    label="申请机时"
-                                    width="200"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    label="预约状态"
-                                    width="350"
-                                    align="left">
-                                    <template slot-scope="scope">{{scope.row.apply.isAgree ?'成功':'失败'}}</template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="operation1"
-                                    label="操作"
-                                    width="" 
-                                    align="left">
-                                <template slot-scope="scope">
-                                    <el-button type="text" @click="open2">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div> -->
-                    <!-- 历史记录版块结束 -->
-
-                    <!-- 正在使用信息开始 -->
-                    <div>
-                        <el-table
-                                :data="tableData0"
-                                stripe
-                                style="width: 100%">
-                            <el-table-column
-                                    prop="apply.startDate"
-                                    label="开始时间"
-                                    width="180"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="apply.endDate"
-                                    label="结束时间"
-                                    width="180"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="apply.hours"
-                                    label="申请机时"
-                                    width="200"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="apply.account"
-                                    label="登录账号"
-                                    width="350"
-                                    align="left">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="apply.password"
-                                    label="登录密码"
-                                    width="350"
-                                    align="left">
-                            </el-table-column>
-                        </el-table>
-                        <el-dialog title="提示" :visible.sync="dialogFormVisible">
-                            <el-form :model="form2">
-                                <el-form-item label="登录密码" :label-width="formLabelWidth">
-                                    <el-input v-model="form2.password" clearable></el-input>
-                                </el-form-item>
-                                <el-form-item label="邮箱" :label-width="formLabelWidth">
-                                    <el-input v-model="form2.email" clearable></el-input>
-                                </el-form-item>
-                            </el-form>
-                            <!-- <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                            </div> -->
-                        </el-dialog>
-                    </div>
-                    <!-- 正在使用信息结束 -->                  
-                </el-tab-pane>
                 <el-tab-pane label="仪器设备预约记录">
-                    <div v-for="data in res" v-bind:key="data" v-if="data.applyUserId === form.id">
+                    <div v-for="data in res" v-bind:key="data" v-if="data.account === form.account">
                         <div class="history">
                             <img :src="data.Img" >
                             <div class="hisCont">
                                 <p>{{data.device}}</p>
                                 <div class="startTime">开始时间:{{data.startDate}}</div>
                                 <div class="startTime">结束时间:{{data.endDate}}</div>
-                                <div class="startTime">设备类型:{{data.deviceType}}</div>
-                                <div class="startTime">是否批准使用:{{data.isAgree ? '是':'否'}}</div>
+                                <div class="startTime" v-if="data.createdAt !== data.updatedAt">是否批准使用:{{data.isAgree ? '是':'否'}}</div>
+                                <div class="startTime">审核状态:{{data.createdAt === data.updatedAt ? '待审核' : '已审核'}}</div>
+                                <div class="startTime" v-if="data.createdAt === data.updatedAt">
+                                  <el-button @click="onCloceExamine(data)">取消审核</el-button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -271,23 +176,13 @@
                     },
                 ],
                 tabPosition: '',
-                res: [
-                    
-                ],
+                res: [],
                 chance: false,
             }
         },  
         methods: {
             async onSubmit(){
                 let getUser = await this.$axios.$post('/api/user/userGetUserData',{id:this.form.id})
-                // if(this.form.name){
-                //     let allUser = await User.findAll()
-                //     for(let index in allUser){
-                //         if(allUser[index].name === JSON.name){
-                //         throw("用户名已有人使用")
-                //         }
-                //     }
-                // }
                 let resData = await this.$axios.$post('/api/user/modifyUserById', {
                     userId: this.form.id,
                     account: this.form.account,
@@ -311,6 +206,20 @@
             async onSubmitCancel(){
                 window.location.reload()
             },
+            async onCloceExamine(data) {
+              let resData = await this.$axios.$post('/api/deviceApply/deleteApplyById', {
+                  id: data.id
+              });
+              if(resData.status === 1){
+                  this.$message({
+                      type: 'success',
+                      message: resData.message
+                  });
+                  window.location.reload()
+              }else {
+                  this.$message.error(resData.message);
+              }
+            }
         },
         
         async mounted(){  
@@ -327,9 +236,14 @@
             let getDataById = await this.$axios.$post('/api/computeApply/getApplySearchFront',{account:this.$store.state.auth.user});
             this.tableData1 = getDataById.result;
             this.tableData0 = getDataById.result;
-            this.res = getAllData.applys;
-            console.log(getAllData.applys)
-            },
+            let array = [];
+            for (let i in getAllData.applys) {
+              if (getAllData.applys[i].isUse) {
+                array.push(getAllData.applys[i]);
+              }
+            }
+            this.res = array;
+        },
         head(){
             return {
                 title: 'CDMP - 个人中心'

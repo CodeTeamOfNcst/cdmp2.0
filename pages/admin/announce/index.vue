@@ -38,13 +38,13 @@
             <div class="oneline">
                 <div class="demo-input-suffix search">
                     <el-input
-                            placeholder="请输入内容"
+                            placeholder="请输入公告标题"
                             prefix-icon="el-icon-search"
                             v-model="searchInput">
                             <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
                     </el-input>
                 </div>
-                <div class="select">
+                <!-- <div class="select">
                     <el-select v-model="value" placeholder="筛选依据">
                         <el-option
                                 v-for="item in options"
@@ -53,7 +53,7 @@
                                 :value="item.value">
                         </el-option>
                     </el-select>
-                </div>
+                </div> -->
                 <div class="add">
                     <el-button v-popover:popover4 class="addContent">新增</el-button>
                 </div>
@@ -187,7 +187,8 @@
         methods: {
             async handleSearch(){
                 if(! this.searchInput){
-                    window.location.reload()
+                    this.$message.error('请输入内容')
+                    // window.location.reload()
                 }else{
                     let resData = await this.$axios.$post('/api/info/getInfoSearch',{
                         title: this.searchInput

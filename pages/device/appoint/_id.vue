@@ -5,6 +5,9 @@
             <span class="bullCont">仪器预约</span>
         </div>
         <el-row class="headerline"></el-row>
+        <div style="color: red;">为防止预约时间冲突，管理员有权修改您的申请时间范围</div>
+        <div style="color: red;">为防止预约失败，预约申请时间范围请尽量不超过两天，可分多次申请</div>
+        <div style="color: red;">若超过预约申请开始时间还未审核通过，可发起重新申请</div>
         <div class="appointCont">
             <el-row>
                 <el-col :span="24">
@@ -133,7 +136,7 @@
                     return
                 }
                 let resData = await this.$axios.$post('/api/deviceApply/addApplyFront', {
-                    userAccount:this.$auth.state.user.user,
+                    userAccount: parseInt(this.$auth.state.user.user),
                     deviceId: this.device.id,
                     vioReason: this.vioReason,
                     startDate: this.date[0],
@@ -141,8 +144,8 @@
                 })
                 if(resData.status === 1){
                     this.$message({
+                        type: 'success',
                         message: resData.message,
-                        type: 'success'
                     });
                     window.location.href = '/device'
                 }else{

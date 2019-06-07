@@ -67,15 +67,7 @@
         <el-row class="headerline"/>
         <div class="announceCont">
             <div class="oneline">
-                <div class="demo-input-suffix search">
-                    <el-input
-                            placeholder="请输入内容"
-                            prefix-icon="el-icon-search"
-                            v-model="searchInput">
-                            <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
-                    </el-input>
-                </div>
-                <div class="select">
+                <!-- <div class="select">
                     <el-select v-model="searchType" placeholder="筛选条件">
                         <el-option
                                 v-for="item in searchOption"
@@ -84,6 +76,14 @@
                                 :value="item.value">
                         </el-option>
                     </el-select>
+                </div> -->
+                <div class="demo-input-suffix search">
+                    <el-input
+                            placeholder="请输入用户名称"
+                            prefix-icon="el-icon-search"
+                            v-model="searchInput">
+                            <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
+                    </el-input>
                 </div>
                 <div class="add">
                     <el-button v-popover:popover4 class="addContent" @click="handleAddOpen">新增</el-button>
@@ -93,10 +93,10 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 70%;">
+                        style="">
                     <el-table-column
-                            prop="id"
                             label="消息id"
+                            type=index
                             width="100">
                     </el-table-column>
                     <el-table-column
@@ -250,7 +250,8 @@
         methods: {
             async handleSearch(){
                 if(! this.searchInput){
-                    window.location.reload()
+                    this.$message.error('请输入内容');
+                    // window.location.reload()
                 }else{
                     let resData = await this.$axios.$post('/api/message/getMessageSearch',{
                         message_user: this.searchInput
@@ -269,7 +270,6 @@
             },
             async handleAdd(){
                 if( this.addForm.selected_user.length !== 0){
-                    console.log(this.addForm.message_type)
                     let resData = await this.$axios.$post('api/message/addMessage', {
                         selected_user: this.addForm.selected_user,
                         releaseDate:this.addForm.releaseDate,
@@ -293,7 +293,6 @@
                 }
             },
             handleAddCancel(){
-                console.log(this.addForm.selected_user);
                 this.addFromVisible = false
             },
             async handleEdit(row) {
@@ -402,7 +401,7 @@
                 ],
                 tableData: [
                     {
-                        id: '1',
+                        // id: '1',
                         releaseDate:'2017-08-26',
                         content: '这是一条系统消息',
                         isRead:'未读',

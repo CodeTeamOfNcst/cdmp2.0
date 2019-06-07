@@ -87,13 +87,13 @@
             <div class="oneline">
                 <div class="demo-input-suffix search">
                     <el-input
-                            placeholder="请输入内容"
+                            placeholder="请输入设备名称"
                             prefix-icon="el-icon-search"
                             v-model="searchInput">
                             <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
                     </el-input>
                 </div>
-                <div class="select">
+                <!-- <div class="select">
                     <el-select v-model="value" placeholder="请选择">
                         <el-option
                                 v-for="item in options1"
@@ -102,7 +102,7 @@
                                 :value="item.value">
                         </el-option>
                     </el-select>
-                </div>
+                </div> -->
                 <div class="add">
                     <el-button v-popover:popover4 class="addContent">新增</el-button>
                 </div>
@@ -131,11 +131,11 @@
                             label="设备类型"
                             width="150">
                     </el-table-column>
-                    <el-table-column
+                    <!-- <el-table-column
                             prop="needRepair"
                             label="是否需要维修"
                             width="130">
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column
                             
                             label="是否可预约"
@@ -212,9 +212,9 @@
                     <el-form-item label="设备描述" :label-width="editFormLabelWidth">
                         <el-input :rows="3" type="textarea" v-model="editForm.describe" class="textarea" />
                     </el-form-item>
-                    <el-form-item label="是否需要维护" :label-width="editFormLabelWidth">
+                    <!-- <el-form-item label="是否需要维护" :label-width="editFormLabelWidth">
                         <el-switch v-model="editForm.needRepair"/>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item label="是否能被预约"
                                   :label-width="editFormLabelWidth"
                                   active-text="可预约"
@@ -330,7 +330,7 @@ export default{
             let deviceAddDate = this.addForm.addDate;
             let location = this.addForm.location;
             let deviceDescribe = this.addForm.describe;
-            let deviceNeedRepair = this.addForm.needRepair;
+            let deviceNeedRepair = false;
             let deviceCanApply = this.addForm.canApply;
             let deviceIsUse = this.addForm.isUse;
             if(deviceName && deviceTypeId && deviceAddDate && deviceDescribe ){
@@ -361,7 +361,8 @@ export default{
         },
         async handleSearch(){
             if(! this.searchInput){
-                window.location.reload()
+                this.$message.error('请输入内容')
+                // window.location.reload()
             }else{
                 let resData = await this.$axios.$post('/api/device/getDeviceSearch',{
                     name: this.searchInput

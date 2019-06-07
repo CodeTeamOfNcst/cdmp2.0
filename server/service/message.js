@@ -87,11 +87,20 @@ module.exports.getAllMessageData = async () => {
 }
 module.exports.getMessageSearch = async (JSON) => {
     try{
-        let user = await User.findOne({
+      let user;
+        if (typeof JSON.message_user == 'string') {
+          user = await User.findOne({
+              where:{
+                  name:JSON.message_user
+              }
+          })
+        } else {
+          user = await User.findOne({
             where:{
-                name:JSON.message_user
+                id:JSON.message_user
             }
         })
+        }
         let searchResult = await Message.findAll({
             where: {message_user:{ [Op.like] : `%${user.id}%`}}
         })
@@ -105,7 +114,7 @@ module.exports.getMessageSearch = async (JSON) => {
                 isUse:searchResult[i].isUse,
                 id:searchResult[i].id,
                 releaseDate:searchResult[i].releaseDate,
-                message_type: (await searchResult[i].getMessageType()).firstType,
+                message_type: (await searchResult[i].getMessageType()).id,
                 name: (await searchResult[i].getMessageUser()).name
             })
         }

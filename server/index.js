@@ -1,4 +1,3 @@
-
 const Koa = require('koa')
 const { Nuxt, Builder } = require('nuxt')
 const logger = require('koa-logger')

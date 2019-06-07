@@ -127,8 +127,7 @@ h2{
                     let resData = await this.$axios.$post('/api/user/userAddUser', {
                         account: this.user_account,
                         password: this.user_password,
-                        //前台注册暂时默认用户类型为普通用户
-                        user_type:'2',
+                        user_type:'2', //前台注册暂时默认用户类型为普通用户
                     })
                     if(resData.status === 1){
                         this.$message({
@@ -136,11 +135,8 @@ h2{
                             message: resData.message
                         });
                         window.location.href = '/login'
-                    }else {
-                        this.$message.error(resData.message);
-                    }
+                    }else this.$message.error(resData.message);
                 }catch(err){
-                    console.log(err)
                     this.$message.error(`服务器异常，由于 ${err}`);
                 }
             }

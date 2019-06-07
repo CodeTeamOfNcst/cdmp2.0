@@ -42,7 +42,6 @@ module.exports.imageUploadToTemp = async (JSON) => {
  */
 module.exports.deleteTempFile = async (JSON) => {
     let deletePath = 'static' + JSON;
-    console.log(deletePath)
     if (deletePath.indexOf('avatars') > -1 && fs.existsSync(deletePath)) {
         fs.unlink(deletePath);
         let res = {

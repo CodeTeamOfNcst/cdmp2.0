@@ -302,7 +302,7 @@
         async mounted(){  
             let getAllData = await this.$axios.$get('/api/device/getAllDeviceData');
             this.devices = getAllData.Devices,
-            this.deviceTypes = getAllData.DeviceTypes
+            this.deviceTypes = getAllData.DeviceTypes,
             this.deviceCounts = getAllData.counts;
         },
     }

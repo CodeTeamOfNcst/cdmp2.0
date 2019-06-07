@@ -123,7 +123,6 @@ module.exports.getDeviceDataByName = async (JSON) => {
 module.exports.getAllDeviceData = async () => {
   try {
     let devices = await Device.findAll({
-      // offset: (parseInt(ctx.params.page || 1) - 1) * ItemPerPage,
       limit: ItemPerPage
     });
     let devicesType = await DeviceType.findAll();
