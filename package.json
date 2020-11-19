@@ -13,7 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/auth": "^4.0.0-rc.3",
+    "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.0.0",
     "element-ui": "^1.4.9",
     "koa": "^2.3.0",
